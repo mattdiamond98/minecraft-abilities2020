@@ -6,19 +6,23 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class CoolDownEndEvent extends Event {
+/***
+ * Event thrown that abilities can listen to
+ * if they require constant timing.
+ */
+public class CoolDownTickEvent extends Event {
 
     private static final HandlerList HANDLERS = new HandlerList();
 
     private Player player;
     private Material item;
 
-    public CoolDownEndEvent(Player player, Material item) {
+    public CoolDownTickEvent(Player player, Material item) {
         this.player = player;
         this.item = item;
     }
 
-    public CoolDownEndEvent(CoolDownKey key) {
+    public CoolDownTickEvent(CoolDownKey key) {
         this(key.getPlayer(), key.getItem());
     }
 
@@ -30,7 +34,11 @@ public class CoolDownEndEvent extends Event {
         return item;
     }
 
-    // TODO: getAbility()
+    public CoolDownKey getCoolDownKey() {
+        return new CoolDownKey(player, item);
+    }
+
+    // TODO: get specific ability
 
     public HandlerList getHandlers() {
         return HANDLERS;
