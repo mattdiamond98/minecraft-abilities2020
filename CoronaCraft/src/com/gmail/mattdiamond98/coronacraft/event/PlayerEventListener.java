@@ -45,8 +45,10 @@ public class PlayerEventListener implements Listener {
     public void onPlayerAttack(EntityDamageByEntityEvent e) {
 
         if (e.getDamager() instanceof Player && e.getEntity() instanceof LivingEntity) {
+            if (Team.getTeamByPlayerName(((Player)e.getDamager()).getName()) == null ||
+                    Team.getTeamByPlayerName(((LivingEntity) e.getEntity()).getName()) == null) return;
             if (Team.getTeamByPlayerName(((LivingEntity) e.getEntity()).getName()).getPlayers().contains((Player)e.getDamager())) return;
-            // Fighter sword has 25% chance to confuse enemy
+            // SwordStyle sword has 25% chance to confuse enemy
             Player p = (Player) e.getDamager();
             if (p.getInventory().getItemInMainHand().getType() == Material.IRON_SWORD && notInSpawn(p)) {
                 // Skirmisher sword deals +50% damage to highlighted enemies
@@ -55,33 +57,8 @@ public class PlayerEventListener implements Listener {
                     e.getEntity().getLocation().getWorld().playEffect(e.getEntity().getLocation(), Effect.STEP_SOUND, Material.REDSTONE_WIRE);
                 }
             }
-            if (p.getInventory().getItemInMainHand().getType() == Material.SHEARS && notInSpawn(p)) {
-                LivingEntity target = (LivingEntity) e.getEntity();
-                if (p.isSneaking()) {
-                    // Assassinate, deal damage equal to poison stack
-                    if (target.getPotionEffect(PotionEffectType.POISON) == null) return;
-                    int duration = target.getPotionEffect(PotionEffectType.POISON).getDuration();
-                    target.removePotionEffect(PotionEffectType.POISON);
-                    p.getLocation().getWorld().playEffect(p.getLocation(), Effect.STEP_SOUND, Material.SLIME_BLOCK);
-                    target.damage(duration / 20);
-                } else {
-                    target.damage(2);
-                }
-            }
         }
-        if (e.getDamager() instanceof Snowball && e.getEntity() instanceof Player) {
-            Player p = (Player) ((Snowball) e.getDamager()).getShooter();
-            Player target = (Player) e.getEntity();
-            if (Team.getTeamByPlayerName(target.getName()).getPlayers().contains(p)) return;
-            target.damage(2, p);
-            p.getLocation().getWorld().playEffect(p.getLocation(), Effect.STEP_SOUND, Material.SLIME_BLOCK);
-            if (target.getPotionEffect(PotionEffectType.POISON) == null) {
-                new PotionEffect(PotionEffectType.POISON, 4 * 20, 0).apply(target);
-            } else {
-                int duration = target.getPotionEffect(PotionEffectType.POISON).getDuration();
-                new PotionEffect(PotionEffectType.POISON, duration + 4 * 20, 0).apply(target);
-            }
-        }
+
     }
 
     @EventHandler(priority = EventPriority.HIGH)

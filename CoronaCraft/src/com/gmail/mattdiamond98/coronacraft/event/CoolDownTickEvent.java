@@ -1,6 +1,6 @@
 package com.gmail.mattdiamond98.coronacraft.event;
 
-import com.gmail.mattdiamond98.coronacraft.abilities.CoolDownKey;
+import com.gmail.mattdiamond98.coronacraft.util.AbilityKey;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -22,7 +22,7 @@ public class CoolDownTickEvent extends Event {
         this.item = item;
     }
 
-    public CoolDownTickEvent(CoolDownKey key) {
+    public CoolDownTickEvent(AbilityKey key) {
         this(key.getPlayer(), key.getItem());
     }
 
@@ -34,8 +34,8 @@ public class CoolDownTickEvent extends Event {
         return item;
     }
 
-    public CoolDownKey getCoolDownKey() {
-        return new CoolDownKey(player, item);
+    public AbilityKey getCoolDownKey() {
+        return new AbilityKey(player, item);
     }
 
     // TODO: get specific ability

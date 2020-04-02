@@ -1,15 +1,20 @@
 package com.gmail.mattdiamond98.coronacraft;
 
-import com.gmail.mattdiamond98.coronacraft.abilities.*;
+import com.gmail.mattdiamond98.coronacraft.abilities.Anarchist.TNTGenerator;
+import com.gmail.mattdiamond98.coronacraft.abilities.Fighter.SwordStyle;
+import com.gmail.mattdiamond98.coronacraft.abilities.Ninja.NinjaMovement;
+import com.gmail.mattdiamond98.coronacraft.abilities.Ninja.ShadowKnife;
+import com.gmail.mattdiamond98.coronacraft.abilities.Ninja.ShurikenBag;
+import com.gmail.mattdiamond98.coronacraft.abilities.Tank.Rally;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownEndEvent;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownTickEvent;
 import com.gmail.mattdiamond98.coronacraft.event.PlayerEventListener;
+import com.gmail.mattdiamond98.coronacraft.util.AbilityKey;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class CoronaCraft extends JavaPlugin {
 
@@ -18,12 +23,12 @@ public class CoronaCraft extends JavaPlugin {
     public static final int ABILITY_TICK_FREQ = 10;
     public static final int ABILITY_TICK_PER_SECOND = 20 / ABILITY_TICK_FREQ;
 
-    private static final Set<Ability> ABILITIES = new HashSet<>();
+    private static final Map<Material, Ability> ABILITIES = new HashMap<>();
 
     // Player metadata for tracking which sub-ability players have selected
-    private static final Map<CoolDownKey, Integer> PLAYER_ABILITIES = new HashMap<>();
+    private static final Map<AbilityKey, Integer> PLAYER_ABILITIES = new HashMap<>();
     // Player metadata for tracking which abilities are on cooldown
-    private static final Map<CoolDownKey, Integer> PLAYER_COOL_DOWNS = new HashMap<>();
+    private static final Map<AbilityKey, Integer> PLAYER_COOL_DOWNS = new HashMap<>();
 
     @Override
     public void onEnable(){
@@ -32,14 +37,16 @@ public class CoronaCraft extends JavaPlugin {
         initializeAbilities(
                 new TNTGenerator(),
                 new ShurikenBag(),
-                new NinjaLeap(),
-                new SwordStyle()
+                new ShadowKnife(),
+                new NinjaMovement(),
+                new SwordStyle(),
+                new Rally()
         );
 
         getServer().getPluginManager().registerEvents(new PlayerEventListener(), this);
 
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
-            for (CoolDownKey key : PLAYER_COOL_DOWNS.keySet()) {
+            for (AbilityKey key : PLAYER_COOL_DOWNS.keySet()) {
                 int new_time = PLAYER_COOL_DOWNS.get(key) - 1;
                 if (new_time <= 0) {
                     PLAYER_COOL_DOWNS.remove(key);
@@ -59,24 +66,24 @@ public class CoronaCraft extends JavaPlugin {
         for (Ability ability : abilities) {
             ability.initialize();
             getServer().getPluginManager().registerEvents(ability, this);
-            ABILITIES.add(ability);
+            ABILITIES.put(ability.getItem(), ability);
         }
     }
 
-    public static final Set<Ability> getAbilities() {
+    public static final Map<Material, Ability> getAbilities() {
         return ABILITIES;
     }
 
-    public static final Map<CoolDownKey, Integer> getPlayerCoolDowns() {
+    public static final Ability getAbility(Material item) {
+        return ABILITIES.get(item);
+    }
+
+    public static final Map<AbilityKey, Integer> getPlayerCoolDowns() {
         return PLAYER_COOL_DOWNS;
     }
 
-    public static final Map<CoolDownKey, Integer> getPlayerAbilities() {
+    public static final Map<AbilityKey, Integer> getPlayerAbilities() {
         return PLAYER_ABILITIES;
-    }
-
-    public static final Set<Ability> getAbilities(Material item) {
-        return ABILITIES.stream().filter((ability) -> ability.getItem().equals(item)).collect(Collectors.toSet());
     }
 
     @Override

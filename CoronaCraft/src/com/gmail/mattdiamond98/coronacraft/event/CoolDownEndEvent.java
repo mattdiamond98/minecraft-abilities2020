@@ -1,6 +1,6 @@
 package com.gmail.mattdiamond98.coronacraft.event;
 
-import com.gmail.mattdiamond98.coronacraft.abilities.CoolDownKey;
+import com.gmail.mattdiamond98.coronacraft.util.AbilityKey;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -18,7 +18,7 @@ public class CoolDownEndEvent extends Event {
         this.item = item;
     }
 
-    public CoolDownEndEvent(CoolDownKey key) {
+    public CoolDownEndEvent(AbilityKey key) {
         this(key.getPlayer(), key.getItem());
     }
 

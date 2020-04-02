@@ -1,14 +1,14 @@
-package com.gmail.mattdiamond98.coronacraft.abilities;
+package com.gmail.mattdiamond98.coronacraft.abilities.Anarchist;
 
 import com.gmail.mattdiamond98.coronacraft.Ability;
 import com.gmail.mattdiamond98.coronacraft.CoronaCraft;
+import com.gmail.mattdiamond98.coronacraft.util.AbilityKey;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownEndEvent;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownTickEvent;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -38,8 +38,8 @@ public class TNTGenerator extends Ability {
                 player.getInventory().addItem(item);
             }
             if (total_count < MAX_COUNT) {
-                Map<CoolDownKey, Integer> coolDowns = CoronaCraft.getPlayerCoolDowns();
-                coolDowns.put(new CoolDownKey(player, getItem()), BASE_COOL_DOWN);
+                Map<AbilityKey, Integer> coolDowns = CoronaCraft.getPlayerCoolDowns();
+                coolDowns.put(new AbilityKey(player, getItem()), BASE_COOL_DOWN);
             }
         }
     }
@@ -50,8 +50,8 @@ public class TNTGenerator extends Ability {
             Player player = e.getPlayer();
             int total_count = AbilityUtil.getTotalCount(player, Material.TNT);
             if (total_count <= MAX_COUNT) {
-                Map<CoolDownKey, Integer> coolDowns = CoronaCraft.getPlayerCoolDowns();
-                CoolDownKey key = new CoolDownKey(player, getItem());
+                Map<AbilityKey, Integer> coolDowns = CoronaCraft.getPlayerCoolDowns();
+                AbilityKey key = new AbilityKey(player, getItem());
                 if (!coolDowns.containsKey(key)) {
                     coolDowns.put(key, BASE_COOL_DOWN);
                 }
