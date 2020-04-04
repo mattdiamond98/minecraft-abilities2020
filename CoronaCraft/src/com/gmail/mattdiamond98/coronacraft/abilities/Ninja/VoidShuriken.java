@@ -29,6 +29,9 @@ public class VoidShuriken extends AbilityStyle {
         p.getWorld().playEffect(target.getLocation(), Effect.SMOKE, 10);
 
         Location targetLoc = target.getLocation();
+        targetLoc.setDirection(p.getLocation().getDirection());
+        Location prevLoc = p.getLocation();
+        prevLoc.setDirection(target.getLocation().getDirection());
         target.teleport(p);
         p.teleport(targetLoc);
         target.damage(2);

@@ -17,10 +17,8 @@ public class InfernalBlade extends AbilityStyle {
      */
     public int execute(Player p, Object... args) {
         LivingEntity e = (LivingEntity) args[0];
-        if (e.getFireTicks() == 0) {
-            e.setFireTicks(40);
-            e.getWorld().playEffect(e.getLocation(), Effect.MOBSPAWNER_FLAMES, 20);
-        }
+        e.setFireTicks(40);
+        e.getWorld().playEffect(e.getLocation(), Effect.MOBSPAWNER_FLAMES, 20);
         return 0;
     }
 }

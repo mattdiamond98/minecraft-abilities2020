@@ -16,8 +16,8 @@ import java.util.Map;
 
 public class TNTGenerator extends Ability {
 
-    public static final int BASE_COOL_DOWN = 8; // 4 Seconds
-    public static final int MAX_COUNT = 3;
+    public static final int BASE_COOL_DOWN = 10; // 5 Seconds
+    public static final int MAX_COUNT = 4;
 
     public TNTGenerator() {
         super("TNT Generator", Material.TNT_MINECART);
@@ -30,18 +30,8 @@ public class TNTGenerator extends Ability {
 
     @EventHandler
     public void onCoolDownEnd(CoolDownEndEvent e) {
-        Player player = e.getPlayer();
-        if (e.getItem().equals(getItem()) && player.getInventory().contains(getItem())) {
-            ItemStack item = new ItemStack(Material.TNT, 1);
-            int total_count = AbilityUtil.getTotalCount(player, item.getType());
-            if (total_count++ < MAX_COUNT) {
-                player.getInventory().addItem(item);
-            }
-            if (total_count < MAX_COUNT) {
-                Map<AbilityKey, Integer> coolDowns = CoronaCraft.getPlayerCoolDowns();
-                coolDowns.put(new AbilityKey(player, getItem()), BASE_COOL_DOWN);
-            }
-        }
+        AbilityUtil.regenerateItemPassive(e.getPlayer(), e.getItem(),
+                item, new ItemStack(Material.TNT, 1), MAX_COUNT, BASE_COOL_DOWN);
     }
 
     @EventHandler

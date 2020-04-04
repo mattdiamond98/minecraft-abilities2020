@@ -53,15 +53,11 @@ public class ShurikenBag extends Ability {
 
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
-        if (e.getDamager() instanceof Player && e.getEntity() instanceof LivingEntity) {
-            if (e.getDamager() instanceof Snowball && e.getEntity() instanceof Player) {
-                if (Team.getTeamByPlayerName(((Player) e.getDamager()).getName()) == null ||
-                        Team.getTeamByPlayerName(((LivingEntity) e.getEntity()).getName()) == null) return;
-
-                Player p = (Player) ((Snowball) e.getDamager()).getShooter();
-                Player target = (Player) e.getEntity();
-
-            }
+        if (e.getDamager() instanceof Snowball && e.getEntity() instanceof Player) {
+            if (Team.getTeamByPlayerName(((LivingEntity) e.getEntity()).getName()) == null) return;
+            Player p = (Player) ((Snowball) e.getDamager()).getShooter();
+            Player target = (Player) e.getEntity();
+            CoronaCraft.getAbilities().get(item).getStyle(p).execute(p, target);
         }
     }
 
@@ -72,21 +68,12 @@ public class ShurikenBag extends Ability {
 
     @EventHandler
     public void onCoolDownEnd(CoolDownEndEvent e) {
-        Player player = e.getPlayer();
-        if (e.getItem().equals(getItem()) && player.getInventory().contains(getItem())) {
-            ItemStack given = new ItemStack(Material.SNOWBALL, 1);
-            ItemMeta meta = given.getItemMeta();
-            meta.setDisplayName("§eShuriken");
-            given.setItemMeta(meta);
-            int total_count = AbilityUtil.getTotalCount(player, given.getType());
-            if (total_count++ < MAX_COUNT) {
-                player.getInventory().addItem(given);
-            }
-            if (total_count < MAX_COUNT) {
-                Map<AbilityKey, Integer> coolDowns = CoronaCraft.getPlayerCoolDowns();
-                coolDowns.put(new AbilityKey(player, getItem()), BASE_COOL_DOWN);
-            }
-        }
+        ItemStack given = new ItemStack(Material.SNOWBALL, 1);
+        ItemMeta meta = given.getItemMeta();
+        meta.setDisplayName("§eShuriken");
+        given.setItemMeta(meta);
+        AbilityUtil.regenerateItemPassive(e.getPlayer(), e.getItem(),
+                item, given, MAX_COUNT, BASE_COOL_DOWN);
     }
 
     @EventHandler

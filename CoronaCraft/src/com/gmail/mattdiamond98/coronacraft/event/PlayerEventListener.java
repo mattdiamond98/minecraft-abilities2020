@@ -14,6 +14,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -58,7 +59,6 @@ public class PlayerEventListener implements Listener {
                 }
             }
         }
-
     }
 
     @EventHandler(priority = EventPriority.HIGH)
@@ -119,6 +119,11 @@ public class PlayerEventListener implements Listener {
         if (Warzone.getZoneByPlayerName(e.getPlayer().getName()) != null) {
             e.setCancelled(true);
         }
+    }
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onArrowHit(ProjectileHitEvent e) {
+        if (e.getEntity() instanceof Arrow) e.getEntity().remove();
     }
 
 }

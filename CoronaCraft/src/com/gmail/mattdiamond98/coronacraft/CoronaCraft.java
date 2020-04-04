@@ -5,6 +5,7 @@ import com.gmail.mattdiamond98.coronacraft.abilities.Fighter.SwordStyle;
 import com.gmail.mattdiamond98.coronacraft.abilities.Ninja.NinjaMovement;
 import com.gmail.mattdiamond98.coronacraft.abilities.Ninja.ShadowKnife;
 import com.gmail.mattdiamond98.coronacraft.abilities.Ninja.ShurikenBag;
+import com.gmail.mattdiamond98.coronacraft.abilities.Ranger.Quiver;
 import com.gmail.mattdiamond98.coronacraft.abilities.Tank.Rally;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownEndEvent;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownTickEvent;
@@ -40,7 +41,8 @@ public class CoronaCraft extends JavaPlugin {
                 new ShadowKnife(),
                 new NinjaMovement(),
                 new SwordStyle(),
-                new Rally()
+                new Rally(),
+                new Quiver()
         );
 
         getServer().getPluginManager().registerEvents(new PlayerEventListener(), this);

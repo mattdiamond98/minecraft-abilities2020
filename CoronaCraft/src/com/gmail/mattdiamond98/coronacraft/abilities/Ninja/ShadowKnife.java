@@ -13,8 +13,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import java.util.Map;
-
 import static com.gmail.mattdiamond98.coronacraft.util.AbilityUtil.notInSpawn;
 
 public class ShadowKnife extends Ability {
@@ -38,6 +36,7 @@ public class ShadowKnife extends Ability {
         }
     }
 
+    @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player && e.getEntity() instanceof LivingEntity) {
             Player p = (Player) e.getDamager();

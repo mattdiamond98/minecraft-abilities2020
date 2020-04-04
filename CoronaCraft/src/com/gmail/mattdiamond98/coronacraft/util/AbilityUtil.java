@@ -42,7 +42,7 @@ public final class AbilityUtil {
     public static final void setItemStackToCooldown(Player player, Material item) {
         Map<AbilityKey, Integer> coolDowns = CoronaCraft.getPlayerCoolDowns();
         if (player.getInventory().contains(item)) {
-            int coolDown = coolDowns.get(new AbilityKey(player, item));
+            int coolDown = coolDowns.getOrDefault(new AbilityKey(player, item), 1);
             setStackCount(player, item, coolDown + 1 / ABILITY_TICK_PER_SECOND);
         }
     }
@@ -63,6 +63,20 @@ public final class AbilityUtil {
             p.sendMessage(ChatColor.AQUA + nextStyle.getName());
             for (String line : nextStyle.getDescription()) {
                 p.sendMessage(ChatColor.GRAY + line);
+            }
+        }
+    }
+
+    public static final void regenerateItemPassive(Player player, Material eventItem, Material baseItem,
+                                                   ItemStack givenItem, int maxCount, int coolDown) {
+        if (eventItem.equals(baseItem)  && player.getInventory().contains(baseItem)) {
+            int total_count = AbilityUtil.getTotalCount(player, givenItem.getType());
+            if (total_count++ < maxCount) {
+                player.getInventory().addItem(givenItem);
+            }
+            if (total_count < maxCount) {
+                Map<AbilityKey, Integer> coolDowns = CoronaCraft.getPlayerCoolDowns();
+                coolDowns.put(new AbilityKey(player, baseItem), coolDown);
             }
         }
     }
