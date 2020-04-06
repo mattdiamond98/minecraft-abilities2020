@@ -34,6 +34,7 @@ public class Lethargy extends AbilityStyle {
                     new PotionEffect(PotionEffectType.SLOW_DIGGING, 200, 1).apply(player);
                     player.getWorld().playEffect(player.getLocation(), Effect.STEP_SOUND, Material.LAVA);
                     player.getWorld().playSound(player.getLocation(), Sound.BLOCK_ANVIL_LAND, 10, 1);
+                    player.sendMessage(ChatColor.RED + "You feel suddenly exhausted.");
                 }
             }
         }

@@ -46,7 +46,7 @@ public class ShurikenBag extends Ability {
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerInteract(PlayerInteractEvent e) {
         Player p = e.getPlayer();
-        if (e.hasItem() && e.getItem().getType() == item && notInSpawn(p)) {
+        if (e.hasItem() && (e.getItem().getType() == item || e.getItem().getType() == Material.SNOWBALL) && notInSpawn(p)) {
             AbilityUtil.toggleAbilityStyle(e.getPlayer(), item);
         }
     }

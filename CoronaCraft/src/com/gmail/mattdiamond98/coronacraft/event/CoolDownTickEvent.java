@@ -1,5 +1,7 @@
 package com.gmail.mattdiamond98.coronacraft.event;
 
+import com.gmail.mattdiamond98.coronacraft.Ability;
+import com.gmail.mattdiamond98.coronacraft.CoronaCraft;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityKey;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -16,14 +18,16 @@ public class CoolDownTickEvent extends Event {
 
     private Player player;
     private Material item;
+    private int ticksRemaining;
 
-    public CoolDownTickEvent(Player player, Material item) {
+    public CoolDownTickEvent(Player player, Material item, int ticksRemaining) {
         this.player = player;
         this.item = item;
+        this.ticksRemaining = ticksRemaining;
     }
 
-    public CoolDownTickEvent(AbilityKey key) {
-        this(key.getPlayer(), key.getItem());
+    public CoolDownTickEvent(AbilityKey key, int ticksRemaining) {
+        this(key.getPlayer(), key.getItem(), ticksRemaining);
     }
 
     public Player getPlayer() {
@@ -34,11 +38,13 @@ public class CoolDownTickEvent extends Event {
         return item;
     }
 
+    public int getTicksRemaining() { return ticksRemaining; }
+
     public AbilityKey getCoolDownKey() {
         return new AbilityKey(player, item);
     }
 
-    // TODO: get specific ability
+    public Ability getAbility() { return CoronaCraft.getAbility(item); }
 
     public HandlerList getHandlers() {
         return HANDLERS;

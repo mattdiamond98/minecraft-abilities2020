@@ -1,5 +1,7 @@
 package com.gmail.mattdiamond98.coronacraft.event;
 
+import com.gmail.mattdiamond98.coronacraft.Ability;
+import com.gmail.mattdiamond98.coronacraft.CoronaCraft;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityKey;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -30,7 +32,7 @@ public class CoolDownEndEvent extends Event {
         return item;
     }
 
-    // TODO: getAbility()
+    public Ability getAbility() { return CoronaCraft.getAbility(item); }
 
     public HandlerList getHandlers() {
         return HANDLERS;

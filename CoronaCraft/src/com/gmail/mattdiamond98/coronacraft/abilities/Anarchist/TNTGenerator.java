@@ -16,8 +16,8 @@ import java.util.Map;
 
 public class TNTGenerator extends Ability {
 
-    public static final int BASE_COOL_DOWN = 10; // 5 Seconds
-    public static final int MAX_COUNT = 4;
+    public static final int BASE_COOL_DOWN = 14; // 7 Seconds
+    public static final int MAX_COUNT = 5;
 
     public TNTGenerator() {
         super("TNT Generator", Material.TNT_MINECART);

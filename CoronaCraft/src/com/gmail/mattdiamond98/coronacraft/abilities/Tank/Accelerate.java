@@ -31,6 +31,7 @@ public class Accelerate extends AbilityStyle {
                 new PotionEffect(PotionEffectType.SPEED, 200, 0).apply(teammate);
                 teammate.getWorld().playEffect(teammate.getLocation(), Effect.STEP_SOUND, Material.SEA_LANTERN);
                 teammate.getWorld().playSound(teammate.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
+                teammate.sendMessage(ChatColor.GREEN + "You feel invigorated with a boost of speed!");
             }
         }
         return 40 * CoronaCraft.ABILITY_TICK_PER_SECOND;

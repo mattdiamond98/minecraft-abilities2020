@@ -31,6 +31,7 @@ public class TankUp extends AbilityStyle {
                 new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 200, 0).apply(teammate);
                 teammate.getWorld().playEffect(teammate.getLocation(), Effect.STEP_SOUND, Material.IRON_BLOCK);
                 teammate.getWorld().playSound(teammate.getLocation(), Sound.BLOCK_ANVIL_USE, 10, 1);
+                teammate.sendMessage(ChatColor.GREEN + "You feel as if nothing can hurt you!");
             }
         }
         return 60 * CoronaCraft.ABILITY_TICK_PER_SECOND;

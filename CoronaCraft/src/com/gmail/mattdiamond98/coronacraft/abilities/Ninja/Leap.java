@@ -17,7 +17,7 @@ public class Leap extends AbilityStyle {
 
     public int execute(Player p, Object... args) {
         p.getLocation().getWorld().playEffect(p.getLocation(), Effect.STEP_SOUND, Material.BLACK_WOOL);
-        Vector v = p.getVelocity().add(p.getEyeLocation().getDirection().normalize().multiply(1.3));
+        Vector v = p.getVelocity().add(p.getEyeLocation().getDirection().normalize().multiply(1.4));
         v.setY(v.getY() * 0.5);
         p.setVelocity(v);
         return COOL_DOWN;

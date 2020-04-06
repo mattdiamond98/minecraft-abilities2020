@@ -20,7 +20,7 @@ public class SwiftBlade  extends AbilityStyle {
      * @return cooldown 0
      */
     public int execute(Player p, Object... args) {
-        new PotionEffect(PotionEffectType.SPEED, 40, 0).apply(p);
+        new PotionEffect(PotionEffectType.SPEED, 70, 0).apply(p);
         return 0;
     }
 }

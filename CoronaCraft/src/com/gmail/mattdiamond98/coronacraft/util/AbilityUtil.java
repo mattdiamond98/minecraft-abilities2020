@@ -9,10 +9,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static com.gmail.mattdiamond98.coronacraft.CoronaCraft.ABILITY_TICK_PER_SECOND;
 
@@ -81,8 +80,29 @@ public final class AbilityUtil {
         }
     }
 
+    // TODO: there is a lot of overlap in these two methods, should clean up some past code.
+    public static final void regenerateItem(Player p, Material item, int max, int increment) {
+        if (notInSpawn(p)) {
+            int count = getTotalCount(p, item);
+            int newCount = Math.min(count + increment, max);
+            if (count < newCount) {
+                p.getInventory().addItem(new ItemStack(item, newCount - count));
+            }
+        }
+    }
+
     public static final void notifyAbilityOnCooldown(Player p, Ability a) {
         p.sendMessage(ChatColor.RED + "Your " + a.getName() + " ability is on cooldown.");
+    }
+
+    public static final void notifyAbilityRequiresResources(Player p, Material m, int c) {
+        p.sendMessage(ChatColor.RED + "That requires " + c + " " + m.toString());
+    }
+
+    public static final void notifyAbilityRequiresResources(Player p, List<Material> m, List<Integer> c) {
+        p.sendMessage(ChatColor.RED + "That requires " + IntStream
+                .range(0, Math.min(m.size(), c.size()))
+                .mapToObj(i -> c.get(i) + " " + m.get(i)).collect(Collectors.joining(", and ")));
     }
 
     public static final ArrayList<Location> getCircle(Location center, double radius, int amount){

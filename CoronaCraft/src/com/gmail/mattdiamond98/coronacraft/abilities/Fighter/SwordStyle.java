@@ -49,7 +49,9 @@ public class SwordStyle extends Ability {
     public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player && e.getEntity() instanceof LivingEntity) {
             Player p = (Player) e.getDamager();
-            if (Team.getTeamByPlayerName(((LivingEntity) e.getEntity()).getName()).getPlayers().contains(p)) return;
+            Team team = Team.getTeamByPlayerName(((LivingEntity) e.getEntity()).getName());
+            if (team == null) return;
+            if (team.getPlayers().contains(p)) return;
             if (p.getInventory().getItemInMainHand().getType() == item && notInSpawn(p)) {
                 CoronaCraft.getAbilities().get(item).getStyle(p).execute(p, (LivingEntity) e.getEntity(), e.getFinalDamage());
             }

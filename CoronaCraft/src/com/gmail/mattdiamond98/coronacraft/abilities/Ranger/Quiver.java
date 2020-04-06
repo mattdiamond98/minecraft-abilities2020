@@ -17,7 +17,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+
+import java.util.HashSet;
+import java.util.UUID;
 
 import static com.gmail.mattdiamond98.coronacraft.util.AbilityUtil.notInSpawn;
 
@@ -60,6 +62,8 @@ public class Quiver extends Ability {
 
     @EventHandler
     public void onCoolDownTick(CoolDownTickEvent e) {
+        if (e.getItem() != item) return;
+        if (e.getTicksRemaining() % CoronaCraft.ABILITY_TICK_PER_SECOND != 0) return;
         if (AbilityUtil.getTotalCount(e.getPlayer(), Material.BOW) == 0) return;
         if (AbilityUtil.getTotalCount(e.getPlayer(), item) == 0) return;
         if (AbilityUtil.notInSpawn(e.getPlayer())) {
@@ -74,7 +78,8 @@ public class Quiver extends Ability {
     public void onPlayerMove(PlayerMoveEvent e) {
         AbilityKey key = new AbilityKey(e.getPlayer(), item);
         if (e.getPlayer().getInventory().contains(Material.BOW)) {
-            CoronaCraft.getPlayerCoolDowns().put(key, 10_000);
+            if (!CoronaCraft.isOnCooldown(e.getPlayer(), item))
+                CoronaCraft.getPlayerCoolDowns().put(key, 10_000);
         } else if (CoronaCraft.getPlayerCoolDowns().containsKey(key)){
             CoronaCraft.getPlayerCoolDowns().remove(key);
         }
@@ -86,7 +91,7 @@ public class Quiver extends Ability {
             AbilityUtil.setStackCount(p, Material.ARROW, arrowCount - cost - 1);
             arrow.addCustomEffect(effect, false);
         } else {
-            p.sendMessage(ChatColor.RED + "That requires " + cost + " arrows!");
+            AbilityUtil.notifyAbilityRequiresResources(p, Material.ARROW, cost);
         }
     }
 }
