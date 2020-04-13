@@ -27,7 +27,7 @@ public class Accelerate extends AbilityStyle {
             new InstantFirework(fireworkEffect, loc);
         }
         for (Player teammate : Team.getTeamByPlayerName(p.getName()).getPlayers()) {
-            if (!teammate.equals(p) && teammate.getLocation().distanceSquared(p.getLocation()) < 10 * 10) {
+            if (teammate.getLocation().distanceSquared(p.getLocation()) < 10 * 10) {
                 new PotionEffect(PotionEffectType.SPEED, 200, 0).apply(teammate);
                 teammate.getWorld().playEffect(teammate.getLocation(), Effect.STEP_SOUND, Material.SEA_LANTERN);
                 teammate.getWorld().playSound(teammate.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);

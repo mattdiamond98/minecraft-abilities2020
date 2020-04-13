@@ -18,7 +18,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
@@ -44,10 +46,12 @@ public class ShurikenBag extends Ability {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onPlayerInteract(PlayerInteractEvent e) {
+    public void onPlayerDropItem(PlayerDropItemEvent e) {
         Player p = e.getPlayer();
-        if (e.hasItem() && (e.getItem().getType() == item || e.getItem().getType() == Material.SNOWBALL) && notInSpawn(p)) {
+        Material m = e.getItemDrop().getItemStack().getType();
+        if ((m == item || m == Material.SNOWBALL) && notInSpawn(p)) {
             AbilityUtil.toggleAbilityStyle(e.getPlayer(), item);
+            e.setCancelled(true);
         }
     }
 
@@ -57,7 +61,7 @@ public class ShurikenBag extends Ability {
             if (Team.getTeamByPlayerName(((LivingEntity) e.getEntity()).getName()) == null) return;
             Player p = (Player) ((Snowball) e.getDamager()).getShooter();
             Player target = (Player) e.getEntity();
-            CoronaCraft.getAbilities().get(item).getStyle(p).execute(p, target);
+            getStyle(p).execute(p, target);
         }
     }
 

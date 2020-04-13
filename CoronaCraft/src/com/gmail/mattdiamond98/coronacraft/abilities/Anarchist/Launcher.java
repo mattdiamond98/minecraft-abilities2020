@@ -14,6 +14,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 
@@ -41,9 +42,7 @@ public class Launcher extends Ability {
     public void onPlayerInteract(PlayerInteractEvent e) {
         Player p = e.getPlayer();
         if (e.hasItem() && e.getItem().getType() == item && notInSpawn(p)) {
-            if (e.getAction().equals(Action.LEFT_CLICK_AIR) || e.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
-                AbilityUtil.toggleAbilityStyle(e.getPlayer(), item);
-            } else if (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+            if (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
                 if (!CoronaCraft.isOnCooldown(p, item)) {
                     int tntCount = AbilityUtil.getTotalCount(p, Material.TNT);
                     if (tntCount > 0) {
@@ -51,7 +50,7 @@ public class Launcher extends Ability {
                         egg.setShooter(p);
                         egg.setMetadata(CoronaCraft.getAbilities().get(item).getStyle(p).getName(), new FixedMetadataValue(CoronaCraft.instance, true));
                         egg.setVelocity(p.getEyeLocation().getDirection().normalize());
-                        CoronaCraft.setCooldown(p, item, 10 * CoronaCraft.ABILITY_TICK_PER_SECOND);
+                        CoronaCraft.setCooldown(p, item, 13 * CoronaCraft.ABILITY_TICK_PER_SECOND);
                         AbilityUtil.setStackCount(p, Material.TNT, tntCount - 1);
                         if (!CoronaCraft.isOnCooldown(p, Material.TNT_MINECART)) {
                             CoronaCraft.setCooldown(p, Material.TNT_MINECART, TNTGenerator.BASE_COOL_DOWN);
@@ -63,6 +62,14 @@ public class Launcher extends Ability {
                     AbilityUtil.notifyAbilityOnCooldown(p, this);
                 }
             }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onPlayerDropItem(PlayerDropItemEvent e) {
+        if ((e.getItemDrop().getItemStack().getType() == item) && notInSpawn(e.getPlayer())) {
+            AbilityUtil.toggleAbilityStyle(e.getPlayer(), item);
+            e.setCancelled(true);
         }
     }
 
@@ -80,7 +87,7 @@ public class Launcher extends Ability {
             if (egg.getShooter() instanceof Player && Warzone.getZoneByLocation(egg.getLocation()) != null) {
                 if (e.getEntity().getTicksLived() > 5) {
                     Player p = (Player) egg.getShooter();
-                    CoronaCraft.getAbilities().get(item).getStyle(p).execute(p, egg);
+                    getStyle(p).execute(p, egg);
                 }
             }
         }

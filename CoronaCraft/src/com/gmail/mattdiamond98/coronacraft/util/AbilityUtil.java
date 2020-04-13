@@ -7,6 +7,7 @@ import com.tommytony.war.Team;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
 import java.util.*;
@@ -17,28 +18,28 @@ import static com.gmail.mattdiamond98.coronacraft.CoronaCraft.ABILITY_TICK_PER_S
 
 public final class AbilityUtil {
 
-    public static final void setStackCount(Player player, Material item, int count) {
+    public static void setStackCount(Player player, Material item, int count) {
         if (player.getInventory().getItemInOffHand().getType().equals(item)) {
             player.getInventory().getItemInOffHand().setAmount(count);
-        } else {
-            for (ItemStack itemStack : player.getInventory().getContents()) {
-                if (itemStack != null && itemStack.getType().equals(item)) {
-                    itemStack.setAmount(count);
-                }
+        }
+        for (ItemStack itemStack : player.getInventory().getContents()) {
+            if (itemStack != null && itemStack.getType().equals(item)) {
+                itemStack.setAmount(count);
             }
         }
     }
 
-    public static final int getTotalCount(Player player, Material item) {
+    public static int getTotalCount(Player player, Material item) {
+        if (!player.getInventory().contains(item)) return 0;
         int total_count = player.getInventory().all(item).values()
-                .stream().map(x -> ((ItemStack) x).getAmount()).reduce(0, Integer::sum);
+                .stream().map(x -> x.getAmount()).reduce(0, Integer::sum);
         if (player.getInventory().getItemInOffHand().getType() == item) {
             total_count += player.getInventory().getItemInOffHand().getAmount();
         }
         return total_count;
     }
 
-    public static final void setItemStackToCooldown(Player player, Material item) {
+    public static void setItemStackToCooldown(Player player, Material item) {
         Map<AbilityKey, Integer> coolDowns = CoronaCraft.getPlayerCoolDowns();
         if (player.getInventory().contains(item)) {
             int coolDown = coolDowns.getOrDefault(new AbilityKey(player, item), 1);
@@ -46,27 +47,34 @@ public final class AbilityUtil {
         }
     }
 
-    public static final boolean notInSpawn(Player p) {
+    public static boolean notInSpawn(Player p) {
         Team team = Team.getTeamByPlayerName(p.getName());
         if (team == null) return false;
         return !team.isSpawnLocation(p.getLocation());
     }
 
-    public static final void toggleAbilityStyle(Player p, Material item) {
+    public static void toggleAbilityStyle(Player p, Material item) {
         Ability ability = CoronaCraft.getAbility(item);
         AbilityStyle currentStyle = ability.getStyle(p);
         int nextPosition = ability.getNextStylePosition(p);
         AbilityStyle nextStyle = ability.getStyle(nextPosition);
         if (!nextStyle.equals(currentStyle)) {
             CoronaCraft.getPlayerAbilities().put(new AbilityKey(p, item), nextPosition);
-            p.sendMessage(ChatColor.AQUA + nextStyle.getName());
+            p.sendMessage(AbilityUtil.formatStyleName(nextStyle));
             for (String line : nextStyle.getDescription()) {
                 p.sendMessage(ChatColor.GRAY + line);
             }
+            Set<Material> keySet = CoronaCraft.getAbilities().keySet();
+            Bukkit.getScheduler().scheduleSyncDelayedTask(CoronaCraft.instance, () ->
+                    Arrays.stream(p.getInventory().getContents())
+                            .filter(Objects::nonNull)
+                            .filter(i -> keySet.contains(i.getType()))
+                            .forEach(i -> AbilityUtil.formatItem(p, i)), 1);
+
         }
     }
 
-    public static final void regenerateItemPassive(Player player, Material eventItem, Material baseItem,
+    public static void regenerateItemPassive(Player player, Material eventItem, Material baseItem,
                                                    ItemStack givenItem, int maxCount, int coolDown) {
         if (eventItem.equals(baseItem)  && player.getInventory().contains(baseItem)) {
             int total_count = AbilityUtil.getTotalCount(player, givenItem.getType());
@@ -81,7 +89,7 @@ public final class AbilityUtil {
     }
 
     // TODO: there is a lot of overlap in these two methods, should clean up some past code.
-    public static final void regenerateItem(Player p, Material item, int max, int increment) {
+    public static void regenerateItem(Player p, Material item, int max, int increment) {
         if (notInSpawn(p)) {
             int count = getTotalCount(p, item);
             int newCount = Math.min(count + increment, max);
@@ -91,21 +99,43 @@ public final class AbilityUtil {
         }
     }
 
-    public static final void notifyAbilityOnCooldown(Player p, Ability a) {
+    public static void notifyAbilityOnCooldown(Player p, Ability a) {
         p.sendMessage(ChatColor.RED + "Your " + a.getName() + " ability is on cooldown.");
     }
 
-    public static final void notifyAbilityRequiresResources(Player p, Material m, int c) {
+    public static void notifyAbilityRequiresResources(Player p, Material m, int c) {
         p.sendMessage(ChatColor.RED + "That requires " + c + " " + m.toString());
     }
 
-    public static final void notifyAbilityRequiresResources(Player p, List<Material> m, List<Integer> c) {
+    public static void notifyAbilityRequiresResources(Player p, List<Material> m, List<Integer> c) {
         p.sendMessage(ChatColor.RED + "That requires " + IntStream
                 .range(0, Math.min(m.size(), c.size()))
                 .mapToObj(i -> c.get(i) + " " + m.get(i)).collect(Collectors.joining(", and ")));
     }
 
-    public static final ArrayList<Location> getCircle(Location center, double radius, int amount){
+    public static String formatStyleName(AbilityStyle style) {
+        return ChatColor.GREEN + "" + ChatColor.BOLD + style.getName();
+    }
+
+    public static String formatStyleName(Player p, Material m) {
+        return formatStyleName(CoronaCraft.getAbility(m).getStyle(p));
+    }
+
+    public static String formatLoreLine(String line) {
+        return ChatColor.AQUA + line;
+    }
+
+    public static void formatItem(Player p, ItemStack item) {
+        Ability ability = CoronaCraft.getAbility(item.getType());
+        if (ability.getStyles().size() == 0) return;
+        AbilityStyle style = ability.getStyle(p);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(formatStyleName(style));
+        meta.setLore(Arrays.stream(style.getDescription()).map(AbilityUtil::formatLoreLine).collect(Collectors.toList()));
+        item.setItemMeta(meta);
+    }
+
+    public static ArrayList<Location> getCircle(Location center, double radius, int amount){
         World world = center.getWorld();
         double increment = (2*Math.PI)/amount;
         ArrayList<Location> locations = new ArrayList<Location>();
@@ -118,7 +148,7 @@ public final class AbilityUtil {
         return locations;
     }
 
-    public static final List<Vector> unitVectors() {
+    public static List<Vector> unitVectors() {
         return Arrays.asList(new Vector[]{
                 new Vector(1, 0, 0),
                 new Vector(0, 1, 0),

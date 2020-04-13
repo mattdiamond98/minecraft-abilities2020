@@ -9,10 +9,14 @@ import com.gmail.mattdiamond98.coronacraft.util.AbilityUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Map;
+
+import static com.gmail.mattdiamond98.coronacraft.util.AbilityUtil.notInSpawn;
 
 public class TNTGenerator extends Ability {
 
@@ -32,6 +36,13 @@ public class TNTGenerator extends Ability {
     public void onCoolDownEnd(CoolDownEndEvent e) {
         AbilityUtil.regenerateItemPassive(e.getPlayer(), e.getItem(),
                 item, new ItemStack(Material.TNT, 1), MAX_COUNT, BASE_COOL_DOWN);
+    }
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onPlayerDropItem(PlayerDropItemEvent e) {
+        if ((e.getItemDrop().getItemStack().getType() == item) && notInSpawn(e.getPlayer())) {
+            e.setCancelled(true);
+        }
     }
 
     @EventHandler

@@ -1,6 +1,8 @@
 package com.gmail.mattdiamond98.coronacraft.abilities.Anarchist;
 
 import com.gmail.mattdiamond98.coronacraft.AbilityStyle;
+import com.tommytony.war.Warzone;
+import com.tommytony.war.config.WarzoneConfig;
 import org.bukkit.entity.Egg;
 import org.bukkit.entity.Player;
 
@@ -16,7 +18,10 @@ public class Grenade extends AbilityStyle {
 
     public int execute(Player p, Object... args) {
         Egg egg = (Egg) args[0];
-        egg.getWorld().createExplosion(egg.getLocation(),2.0F, false, true, (Player) egg.getShooter());
+        Warzone zone = Warzone.getZoneByLocation(egg.getLocation());
+        boolean destroy = zone == null ||
+                zone.getWarzoneConfig().contains(WarzoneConfig.UNBREAKABLE) && zone.getWarzoneConfig().getBoolean(WarzoneConfig.UNBREAKABLE);
+        egg.getWorld().createExplosion(egg.getLocation(),2.0F, false, !destroy, (Player) egg.getShooter());
         return 0;
     }
 }

@@ -5,30 +5,32 @@ import com.gmail.mattdiamond98.coronacraft.CoronaCraft;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownTickEvent;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityKey;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityUtil;
+import com.tommytony.war.Team;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Trident;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
-import java.util.HashSet;
-import java.util.UUID;
-
 import static com.gmail.mattdiamond98.coronacraft.util.AbilityUtil.notInSpawn;
 
-public class Quiver extends Ability {
+public class Longbow extends Ability {
 
     private static final int MAX_COUNT = 64;
 
-    public Quiver() {
-        super("Quiver", Material.LEATHER);
+    public Longbow() {
+        super("Longbow", Material.BOW);
     }
 
     @Override
@@ -40,12 +42,10 @@ public class Quiver extends Ability {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onPlayerInteract(PlayerInteractEvent e) {
-        Player p = e.getPlayer();
-        if (e.hasItem() && (e.getItem().getType() == item || e.getItem().getType() == Material.BOW) && notInSpawn(p)) {
-            if (e.getAction().equals(Action.LEFT_CLICK_AIR) || e.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
-                AbilityUtil.toggleAbilityStyle(e.getPlayer(), item);
-            }
+    public void onPlayerDropItem(PlayerDropItemEvent e) {
+        if ((e.getItemDrop().getItemStack().getType() == item) && notInSpawn(e.getPlayer())) {
+            AbilityUtil.toggleAbilityStyle(e.getPlayer(), item);
+            e.setCancelled(true);
         }
     }
 
@@ -55,7 +55,7 @@ public class Quiver extends Ability {
             Arrow arrow = (Arrow) e.getEntity();
             Player p = (Player) arrow.getShooter();
             if (p.isSneaking() && AbilityUtil.notInSpawn(p)) {
-                CoronaCraft.getAbilities().get(item).getStyle(p).execute(p, arrow);
+                getStyle(p).execute(p, arrow);
             }
         }
     }

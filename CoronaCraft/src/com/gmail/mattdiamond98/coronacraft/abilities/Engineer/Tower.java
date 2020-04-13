@@ -18,6 +18,7 @@ import com.sk89q.worldedit.regions.RegionOperationException;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import com.tommytony.war.Team;
 import com.tommytony.war.Warzone;
+import com.tommytony.war.config.WarzoneConfig;
 import com.tommytony.war.volume.Volume;
 import com.tommytony.war.volume.ZoneVolume;
 import org.bukkit.Bukkit;
@@ -80,6 +81,9 @@ public class Tower extends AbilityStyle {
             } catch (RegionOperationException e) {
                 e.printStackTrace();
             }
+            if (zone.getWarzoneConfig().contains(WarzoneConfig.UNBREAKABLE) && zone.getWarzoneConfig().getBoolean(WarzoneConfig.UNBREAKABLE)) {
+                return -3;
+            }
             Location minSchematicLoc = BukkitAdapter.adapt(p.getWorld(), schematicVolume.getMinimumPoint());
             Location maxSchematicLoc = BukkitAdapter.adapt(p.getWorld(), schematicVolume.getMaximumPoint());
             if (!fullVolume.contains(minSchematicLoc)
@@ -90,20 +94,6 @@ public class Tower extends AbilityStyle {
                         || schematicVolume.contains(BukkitAdapter.asBlockVector(v.getCornerOne()))
                         || schematicVolume.contains(BukkitAdapter.asBlockVector(v.getCornerTwo()))
             )) {
-                System.out.println("--- State ----");
-                System.out.println("zoneVolumes: " + zoneVolumes);
-                System.out.println("fullVolume: " + fullVolume);
-                System.out.println("schematicVolume: " + schematicVolume);
-                System.out.println("minSchematicLoc: " + minSchematicLoc);
-                System.out.println("maxSchematicLoc: " + maxSchematicLoc);
-                System.out.println("--- These should all be false ---");
-                System.out.println(!fullVolume.contains(minSchematicLoc));
-                System.out.println(!fullVolume.contains(maxSchematicLoc));
-                System.out.println(zoneVolumes.stream().anyMatch(v ->
-                        v.contains(minSchematicLoc)
-                                || v.contains(maxSchematicLoc)
-                                || schematicVolume.contains(BukkitAdapter.asBlockVector(v.getCornerOne()))
-                                || schematicVolume.contains(BukkitAdapter.asBlockVector(v.getCornerTwo()))));
                 return -1;
             }
             int plankCount = AbilityUtil.getTotalCount(p, Material.OAK_PLANKS);

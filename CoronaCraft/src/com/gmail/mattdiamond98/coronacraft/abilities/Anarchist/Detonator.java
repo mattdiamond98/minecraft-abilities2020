@@ -1,6 +1,7 @@
 package com.gmail.mattdiamond98.coronacraft.abilities.Anarchist;
 
 import com.gmail.mattdiamond98.coronacraft.Ability;
+import com.gmail.mattdiamond98.coronacraft.util.AbilityUtil;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -10,6 +11,7 @@ import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.EnumSet;
@@ -25,6 +27,14 @@ public class Detonator extends Ability {
             .filter(((Predicate<Material>)Material::isOccluding).negate()).collect(Collectors.toSet());
     static {
         transparent.remove(Material.TNT);
+    }
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onPlayerDropItem(PlayerDropItemEvent e) {
+        if ((e.getItemDrop().getItemStack().getType() == item) && notInSpawn(e.getPlayer())) {
+            // If we add more types of detonators, can cycle
+            e.setCancelled(true);
+        }
     }
 
     public Detonator() {

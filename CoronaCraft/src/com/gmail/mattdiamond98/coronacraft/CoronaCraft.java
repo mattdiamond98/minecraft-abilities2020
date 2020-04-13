@@ -12,7 +12,7 @@ import com.gmail.mattdiamond98.coronacraft.abilities.Gladiator.Net;
 import com.gmail.mattdiamond98.coronacraft.abilities.Ninja.NinjaMovement;
 import com.gmail.mattdiamond98.coronacraft.abilities.Ninja.ShadowKnife;
 import com.gmail.mattdiamond98.coronacraft.abilities.Ninja.ShurikenBag;
-import com.gmail.mattdiamond98.coronacraft.abilities.Ranger.Quiver;
+import com.gmail.mattdiamond98.coronacraft.abilities.Ranger.Longbow;
 import com.gmail.mattdiamond98.coronacraft.abilities.Skirmisher.Shortsword;
 import com.gmail.mattdiamond98.coronacraft.abilities.Tank.Rally;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownEndEvent;
@@ -51,7 +51,7 @@ public class CoronaCraft extends JavaPlugin {
                 new NinjaMovement(),
                 new SwordStyle(),
                 new Rally(),
-                new Quiver(),
+                new Longbow(),
                 new Net(),
                 new Launcher(),
                 new Shortsword(),

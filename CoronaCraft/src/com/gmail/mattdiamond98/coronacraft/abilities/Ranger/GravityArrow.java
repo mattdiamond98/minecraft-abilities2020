@@ -1,8 +1,6 @@
 package com.gmail.mattdiamond98.coronacraft.abilities.Ranger;
 
 import com.gmail.mattdiamond98.coronacraft.AbilityStyle;
-import com.gmail.mattdiamond98.coronacraft.util.AbilityUtil;
-import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -26,7 +24,7 @@ public class GravityArrow extends AbilityStyle {
      */
     public int execute(Player p, Object... args) {
         PotionEffect effect = new PotionEffect(PotionEffectType.LEVITATION, 7 * 20, 0);
-        Quiver.potionEffectArrow(p, (Arrow) args[0], effect, ARROW_COST);
+        Longbow.potionEffectArrow(p, (Arrow) args[0], effect, ARROW_COST);
         return 0;
     }
 

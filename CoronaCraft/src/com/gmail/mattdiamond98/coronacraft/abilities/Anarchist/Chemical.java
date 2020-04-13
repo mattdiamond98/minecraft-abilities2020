@@ -1,12 +1,17 @@
 package com.gmail.mattdiamond98.coronacraft.abilities.Anarchist;
 
 import com.gmail.mattdiamond98.coronacraft.AbilityStyle;
+import com.tommytony.war.Team;
+import com.tommytony.war.Warzone;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.AreaEffectCloud;
 import org.bukkit.entity.Egg;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import java.util.List;
 
 public class Chemical extends AbilityStyle {
     public Chemical() {
@@ -21,8 +26,16 @@ public class Chemical extends AbilityStyle {
     public int execute(Player p, Object... args) {
         Egg egg = (Egg) args[0];
         egg.getWorld().createExplosion(egg.getLocation(),2.0F, false, false, (Player) egg.getShooter());
-        AreaEffectCloud cloud = (AreaEffectCloud) egg.getWorld().spawnEntity(egg.getLocation(), EntityType.AREA_EFFECT_CLOUD);
-        cloud.addCustomEffect(new PotionEffect(PotionEffectType.HARM, 30 * 20, 1), true);
+        if (Warzone.getZoneByLocation(egg.getLocation()) == null ||
+                Warzone.getZoneByLocation(egg.getLocation())
+                        .getTeams().stream()
+                        .map(Team::getTeamSpawns)
+                        .flatMap(List::stream).anyMatch(loc -> loc.toVector().distanceSquared(egg.getLocation().toVector()) < 5 * 5)) {
+            p.sendMessage(ChatColor.RED + "Cannot splash so close to a spawn point!");
+        } else {
+            AreaEffectCloud cloud = (AreaEffectCloud) egg.getWorld().spawnEntity(egg.getLocation(), EntityType.AREA_EFFECT_CLOUD);
+            cloud.addCustomEffect(new PotionEffect(PotionEffectType.HARM, 20 * 20, 1), true);
+        }
         return 0;
     }
 }

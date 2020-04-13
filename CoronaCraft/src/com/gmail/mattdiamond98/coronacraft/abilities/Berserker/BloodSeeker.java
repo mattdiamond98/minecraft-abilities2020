@@ -19,9 +19,9 @@ public class BloodSeeker extends AbilityStyle {
         if (p.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE)) {
             PotionEffect current = p.getPotionEffect(PotionEffectType.INCREASE_DAMAGE);
             new PotionEffect(PotionEffectType.INCREASE_DAMAGE,
-                    current.getDuration() + 6 * 20, current.getAmplifier() + 1).apply(p);
+                    Math.min(current.getDuration() + 6 * 20, 8 * 20), current.getAmplifier() + 1).apply(p);
         } else {
-            new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 6 * 20, 1).apply(p);
+            new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 6 * 20, 0).apply(p);
         }
         return 0;
     }

@@ -12,7 +12,7 @@ public class Fleetfoot extends AbilityStyle {
     public Fleetfoot() {
         super ("Fleetfoot", new String[] {
                 "Gain a boost of speed.",
-                "Duration: 7 seconds",
+                "Duration: 10 seconds",
                 "Cost: 2 hearts"
         }, "coronacraft.berserker.fleetfoot");
     }

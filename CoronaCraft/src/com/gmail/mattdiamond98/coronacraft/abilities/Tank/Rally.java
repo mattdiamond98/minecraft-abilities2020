@@ -11,9 +11,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.Map;
+
+import static com.gmail.mattdiamond98.coronacraft.util.AbilityUtil.notInSpawn;
 
 
 public class Rally extends Ability {
@@ -42,13 +45,19 @@ public class Rally extends Ability {
                 Map<AbilityKey, Integer> coolDowns = CoronaCraft.getPlayerCoolDowns();
                 if (!coolDowns.containsKey(key)) {
                     coolDowns.put(key,
-                            CoronaCraft.getAbilities().get(item).getStyle(e.getPlayer()).execute(e.getPlayer()));
+                            getStyle(e.getPlayer()).execute(e.getPlayer()));
                 } else {
                     AbilityUtil.notifyAbilityOnCooldown(e.getPlayer(), this);
                 }
-            } else if (e.getAction().equals(Action.LEFT_CLICK_AIR) || e.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
-                AbilityUtil.toggleAbilityStyle(e.getPlayer(), item);
             }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onPlayerDropItem(PlayerDropItemEvent e) {
+        if ((e.getItemDrop().getItemStack().getType() == item) && notInSpawn(e.getPlayer())) {
+            AbilityUtil.toggleAbilityStyle(e.getPlayer(), item);
+            e.setCancelled(true);
         }
     }
 }
