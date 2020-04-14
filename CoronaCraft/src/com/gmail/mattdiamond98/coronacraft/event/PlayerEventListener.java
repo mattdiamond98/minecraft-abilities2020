@@ -11,7 +11,9 @@ import com.tommytony.war.Warzone;
 import com.tommytony.war.event.WarBattleWinEvent;
 import com.tommytony.war.event.WarPlayerDeathEvent;
 import com.tommytony.war.event.WarPlayerThiefEvent;
+import net.milkbowl.vault.chat.Chat;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
@@ -28,6 +30,8 @@ import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerPickupArrowEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.*;
 
@@ -151,41 +155,64 @@ public class PlayerEventListener implements Listener {
         }
     }
 
+    @EventHandler
     public void onFlagStolen(WarPlayerThiefEvent e) {
         if (e.getStolenObject() == WarPlayerThiefEvent.StolenObject.FLAG) {
-            int t_long = 10;
-            int t_short = 5;
+            int timeLong = 90 * 20;
+            int timeShort = 45 * 20;
 
             Player p = e.getThief();
             Warzone warzone = Warzone.getZoneByPlayerName(p.getName());
-            
+
+            Team players = Team.getTeamByPlayerName(p.getName());
+            Team opponents = warzone.getVictimTeamForFlagThief(p);
             // schedule anti-hide task
             int taskIdLong = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(CoronaCraft.instance, () -> {
                 if (warzone.isFlagThief(p)) {
-                    p.setGlowing(true);
+                    if (!p.hasPotionEffect(PotionEffectType.GLOWING)) {
+                        p.sendMessage(ChatColor.YELLOW + "You have been revealed!");
+                        for (Player other : warzone.getPlayers()) {
+                            if (!other.equals(p))
+                                other.sendMessage(ChatColor.YELLOW + players.getName() + " has been revealed!");
+                        }
+                    }
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 10_000, 0, true));
                 }
-            }, t_long);
+            }, timeLong);
             
             if (taskIdLong != -1)
                 CoronaCraft.addPlayerTimer(p, PlayerTimerType.FLAG_IND, taskIdLong);
 
-            Team p_team = Team.getTeamByPlayerName(p.getName());
-            Team o_team = warzone.getVictimTeamForFlagThief(p);
 
-            if (warzone.isTeamFlagStolen(p_team)) {
-                for (Player o_p : o_team.getPlayers()) {
-                    if (warzone.isFlagThief(o_p)) {
+
+            if (warzone.isTeamFlagStolen(players)) {
+                for (Player opponent : opponents.getPlayers()) {
+                    if (warzone.isFlagThief(opponent)) {
                         // schedule omni-team anti-hide task
                         int taskIdShort = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(CoronaCraft.instance, () -> {
-                            if (warzone.isFlagThief(p) && warzone.isFlagThief(o_p)) {
-                                p.setGlowing(true);
-                                o_p.setGlowing(true);
+                            if (warzone.isFlagThief(p) && warzone.isFlagThief(opponent)) {
+                                if (!p.hasPotionEffect(PotionEffectType.GLOWING)) {
+                                    p.sendMessage(ChatColor.YELLOW + "You have been revealed!");
+                                    for (Player other : warzone.getPlayers()) {
+                                        if (!other.equals(p))
+                                            other.sendMessage(ChatColor.YELLOW + players.getName() + " has been revealed!");
+                                    }
+                                }
+                                p.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 100_000, 0, true));
+                                if (!opponent.hasPotionEffect(PotionEffectType.GLOWING)) {
+                                    opponent.sendMessage(ChatColor.YELLOW + "You have been revealed!");
+                                    for (Player other : warzone.getPlayers()) {
+                                        if (!other.equals(opponent))
+                                            other.sendMessage(ChatColor.YELLOW + opponent.getName() + " has been revealed!");
+                                    }
+                                }
+                                opponent.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 100_000, 0, true));
                             }
-                        }, t_short);
+                        }, timeShort);
 
                         if (taskIdShort != -1) {
                             CoronaCraft.addPlayerTimer(p, PlayerTimerType.FLAG_BOTH, taskIdShort);
-                            CoronaCraft.addPlayerTimer(o_p, PlayerTimerType.FLAG_BOTH, taskIdShort);
+                            CoronaCraft.addPlayerTimer(opponent, PlayerTimerType.FLAG_BOTH, taskIdShort);
                         }
                     }
                 }

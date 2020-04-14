@@ -172,6 +172,7 @@ public class CoronaCraft extends JavaPlugin {
     }
 
     public static final int getTaskId(PlayerTimerKey ptk) {
+        if (!PLAYER_TASK_MAP.containsKey(ptk)) return -1;
         return PLAYER_TASK_MAP.get(ptk);
     }
 

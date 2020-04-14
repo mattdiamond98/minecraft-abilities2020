@@ -19,7 +19,7 @@ public class Stockpile extends Ability {
 
     @Override
     public void initialize() {
-        // TODO: Other materials instead of cobwebs as tertiary
+        // TODO: Other material styles
     }
 
     @EventHandler
