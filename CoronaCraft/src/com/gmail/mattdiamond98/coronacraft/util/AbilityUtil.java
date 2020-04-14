@@ -22,9 +22,15 @@ public final class AbilityUtil {
         if (player.getInventory().getItemInOffHand().getType().equals(item)) {
             player.getInventory().getItemInOffHand().setAmount(count);
         }
+        boolean first = true;
         for (ItemStack itemStack : player.getInventory().getContents()) {
             if (itemStack != null && itemStack.getType().equals(item)) {
-                itemStack.setAmount(count);
+                if (first) {
+                    itemStack.setAmount(count);
+                    first = false;
+                } else {
+                    itemStack.setAmount(0);
+                }
             }
         }
     }

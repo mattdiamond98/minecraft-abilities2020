@@ -6,6 +6,7 @@ import com.gmail.mattdiamond98.coronacraft.CoronaCraft;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityUtil;
 import com.tommytony.war.Team;
 import com.tommytony.war.Warzone;
+import com.tommytony.war.event.WarBattleWinEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -14,11 +15,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPickupItemEvent;
-import org.bukkit.event.entity.LingeringPotionSplashEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
@@ -130,6 +129,23 @@ public class PlayerEventListener implements Listener {
     public void onArrowHit(ProjectileHitEvent e) {
         if (e.getEntity() instanceof Arrow || e.getEntity() instanceof SpectralArrow)
             ((AbstractArrow) e.getEntity()).setPickupStatus(AbstractArrow.PickupStatus.DISALLOWED);
+    }
+
+    @EventHandler
+    public void onGameEnd(WarBattleWinEvent e) {
+        List<Team> winners = e.getWinningTeams();
+        List<Team> losers = new ArrayList<>(e.getZone().getTeams());
+        losers.removeAll(winners);
+        int reward = losers.stream().map(team -> team.getPlayers().size()).min(Integer::compareTo).orElse(1);
+        final int adjustedReward = (reward > 5) ? (int) Math.round(Math.floor(5 + Math.log(reward - 5) / Math.log(2))) : reward;
+        winners.stream().forEach(team -> payTeam(team, adjustedReward));
+        losers.stream().forEach(team -> payTeam(team, Math.max(adjustedReward / 3, 1)));
+    }
+
+    private void payTeam(Team team, int amount) {
+        for (Player p : team.getPlayers()) {
+            CoronaCraft.getEconomy().depositPlayer(p, amount);
+        }
     }
 
 }

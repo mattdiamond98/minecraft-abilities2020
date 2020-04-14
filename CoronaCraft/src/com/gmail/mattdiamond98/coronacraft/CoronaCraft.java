@@ -19,16 +19,23 @@ import com.gmail.mattdiamond98.coronacraft.event.CoolDownEndEvent;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownTickEvent;
 import com.gmail.mattdiamond98.coronacraft.event.PlayerEventListener;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityKey;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 public class CoronaCraft extends JavaPlugin {
 
     public static CoronaCraft instance;
+
+    private static final Logger log = Logger.getLogger("Minecraft");
+
+    private static Economy econ = null;
 
     public static final int ABILITY_TICK_FREQ = 10;
     public static final int ABILITY_TICK_PER_SECOND = 20 / ABILITY_TICK_FREQ;
@@ -43,6 +50,12 @@ public class CoronaCraft extends JavaPlugin {
     @Override
     public void onEnable(){
         instance = this;
+
+        if (!setupEconomy() ) {
+            log.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
 
         initializeAbilities(
                 new TNTGenerator(),
@@ -89,6 +102,18 @@ public class CoronaCraft extends JavaPlugin {
         }
     }
 
+    private boolean setupEconomy() {
+        if (getServer().getPluginManager().getPlugin("Vault") == null) {
+            return false;
+        }
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        if (rsp == null) {
+            return false;
+        }
+        econ = rsp.getProvider();
+        return econ != null;
+    }
+
     public static final Map<Material, Ability> getAbilities() {
         return ABILITIES;
     }
@@ -118,6 +143,12 @@ public class CoronaCraft extends JavaPlugin {
         PLAYER_COOL_DOWNS.put(new AbilityKey(p, item), coolDown);
     }
 
+    public static Economy getEconomy() {
+        return econ;
+    }
+
     @Override
-    public void onDisable(){}
+    public void onDisable() {
+        log.info(String.format("[%s] Disabled Version %s", getDescription().getName(), getDescription().getVersion()));
+    }
 }
