@@ -19,6 +19,8 @@ import com.gmail.mattdiamond98.coronacraft.event.CoolDownEndEvent;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownTickEvent;
 import com.gmail.mattdiamond98.coronacraft.event.PlayerEventListener;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityKey;
+import com.gmail.mattdiamond98.coronacraft.util.PlayerTimer;
+import com.gmail.mattdiamond98.coronacraft.util.PlayerTimerKey;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -39,6 +41,8 @@ public class CoronaCraft extends JavaPlugin {
     private static final Map<AbilityKey, Integer> PLAYER_ABILITIES = new HashMap<>();
     // Player metadata for tracking which abilities are on cooldown
     private static final Map<AbilityKey, Integer> PLAYER_COOL_DOWNS = new HashMap<>();
+    // Player metadata for tracking timers associated with players
+    private static final Map<PlayerTimerKey, Integer> PLAYER_TASK_MAP = new HashMap<>();
 
     @Override
     public void onEnable(){
@@ -118,6 +122,32 @@ public class CoronaCraft extends JavaPlugin {
         PLAYER_COOL_DOWNS.put(new AbilityKey(p, item), coolDown);
     }
 
+    public static final void addPlayerTimer(PlayerTimerKey ptk, int taskId) {
+        PLAYER_TASK_MAP.put(ptk, taskId);
+    }
+
+    public static final void addPlayerTimer(Player p, PlayerTimer playerTimer, int taskId) {
+        addPlayerTimer(new PlayerTimerKey(player, playerTimer), taskId);
+    }
+
+    public static final void removePlayerTimer(PlayerTimerKey ptk) {
+        if (PLAYER_TASK_MAP.containsKey(ptk))
+            PLAYER_TASK_MAP.remove(ptk);
+    }
+
+    public static final void removePlayerTimer(Player p, PlayerTimer playerTimer) {
+        removePlayerTimer(new PlayerTimerKey(p, playerTimer));
+    }
+
+    public static final int getTaskId(PlayerTimerKey ptk) {
+        return PLAYER_TASK_MAP.get(ptk);
+    }
+
+    public static final int getTaskId(Player p, PlayerTimer playerTimer) {
+        return getTaskId(new PlayerTimerKey(p, playerTimer));
+    }
+
     @Override
     public void onDisable(){}
+
 }

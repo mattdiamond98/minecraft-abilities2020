@@ -4,8 +4,11 @@ import com.gmail.mattdiamond98.coronacraft.Ability;
 import com.gmail.mattdiamond98.coronacraft.AbilityStyle;
 import com.gmail.mattdiamond98.coronacraft.CoronaCraft;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityUtil;
+import com.gmail.mattdiamond98.coronacraft.util.PlayerTimerKey;
+import com.gmail.mattdiamond98.coronacraft.util.PlayerTimerKey.PlayerTimer;
 import com.tommytony.war.Team;
 import com.tommytony.war.Warzone;
+import com.tommytony.war.event.WarPlayerThiefEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -26,10 +29,10 @@ import org.bukkit.event.player.PlayerPickupArrowEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 public class PlayerEventListener implements Listener {
-
     public Set<Material> lockedItems() {
         if (CoronaCraft.getAbilities() == null) return new HashSet<>();
         Set<Material> base = new HashSet<>(CoronaCraft.getAbilities().keySet());
@@ -132,4 +135,76 @@ public class PlayerEventListener implements Listener {
             ((AbstractArrow) e.getEntity()).setPickupStatus(AbstractArrow.PickupStatus.DISALLOWED);
     }
 
+    @EventHandler
+    public void onFlagStolen(WarPlayerThiefEvent e) {
+        if (e.getStolenObject() == StolenObject.FLAG) {
+            int t_long = 10;
+            int t_short = 5;
+
+            Player p = e.getThief();
+            
+            // schedule anti-hide task
+            int taskIdLong = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
+                if (Warzone.isFlagThief(p)) {
+                    p.setGlowing(true);
+                }
+            }, t_long);
+            
+            if (taskIdLong != -1)
+                CaronaCraft.addPlayerTimer(p, PlayerTimer.FLAG_IND, taskIdLong);
+
+            Team p_team = Team.getTeamByPlayerName(p);
+            Team o_team = WarZone.getVictimTeamForFlagThief(p);
+
+            if (Warzone.isTeamFlagStolen(p_team)) {
+                for (Player o_p : o_team.getPlayers()) {
+                    if (Warzone.isFlagThief(o_p)) {
+                        // schedule omni-team anti-hide task
+                        int taskIdShort = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
+                            if (Warzone.isFlagThief(p) && Warzone.isFlagThief(o_p)) {
+                                p.setGlowing(true);
+                                o_p.setGlowing(true);
+                            }
+                        }, t_short);
+
+                        if (taskIdShort != -1) {
+                            CaronaCraft.addPlayerTimer(p, PlayerTimer.FLAG_BOTH, taskIdShort);
+                            CaronaCraft.addPlayerTimer(o_p, PlayerTimer.FLAG_BOTH, taskIdShort);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onPlayerDeath(WarPlayerDeathEvent e) {
+        // clear single life player timers
+        Player p = e.getVictim();
+        Player k = e.getKiller();
+
+        Team o_team = Team.getTeamByPlayerName(k);
+
+        if (Warzone.isFlagThief(p)) {
+            // cancel long capture timer
+            PlayerTimerKey longPTK = new PlayerTimerKey(p, PlayerTimer.FLAG_IND);
+            int longTaskId = CaronaCraft.getTaskId(longPTK);
+            
+            Bukkit.getServer().getScheduler().cancelTask(longTaskId);
+            CaronaCraft.removePlayerTimer(longPTK);
+
+            // cancel short capture timer
+            PlayerTimerKey shortPTKMe = new PlayerTimerKey(p, PlayerTimer.FLAG_BOTH);
+            int shortTaskId = CaronaCraft.getTaskId(shortPTKMe);
+
+            Bukkit.getServer().getScheduler().cancelTask(shortTaskId);
+            CaronaCraft.removePlayerTimer(shortPTKMe);
+
+            for (Player o_p : o_team.getPlayers()) {
+                if (Warzone.isFlagThief(o_p)) {
+                    CaronaCraft.removePlayerTimer(o_p, PlayerTimer.FLAG_BOTH);
+                }
+            }
+        }
+    }
 }
