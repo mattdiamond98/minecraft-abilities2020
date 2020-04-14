@@ -4,9 +4,13 @@ import com.gmail.mattdiamond98.coronacraft.Ability;
 import com.gmail.mattdiamond98.coronacraft.AbilityStyle;
 import com.gmail.mattdiamond98.coronacraft.CoronaCraft;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityUtil;
+import com.gmail.mattdiamond98.coronacraft.util.PlayerTimerKey;
+import com.gmail.mattdiamond98.coronacraft.util.PlayerTimerKey.PlayerTimerType;
 import com.tommytony.war.Team;
 import com.tommytony.war.Warzone;
 import com.tommytony.war.event.WarBattleWinEvent;
+import com.tommytony.war.event.WarPlayerDeathEvent;
+import com.tommytony.war.event.WarPlayerThiefEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -28,7 +32,6 @@ import org.bukkit.inventory.ItemStack;
 import java.util.*;
 
 public class PlayerEventListener implements Listener {
-
     public Set<Material> lockedItems() {
         if (CoronaCraft.getAbilities() == null) return new HashSet<>();
         Set<Material> base = new HashSet<>(CoronaCraft.getAbilities().keySet());
@@ -148,4 +151,77 @@ public class PlayerEventListener implements Listener {
         }
     }
 
+    public void onFlagStolen(WarPlayerThiefEvent e) {
+        if (e.getStolenObject() == WarPlayerThiefEvent.StolenObject.FLAG) {
+            int t_long = 10;
+            int t_short = 5;
+
+            Player p = e.getThief();
+            Warzone warzone = Warzone.getZoneByPlayerName(p.getName());
+            
+            // schedule anti-hide task
+            int taskIdLong = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(CoronaCraft.instance, () -> {
+                if (warzone.isFlagThief(p)) {
+                    p.setGlowing(true);
+                }
+            }, t_long);
+            
+            if (taskIdLong != -1)
+                CoronaCraft.addPlayerTimer(p, PlayerTimerType.FLAG_IND, taskIdLong);
+
+            Team p_team = Team.getTeamByPlayerName(p.getName());
+            Team o_team = warzone.getVictimTeamForFlagThief(p);
+
+            if (warzone.isTeamFlagStolen(p_team)) {
+                for (Player o_p : o_team.getPlayers()) {
+                    if (warzone.isFlagThief(o_p)) {
+                        // schedule omni-team anti-hide task
+                        int taskIdShort = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(CoronaCraft.instance, () -> {
+                            if (warzone.isFlagThief(p) && warzone.isFlagThief(o_p)) {
+                                p.setGlowing(true);
+                                o_p.setGlowing(true);
+                            }
+                        }, t_short);
+
+                        if (taskIdShort != -1) {
+                            CoronaCraft.addPlayerTimer(p, PlayerTimerType.FLAG_BOTH, taskIdShort);
+                            CoronaCraft.addPlayerTimer(o_p, PlayerTimerType.FLAG_BOTH, taskIdShort);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onPlayerDeath(WarPlayerDeathEvent e) {
+        // clear single life player timers
+        Player p = e.getVictim();
+        Warzone warzone = Warzone.getZoneByPlayerName(p.getName());
+
+        Team opponents = warzone.getTeams().get(0).getPlayers().contains(p) ? warzone.getTeams().get(1) : warzone.getTeams().get(0);
+        // TODO: work for when there is more than 2 teams
+
+        if (warzone.isFlagThief(p)) {
+            // cancel long capture timer
+            PlayerTimerKey longPTK = new PlayerTimerKey(p, PlayerTimerType.FLAG_IND);
+            int longTaskId = CoronaCraft.getTaskId(longPTK);
+            
+            Bukkit.getServer().getScheduler().cancelTask(longTaskId);
+            CoronaCraft.removePlayerTimer(longPTK);
+
+            // cancel short capture timer
+            PlayerTimerKey shortPTKMe = new PlayerTimerKey(p, PlayerTimerType.FLAG_BOTH);
+            int shortTaskId = CoronaCraft.getTaskId(shortPTKMe);
+
+            Bukkit.getServer().getScheduler().cancelTask(shortTaskId);
+            CoronaCraft.removePlayerTimer(shortPTKMe);
+
+            for (Player opponent : opponents.getPlayers()) {
+                if (warzone.isFlagThief(opponent)) {
+                    CoronaCraft.removePlayerTimer(opponent, PlayerTimerType.FLAG_BOTH);
+                }
+            }
+        }
+    }
 }

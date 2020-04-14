@@ -20,6 +20,7 @@ import com.gmail.mattdiamond98.coronacraft.event.CoolDownTickEvent;
 import com.gmail.mattdiamond98.coronacraft.event.PlayerEventListener;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityKey;
 import net.milkbowl.vault.economy.Economy;
+import com.gmail.mattdiamond98.coronacraft.util.PlayerTimerKey;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -46,6 +47,8 @@ public class CoronaCraft extends JavaPlugin {
     private static final Map<AbilityKey, Integer> PLAYER_ABILITIES = new HashMap<>();
     // Player metadata for tracking which abilities are on cooldown
     private static final Map<AbilityKey, Integer> PLAYER_COOL_DOWNS = new HashMap<>();
+    // Player metadata for tracking timers associated with players
+    private static final Map<PlayerTimerKey, Integer> PLAYER_TASK_MAP = new HashMap<>();
 
     @Override
     public void onEnable(){
@@ -78,7 +81,7 @@ public class CoronaCraft extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerEventListener(), this);
 
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
-            for (AbilityKey key : new HashSet<AbilityKey>(PLAYER_COOL_DOWNS.keySet())) {
+            for (AbilityKey key : new HashSet<>(PLAYER_COOL_DOWNS.keySet())) {
                 int new_time = PLAYER_COOL_DOWNS.get(key) - 1;
                 if (new_time <= 0) {
                     PLAYER_COOL_DOWNS.remove(key);
@@ -151,4 +154,29 @@ public class CoronaCraft extends JavaPlugin {
     public void onDisable() {
         log.info(String.format("[%s] Disabled Version %s", getDescription().getName(), getDescription().getVersion()));
     }
+    public static final void addPlayerTimer(PlayerTimerKey ptk, int taskId) {
+        PLAYER_TASK_MAP.put(ptk, taskId);
+    }
+
+    public static final void addPlayerTimer(Player p, PlayerTimerKey.PlayerTimerType playerTimer, int taskId) {
+        addPlayerTimer(new PlayerTimerKey(p, playerTimer), taskId);
+    }
+
+    public static final void removePlayerTimer(PlayerTimerKey ptk) {
+        if (PLAYER_TASK_MAP.containsKey(ptk))
+            PLAYER_TASK_MAP.remove(ptk);
+    }
+
+    public static final void removePlayerTimer(Player p, PlayerTimerKey.PlayerTimerType playerTimer) {
+        removePlayerTimer(new PlayerTimerKey(p, playerTimer));
+    }
+
+    public static final int getTaskId(PlayerTimerKey ptk) {
+        return PLAYER_TASK_MAP.get(ptk);
+    }
+
+    public static final int getTaskId(Player p, PlayerTimerKey.PlayerTimerType playerTimer) {
+        return getTaskId(new PlayerTimerKey(p, playerTimer));
+    }
+
 }
