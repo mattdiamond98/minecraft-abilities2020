@@ -1,6 +1,6 @@
 package com.gmail.mattdiamond98.coronacraft.abilities.Tank;
 
-import com.gmail.mattdiamond98.coronacraft.AbilityStyle;
+import com.gmail.mattdiamond98.coronacraft.abilities.AbilityStyle;
 import com.gmail.mattdiamond98.coronacraft.CoronaCraft;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityUtil;
 import com.gmail.mattdiamond98.coronacraft.util.InstantFirework;
@@ -13,7 +13,7 @@ import org.bukkit.potion.PotionEffectType;
 public class TankUp extends AbilityStyle {
 
     public TankUp() {
-        super("TankUp", new String[]{"Buff allies with protection!", "Radius: 10", "Duration: 10 seconds", "Cooldown: 60 seconds"});
+        super("Tank Up", new String[]{"Buff allies with protection!", "Radius: 10", "Duration: 10 seconds", "Cooldown: 40 seconds"});
     }
 
     /***
@@ -34,6 +34,6 @@ public class TankUp extends AbilityStyle {
                 teammate.sendMessage(ChatColor.GREEN + "You feel as if nothing can hurt you!");
             }
         }
-        return 60 * CoronaCraft.ABILITY_TICK_PER_SECOND;
+        return 40 * CoronaCraft.ABILITY_TICK_PER_SECOND;
     }
 }

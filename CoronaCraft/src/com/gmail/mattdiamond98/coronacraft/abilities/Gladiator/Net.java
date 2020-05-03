@@ -1,21 +1,16 @@
 package com.gmail.mattdiamond98.coronacraft.abilities.Gladiator;
 
-import com.gmail.mattdiamond98.coronacraft.Ability;
+import com.gmail.mattdiamond98.coronacraft.abilities.Ability;
 import com.gmail.mattdiamond98.coronacraft.CoronaCraft;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownTickEvent;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityUtil;
-import com.tommytony.war.Team;
+import com.tommytony.war.Warzone;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerFishEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.potion.PotionEffectType;
-
-import static com.gmail.mattdiamond98.coronacraft.util.AbilityUtil.notInSpawn;
 
 public class Net extends Ability {
 
@@ -32,7 +27,7 @@ public class Net extends Ability {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerDropItem(PlayerDropItemEvent e) {
-        if ((e.getItemDrop().getItemStack().getType() == item) && notInSpawn(e.getPlayer())) {
+        if ((e.getItemDrop().getItemStack().getType() == item)) {
             AbilityUtil.toggleAbilityStyle(e.getPlayer(), item);
             e.setCancelled(true);
         }
@@ -44,16 +39,23 @@ public class Net extends Ability {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onPlayerHitFishingRod(final PlayerFishEvent event) {
+    public void onPlayerFishEvent(final PlayerFishEvent event) {
+        if (event.getState() != PlayerFishEvent.State.REEL_IN
+            && event.getState() != PlayerFishEvent.State.CAUGHT_ENTITY
+            && event.getState() != PlayerFishEvent.State.IN_GROUND) return;
         final Player player = event.getPlayer();
-        if (event.getCaught() instanceof Player) {
-            final Player caught = (Player) event.getCaught();
-            if (Team.getTeamByPlayerName(caught.getName()).getPlayers().contains(player)) return;
+        if (player == null) return;
+        Warzone zone = Warzone.getZoneByPlayerName(player.getName());
+        if (zone == null) return;
+        if (AbilityUtil.notInSpawn(player)) {
             if (CoronaCraft.isOnCooldown(player, item)) {
                 AbilityUtil.notifyAbilityOnCooldown(player, this);
             } else {
-                CoronaCraft.setCooldown(player, item, getStyle(player).execute(player, caught));
+                CoronaCraft.setCooldown(player, item, getStyle(player).execute(player, event.getHook()));
             }
+        } else {
+            event.getHook().remove();
+            event.setCancelled(true);
         }
     }
 }

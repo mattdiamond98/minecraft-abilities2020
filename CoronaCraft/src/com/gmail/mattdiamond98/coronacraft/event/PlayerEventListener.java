@@ -1,17 +1,18 @@
 package com.gmail.mattdiamond98.coronacraft.event;
 
-import com.gmail.mattdiamond98.coronacraft.Ability;
-import com.gmail.mattdiamond98.coronacraft.AbilityStyle;
+import com.gmail.mattdiamond98.coronacraft.abilities.Ability;
+import com.gmail.mattdiamond98.coronacraft.abilities.AbilityStyle;
 import com.gmail.mattdiamond98.coronacraft.CoronaCraft;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityUtil;
+import com.gmail.mattdiamond98.coronacraft.util.MetadataKey;
 import com.gmail.mattdiamond98.coronacraft.util.PlayerTimerKey;
 import com.gmail.mattdiamond98.coronacraft.util.PlayerTimerKey.PlayerTimerType;
 import com.tommytony.war.Team;
+import com.tommytony.war.War;
 import com.tommytony.war.Warzone;
-import com.tommytony.war.event.WarBattleWinEvent;
-import com.tommytony.war.event.WarPlayerDeathEvent;
-import com.tommytony.war.event.WarPlayerThiefEvent;
-import net.milkbowl.vault.chat.Chat;
+import com.tommytony.war.config.TeamConfig;
+import com.tommytony.war.config.WarzoneConfig;
+import com.tommytony.war.event.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -20,22 +21,24 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerItemHeldEvent;
-import org.bukkit.event.player.PlayerPickupArrowEvent;
-import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.*;
 
 public class PlayerEventListener implements Listener {
+
+    private java.util.Random random = new java.util.Random();
+
     public Set<Material> lockedItems() {
         if (CoronaCraft.getAbilities() == null) return new HashSet<>();
         Set<Material> base = new HashSet<>(CoronaCraft.getAbilities().keySet());
@@ -47,6 +50,66 @@ public class PlayerEventListener implements Listener {
         base.add(Material.COBWEB);
         base.add(Material.CROSSBOW);
         return base;
+    }
+
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent e) {
+        if (Warzone.getZoneByPlayerName(e.getPlayer().getName()) == null) {
+            if (e.hasItem() && e.getItem().getType() == Material.NETHER_STAR
+                    && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
+                List<Warzone> warzones = War.war.getActiveWarzones();
+                if (warzones.size() == 0) {
+                    warzones = War.war.getEnabledWarzones();
+                    warzones.removeIf(zone -> {
+                        if (zone.isReinitializing()) return true;
+                        if (zone.isFull(e.getPlayer())) return true;
+                        int totalPlayers = Bukkit.getServer().getOnlinePlayers().size();
+                        if (totalPlayers < 4) { // Deathmatch only
+                            return zone.getTeams().stream().anyMatch(team -> team.getTeamFlag() != null);
+                        }
+                        if (totalPlayers < 6) { // Small Deathmatch and CTF
+                            return zone.getTotalCapacity() > 12;
+                        }
+                        if (zone.getTeams().stream().allMatch(team -> team.getTeamFlag() == null)) return true;
+                        if (totalPlayers < 8) { // Small and medium CTF
+                            return zone.getTotalCapacity() > 20;
+                        }
+                        if (totalPlayers < 16) { // Medium and large CTF
+                            return zone.getTotalCapacity() <= 12;
+                        }
+                        return zone.getTotalCapacity() <= 20; // Large CTF
+                    });
+                }
+                if (warzones.size() == 0) return;
+                Warzone zone = warzones.get(random.nextInt(warzones.size()));
+                if (zone != null) {
+                    zone.autoAssign(e.getPlayer());
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onProjectileHit(ProjectileHitEvent event) {
+        if (event.getEntity() instanceof Trident && event.getEntity().getShooter() instanceof Player) {
+            if (!event.getEntity().hasMetadata(MetadataKey.ON_HIT)) return;
+            Object meta = event.getEntity().getMetadata(MetadataKey.ON_HIT).get(0).value();
+            if (meta instanceof AbilityStyle) {
+                ((AbilityStyle) meta).execute((Player) event.getEntity().getShooter(), event);
+            }
+        }
+    }
+
+    @EventHandler
+    public void onPlayerLeave(WarPlayerLeaveEvent event) {
+        AbilityUtil.removeCooldowns(Bukkit.getPlayer(event.getQuitter()));
+    }
+
+    @EventHandler
+    public void onGameEnd(WarBattleWinEvent event) {
+        for (Player player : event.getZone().getPlayers()) {
+            AbilityUtil.removeCooldowns(player);
+        }
     }
 
     @EventHandler(priority = EventPriority.HIGH)
@@ -96,14 +159,13 @@ public class PlayerEventListener implements Listener {
 
     @EventHandler
     public void onPlayerSneak(PlayerToggleSneakEvent e) {
-        // TODO: this method should be "inSpawn" but will have to change other stuff
-        if (!AbilityUtil.notInSpawn(e.getPlayer())) {
+        if (AbilityUtil.inSpawn(e.getPlayer())) {
             Set<Material> keySet = CoronaCraft.getAbilities().keySet();
             Bukkit.getScheduler().scheduleSyncDelayedTask(CoronaCraft.instance, () ->
                     Arrays.stream(e.getPlayer().getInventory().getContents())
                             .filter(Objects::nonNull)
                             .filter(i -> keySet.contains(i.getType()))
-                            .forEach(i -> AbilityUtil.formatItem(e.getPlayer(), i)), 1);
+                            .forEach(i -> AbilityUtil.formatItem(e.getPlayer(), i)), 2);
         }
     }
 
@@ -139,19 +201,35 @@ public class PlayerEventListener implements Listener {
     }
 
     @EventHandler
-    public void onGameEnd(WarBattleWinEvent e) {
+    public void onGameEnd(WarScoreCapEvent e) {
         List<Team> winners = e.getWinningTeams();
-        List<Team> losers = new ArrayList<>(e.getZone().getTeams());
-        losers.removeAll(winners);
-        int reward = losers.stream().map(team -> team.getPlayers().size()).min(Integer::compareTo).orElse(1);
-        final int adjustedReward = (reward > 5) ? (int) Math.round(Math.floor(5 + Math.log(reward - 5) / Math.log(2))) : reward;
+//        losers.removeAll(winners);
+        int reward = winners.stream().map(team -> team.getPlayers().size()).min(Integer::compareTo).orElse(1);
+        final int adjustedReward = 1 + ((reward > 5) ? (int) Math.round(Math.floor(5 + Math.log(reward - 5) / Math.log(2))) : reward);
         winners.stream().forEach(team -> payTeam(team, adjustedReward));
-        losers.stream().forEach(team -> payTeam(team, Math.max(adjustedReward / 3, 1)));
+//        losers.stream().forEach(team -> payTeam(team, Math.max(adjustedReward / 3, 1)));
     }
 
     private void payTeam(Team team, int amount) {
+//        if (team.getPlayers().stream().anyMatch(p -> p.hasPermission("coronacraft.coins.allyboost"))) {
+////            amount = (int) Math.ceil(amount * 1.2);
+//            team.getPlayers().stream().forEach(p -> p.sendMessage(ChatColor.LIGHT_PURPLE + "You received a bonus for having a VIP on your team!"));
+//        }
         for (Player p : team.getPlayers()) {
-            CoronaCraft.getEconomy().depositPlayer(p, amount);
+            double adjustedAmount = amount * 1.0;
+            if (p.hasPermission("coronacraft.coins.hugeboost")) {
+                p.sendMessage(ChatColor.LIGHT_PURPLE + "You recevied a bonus for being a VIP!");
+                adjustedAmount *= 2.5;
+            } else if (p.hasPermission("coronacraft.coins.largeboost")) {
+                p.sendMessage(ChatColor.LIGHT_PURPLE + "You recevied a bonus for being a VIP!");
+                adjustedAmount *= 2.0;
+            } else if (p.hasPermission("coronacraft.coins.smallboost")) {
+                p.sendMessage(ChatColor.LIGHT_PURPLE + "You recevied a bonus for being a VIP!");
+                adjustedAmount *= 1.5;
+            }
+            adjustedAmount = Math.ceil(adjustedAmount);
+            CoronaCraft.getEconomy().depositPlayer(p, (int) adjustedAmount);
+            p.sendMessage(ChatColor.GREEN + "You received " + ((int) adjustedAmount) + " Corona Coins!");
         }
     }
 
@@ -182,8 +260,6 @@ public class PlayerEventListener implements Listener {
             
             if (taskIdLong != -1)
                 CoronaCraft.addPlayerTimer(p, PlayerTimerType.FLAG_IND, taskIdLong);
-
-
 
             if (warzone.isTeamFlagStolen(players)) {
                 for (Player opponent : opponents.getPlayers()) {
@@ -220,14 +296,32 @@ public class PlayerEventListener implements Listener {
         }
     }
 
+    private Runnable spawnResistanceRunnable(final Player p) {
+        return new Runnable() {
+            @Override
+            public void run() {
+                if (!p.isDead()) {
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 5 * 20, 2));
+                }
+                if (AbilityUtil.inSpawn(p)) {
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(CoronaCraft.instance, spawnResistanceRunnable(p), 20);
+                }
+            }
+        };
+    }
+
     @EventHandler
     public void onPlayerDeath(WarPlayerDeathEvent e) {
         // clear single life player timers
-        Player p = e.getVictim();
+        final Player p = e.getVictim();
         Warzone warzone = Warzone.getZoneByPlayerName(p.getName());
+        if (warzone == null) return;
 
         Team opponents = warzone.getTeams().get(0).getPlayers().contains(p) ? warzone.getTeams().get(1) : warzone.getTeams().get(0);
         // TODO: work for when there is more than 2 teams
+
+        if (warzone.getTeamDefaultConfig().contains(TeamConfig.RESPAWNTIMER) && warzone.getTeamDefaultConfig().getInt(TeamConfig.RESPAWNTIMER) >= 3)
+            Bukkit.getScheduler().scheduleSyncDelayedTask(CoronaCraft.instance, spawnResistanceRunnable(p), 20);
 
         if (warzone.isFlagThief(p)) {
             // cancel long capture timer
@@ -249,6 +343,22 @@ public class PlayerEventListener implements Listener {
                     CoronaCraft.removePlayerTimer(opponent, PlayerTimerType.FLAG_BOTH);
                 }
             }
+        }
+    }
+
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent e) {
+        if (!e.getPlayer().hasPlayedBefore()) {
+            // TODO: change to tutorial once implemented
+            e.getPlayer().sendTitle(ChatColor.GOLD + "Corona Capture the Flag", ChatColor.GREEN + "Right click the Nether Star to play", 1, 6, 1);
+        }
+        if (!e.getPlayer().getInventory().contains(Material.NETHER_STAR)) {
+            ItemStack autoJoin = new ItemStack(Material.NETHER_STAR, 1);
+            ItemMeta meta = autoJoin.getItemMeta();
+            meta.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Join Active Game");
+            meta.setLore(Arrays.asList(ChatColor.AQUA + "Right click to join the active game."));
+            autoJoin.setItemMeta(meta);
+            e.getPlayer().getInventory().addItem(autoJoin);
         }
     }
 }

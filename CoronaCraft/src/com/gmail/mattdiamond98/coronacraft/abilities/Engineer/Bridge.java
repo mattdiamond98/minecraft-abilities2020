@@ -5,10 +5,10 @@ import org.bukkit.Material;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Tower extends SchematicStyle {
+public class Bridge extends SchematicStyle {
 
-    public static final int COST_PLANKS = 48;
-    public static final int COST_COBBLE = 12;
+    public static final int COST_PLANKS = 32;
+    public static final int COST_COBBLE = 8;
 
     private static final Map<Material, Integer> costs = new TreeMap<>();
     static {
@@ -16,16 +16,12 @@ public class Tower extends SchematicStyle {
         costs.put(Material.COBBLESTONE, COST_COBBLE);
     }
 
-    public Tower() {
-        super("Tower", new String[] {
-                "Create a defensive tower",
-                "where you stand.",
+    public Bridge() {
+        super("Bridge", new String[] {
+                "Create a tactical bridge",
+                "in front of you.",
                 String.format("Cost: %d Planks, %d Cobblestone", COST_PLANKS, COST_COBBLE),
                 "Construction Time: 5 seconds"
-        }, null, costs);
+        }, "coronacraft.engineer.bridge", costs);
     }
-
-
-
-
 }

@@ -1,8 +1,6 @@
 package com.gmail.mattdiamond98.coronacraft.abilities.Fighter;
 
-import com.gmail.mattdiamond98.coronacraft.AbilityStyle;
-import org.bukkit.Effect;
-import org.bukkit.entity.LivingEntity;
+import com.gmail.mattdiamond98.coronacraft.abilities.AbilityStyle;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -20,7 +18,7 @@ public class SwiftBlade  extends AbilityStyle {
      * @return cooldown 0
      */
     public int execute(Player p, Object... args) {
-        new PotionEffect(PotionEffectType.SPEED, 70, 0).apply(p);
+        new PotionEffect(PotionEffectType.SPEED, 140, 0, true).apply(p);
         return 0;
     }
 }

@@ -1,6 +1,6 @@
 package com.gmail.mattdiamond98.coronacraft.abilities.Ninja;
 
-import com.gmail.mattdiamond98.coronacraft.AbilityStyle;
+import com.gmail.mattdiamond98.coronacraft.abilities.AbilityStyle;
 import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
@@ -27,7 +27,7 @@ public class ToxicEnd extends AbilityStyle {
         int duration = target.getPotionEffect(PotionEffectType.POISON).getDuration();
         target.removePotionEffect(PotionEffectType.POISON);
         p.getLocation().getWorld().playEffect(p.getLocation(), Effect.STEP_SOUND, Material.SLIME_BLOCK);
-        target.damage(duration / 20);
+        target.damage((duration / 20) + 2);
         return 0;
     }
 

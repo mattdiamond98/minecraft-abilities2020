@@ -1,4 +1,4 @@
-package com.gmail.mattdiamond98.coronacraft;
+package com.gmail.mattdiamond98.coronacraft.abilities;
 
 import com.sun.istack.internal.Nullable;
 import org.bukkit.entity.Player;

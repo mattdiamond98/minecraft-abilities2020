@@ -1,7 +1,6 @@
 package com.gmail.mattdiamond98.coronacraft.abilities.Anarchist;
 
-import com.gmail.mattdiamond98.coronacraft.Ability;
-import com.gmail.mattdiamond98.coronacraft.util.AbilityUtil;
+import com.gmail.mattdiamond98.coronacraft.abilities.Ability;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;

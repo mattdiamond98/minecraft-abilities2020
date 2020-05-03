@@ -1,6 +1,6 @@
 package com.gmail.mattdiamond98.coronacraft.abilities.Anarchist;
 
-import com.gmail.mattdiamond98.coronacraft.Ability;
+import com.gmail.mattdiamond98.coronacraft.abilities.Ability;
 import com.gmail.mattdiamond98.coronacraft.CoronaCraft;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownTickEvent;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityUtil;
@@ -67,7 +67,7 @@ public class Launcher extends Ability {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerDropItem(PlayerDropItemEvent e) {
-        if ((e.getItemDrop().getItemStack().getType() == item) && notInSpawn(e.getPlayer())) {
+        if ((e.getItemDrop().getItemStack().getType() == item)) {
             AbilityUtil.toggleAbilityStyle(e.getPlayer(), item);
             e.setCancelled(true);
         }

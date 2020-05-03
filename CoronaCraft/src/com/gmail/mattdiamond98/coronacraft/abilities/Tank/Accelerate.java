@@ -1,6 +1,6 @@
 package com.gmail.mattdiamond98.coronacraft.abilities.Tank;
 
-import com.gmail.mattdiamond98.coronacraft.AbilityStyle;
+import com.gmail.mattdiamond98.coronacraft.abilities.AbilityStyle;
 import com.gmail.mattdiamond98.coronacraft.CoronaCraft;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityUtil;
 import com.gmail.mattdiamond98.coronacraft.util.InstantFirework;
@@ -13,7 +13,7 @@ import org.bukkit.potion.PotionEffectType;
 public class Accelerate extends AbilityStyle {
 
     public Accelerate() {
-        super("Accelerate", new String[]{"Buff allies with a speed boost!", "Radius: 10", "Duration: 10 seconds", "Cooldown: 40 seconds"});
+        super("Accelerate", new String[]{"Buff allies with a speed boost!", "Radius: 10", "Duration: 10 seconds", "Cooldown: 30 seconds"});
     }
 
     /***
@@ -28,7 +28,7 @@ public class Accelerate extends AbilityStyle {
         }
         for (Player teammate : Team.getTeamByPlayerName(p.getName()).getPlayers()) {
             if (teammate.getLocation().distanceSquared(p.getLocation()) < 10 * 10) {
-                new PotionEffect(PotionEffectType.SPEED, 200, 0).apply(teammate);
+                new PotionEffect(PotionEffectType.SPEED, 200, 1).apply(teammate);
                 teammate.getWorld().playEffect(teammate.getLocation(), Effect.STEP_SOUND, Material.SEA_LANTERN);
                 teammate.getWorld().playSound(teammate.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
                 teammate.sendMessage(ChatColor.GREEN + "You feel invigorated with a boost of speed!");

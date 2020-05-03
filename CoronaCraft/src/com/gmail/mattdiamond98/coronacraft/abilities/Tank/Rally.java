@@ -1,13 +1,11 @@
 package com.gmail.mattdiamond98.coronacraft.abilities.Tank;
 
-import com.gmail.mattdiamond98.coronacraft.Ability;
+import com.gmail.mattdiamond98.coronacraft.abilities.Ability;
 import com.gmail.mattdiamond98.coronacraft.CoronaCraft;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownTickEvent;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityKey;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityUtil;
 import org.bukkit.Material;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
@@ -55,7 +53,7 @@ public class Rally extends Ability {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerDropItem(PlayerDropItemEvent e) {
-        if ((e.getItemDrop().getItemStack().getType() == item) && notInSpawn(e.getPlayer())) {
+        if ((e.getItemDrop().getItemStack().getType() == item)) {
             AbilityUtil.toggleAbilityStyle(e.getPlayer(), item);
             e.setCancelled(true);
         }

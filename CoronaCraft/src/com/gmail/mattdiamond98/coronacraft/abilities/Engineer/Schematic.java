@@ -1,7 +1,7 @@
 package com.gmail.mattdiamond98.coronacraft.abilities.Engineer;
 
-import com.gmail.mattdiamond98.coronacraft.Ability;
-import com.gmail.mattdiamond98.coronacraft.AbilityStyle;
+import com.gmail.mattdiamond98.coronacraft.abilities.Ability;
+import com.gmail.mattdiamond98.coronacraft.abilities.AbilityStyle;
 import com.gmail.mattdiamond98.coronacraft.CoronaCraft;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownEndEvent;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownTickEvent;
@@ -28,6 +28,8 @@ public class Schematic extends Ability {
     @Override
     public void initialize() {
         styles.add(new Tower());
+        styles.add(new Wall());
+        styles.add(new Bridge());
     }
 
     @EventHandler
@@ -37,9 +39,8 @@ public class Schematic extends Ability {
             if (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
                 AbilityStyle schematic = getStyle(p);
                 int steps = schematic.execute(p, -1);
-                if (steps == -3) {
-                    p.sendMessage(ChatColor.RED + "Building is disabled on this map.");
-                }
+                if (steps == -4) p.sendMessage(ChatColor.RED + "You must stand still to place a schematic.");
+                else if (steps == -3) p.sendMessage(ChatColor.RED + "Building is disabled on this map.");
                 else if (steps == -2) return; // Materials message already handled
                 else if (steps == -1) {
                     p.sendMessage(ChatColor.RED + "Invalid position. Place away from borders and game objects.");

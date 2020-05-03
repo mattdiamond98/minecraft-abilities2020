@@ -1,6 +1,6 @@
 package com.gmail.mattdiamond98.coronacraft.abilities.Ninja;
 
-import com.gmail.mattdiamond98.coronacraft.AbilityStyle;
+import com.gmail.mattdiamond98.coronacraft.abilities.AbilityStyle;
 import com.gmail.mattdiamond98.coronacraft.CoronaCraft;
 import org.bukkit.Effect;
 import org.bukkit.Material;

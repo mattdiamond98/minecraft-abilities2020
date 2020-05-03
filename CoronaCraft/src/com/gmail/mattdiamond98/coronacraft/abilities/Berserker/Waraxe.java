@@ -1,6 +1,6 @@
 package com.gmail.mattdiamond98.coronacraft.abilities.Berserker;
 
-import com.gmail.mattdiamond98.coronacraft.Ability;
+import com.gmail.mattdiamond98.coronacraft.abilities.Ability;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityUtil;
 import com.tommytony.war.event.WarPlayerDeathEvent;
 import org.bukkit.Material;

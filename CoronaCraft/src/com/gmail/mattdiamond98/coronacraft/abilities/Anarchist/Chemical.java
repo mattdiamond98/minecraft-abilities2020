@@ -1,6 +1,6 @@
 package com.gmail.mattdiamond98.coronacraft.abilities.Anarchist;
 
-import com.gmail.mattdiamond98.coronacraft.AbilityStyle;
+import com.gmail.mattdiamond98.coronacraft.abilities.AbilityStyle;
 import com.tommytony.war.Team;
 import com.tommytony.war.Warzone;
 import org.bukkit.ChatColor;

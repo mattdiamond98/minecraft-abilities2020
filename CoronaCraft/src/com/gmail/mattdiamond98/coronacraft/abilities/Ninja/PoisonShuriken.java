@@ -1,6 +1,6 @@
 package com.gmail.mattdiamond98.coronacraft.abilities.Ninja;
 
-import com.gmail.mattdiamond98.coronacraft.AbilityStyle;
+import com.gmail.mattdiamond98.coronacraft.abilities.AbilityStyle;
 import com.tommytony.war.Team;
 import org.bukkit.Effect;
 import org.bukkit.Material;
@@ -27,7 +27,7 @@ public class PoisonShuriken extends AbilityStyle {
         LivingEntity target = (LivingEntity) args[0];
         if (Team.getTeamByPlayerName(target.getName()).getPlayers().contains(p)) return 0;
         target.damage(2, p);
-        p.getLocation().getWorld().playEffect(p.getLocation(), Effect.STEP_SOUND, Material.SLIME_BLOCK);
+        target.getLocation().getWorld().playEffect(target.getLocation(), Effect.STEP_SOUND, Material.SLIME_BLOCK);
         if (target.getPotionEffect(PotionEffectType.POISON) == null) {
             new PotionEffect(PotionEffectType.POISON, 4 * 20, 0).apply(target);
         } else {

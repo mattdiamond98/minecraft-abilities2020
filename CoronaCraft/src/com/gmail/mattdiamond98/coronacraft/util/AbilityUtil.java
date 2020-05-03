@@ -1,9 +1,11 @@
 package com.gmail.mattdiamond98.coronacraft.util;
 
-import com.gmail.mattdiamond98.coronacraft.Ability;
-import com.gmail.mattdiamond98.coronacraft.AbilityStyle;
+import com.gmail.mattdiamond98.coronacraft.abilities.Ability;
+import com.gmail.mattdiamond98.coronacraft.abilities.AbilityStyle;
 import com.gmail.mattdiamond98.coronacraft.CoronaCraft;
 import com.tommytony.war.Team;
+import com.tommytony.war.Warzone;
+import com.tommytony.war.utility.LoadoutSelection;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -36,6 +38,7 @@ public final class AbilityUtil {
     }
 
     public static int getTotalCount(Player player, Material item) {
+        if (player == null || item == null) return 0;
         if (!player.getInventory().contains(item)) return 0;
         int total_count = player.getInventory().all(item).values()
                 .stream().map(x -> x.getAmount()).reduce(0, Integer::sum);
@@ -45,18 +48,34 @@ public final class AbilityUtil {
         return total_count;
     }
 
+    public static List<Player> getEnemies(Player player) {
+        List<Player> enemies = new ArrayList<>();
+        Warzone zone = Warzone.getZoneByPlayerName(player.getName());
+        if (zone == null) return enemies;
+        for (Team team : zone.getTeams()) {
+            if (!team.getPlayers().contains(player)) enemies.addAll(team.getPlayers());
+        }
+        return enemies;
+    }
+
     public static void setItemStackToCooldown(Player player, Material item) {
         Map<AbilityKey, Integer> coolDowns = CoronaCraft.getPlayerCoolDowns();
+        if (player.getInventory() == null || item == null) return;
         if (player.getInventory().contains(item)) {
             int coolDown = coolDowns.getOrDefault(new AbilityKey(player, item), 1);
             setStackCount(player, item, coolDown + 1 / ABILITY_TICK_PER_SECOND);
         }
     }
 
+    public static boolean inSpawn(Player p) {
+        Warzone warzone = Warzone.getZoneByPlayerName(p.getName());
+        if (warzone == null) return false;
+        LoadoutSelection loadoutState = warzone.getLoadoutSelections().get(p.getName());
+        return loadoutState != null && loadoutState.isStillInSpawn();
+    }
+
     public static boolean notInSpawn(Player p) {
-        Team team = Team.getTeamByPlayerName(p.getName());
-        if (team == null) return false;
-        return !team.isSpawnLocation(p.getLocation());
+        return !inSpawn(p);
     }
 
     public static void toggleAbilityStyle(Player p, Material item) {
@@ -117,6 +136,22 @@ public final class AbilityUtil {
         p.sendMessage(ChatColor.RED + "That requires " + IntStream
                 .range(0, Math.min(m.size(), c.size()))
                 .mapToObj(i -> c.get(i) + " " + m.get(i)).collect(Collectors.joining(", and ")));
+    }
+
+    public static void notifyAbilityRequiresResources(Player p, Map<Material, Integer> materials) {
+        List<Material> m = new ArrayList<>(materials.size());
+        List<Integer> c  = new ArrayList<>(materials.size());
+        for (Map.Entry<Material, Integer> entry : materials.entrySet()) {
+            m.add(entry.getKey());
+            c.add(entry.getValue());
+        }
+        notifyAbilityRequiresResources(p, m, c);
+    }
+
+    public static void removeCooldowns(Player p) {
+        new HashSet<>(CoronaCraft.getPlayerCoolDowns().keySet()).stream()
+                .filter(key -> key.getPlayerID().equals(p.getUniqueId()))
+                .forEach(key -> CoronaCraft.setCooldown(key.getPlayer(), key.getItem(), 0));
     }
 
     public static String formatStyleName(AbilityStyle style) {

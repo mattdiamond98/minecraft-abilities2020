@@ -1,13 +1,12 @@
 package com.gmail.mattdiamond98.coronacraft.abilities.Ninja;
 
-import com.gmail.mattdiamond98.coronacraft.Ability;
+import com.gmail.mattdiamond98.coronacraft.abilities.Ability;
 import com.gmail.mattdiamond98.coronacraft.CoronaCraft;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityKey;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownEndEvent;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownTickEvent;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityUtil;
 import com.tommytony.war.Team;
-import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -15,16 +14,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import java.util.Map;
 
@@ -49,7 +43,7 @@ public class ShurikenBag extends Ability {
     public void onPlayerDropItem(PlayerDropItemEvent e) {
         Player p = e.getPlayer();
         Material m = e.getItemDrop().getItemStack().getType();
-        if ((m == item || m == Material.SNOWBALL) && notInSpawn(p)) {
+        if ((m == item || m == Material.SNOWBALL)) {
             AbilityUtil.toggleAbilityStyle(e.getPlayer(), item);
             e.setCancelled(true);
         }

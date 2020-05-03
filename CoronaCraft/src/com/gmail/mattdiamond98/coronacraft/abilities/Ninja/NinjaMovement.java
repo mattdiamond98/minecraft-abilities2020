@@ -1,6 +1,6 @@
 package com.gmail.mattdiamond98.coronacraft.abilities.Ninja;
 
-import com.gmail.mattdiamond98.coronacraft.Ability;
+import com.gmail.mattdiamond98.coronacraft.abilities.Ability;
 import com.gmail.mattdiamond98.coronacraft.CoronaCraft;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityKey;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownTickEvent;
@@ -52,7 +52,7 @@ public class NinjaMovement extends Ability {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerDropItem(PlayerDropItemEvent e) {
-        if ((e.getItemDrop().getItemStack().getType() == item) && notInSpawn(e.getPlayer())) {
+        if ((e.getItemDrop().getItemStack().getType() == item)) {
             AbilityUtil.toggleAbilityStyle(e.getPlayer(), item);
             e.setCancelled(true);
         }

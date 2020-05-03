@@ -1,6 +1,6 @@
 package com.gmail.mattdiamond98.coronacraft.abilities.Fighter;
 
-import com.gmail.mattdiamond98.coronacraft.AbilityStyle;
+import com.gmail.mattdiamond98.coronacraft.abilities.AbilityStyle;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -23,14 +23,12 @@ public class ConfusionBlade extends AbilityStyle {
      */
     public int execute(Player p, Object... args) {
         LivingEntity e = (LivingEntity) args[0];
-        Double damage = (Double) args[1];
         if (random.nextFloat() < 0.25) {
             Location loc = e.getLocation();
             loc.setPitch((random.nextFloat() * 180) - 90);
             loc.setYaw((random.nextFloat() * 360) - 180);
             p.getLocation().getWorld().playEffect(p.getLocation(), Effect.STEP_SOUND, Material.GLOWSTONE);
             e.teleport(loc);
-            e.damage(damage);
         }
         return 0;
     }

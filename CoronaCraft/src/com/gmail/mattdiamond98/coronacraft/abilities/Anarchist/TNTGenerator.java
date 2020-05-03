@@ -1,6 +1,6 @@
 package com.gmail.mattdiamond98.coronacraft.abilities.Anarchist;
 
-import com.gmail.mattdiamond98.coronacraft.Ability;
+import com.gmail.mattdiamond98.coronacraft.abilities.Ability;
 import com.gmail.mattdiamond98.coronacraft.CoronaCraft;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityKey;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownEndEvent;
@@ -15,8 +15,6 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Map;
-
-import static com.gmail.mattdiamond98.coronacraft.util.AbilityUtil.notInSpawn;
 
 public class TNTGenerator extends Ability {
 
@@ -40,7 +38,7 @@ public class TNTGenerator extends Ability {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerDropItem(PlayerDropItemEvent e) {
-        if ((e.getItemDrop().getItemStack().getType() == item) && notInSpawn(e.getPlayer())) {
+        if ((e.getItemDrop().getItemStack().getType() == item)) {
             e.setCancelled(true);
         }
     }

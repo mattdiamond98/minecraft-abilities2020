@@ -1,6 +1,6 @@
 package com.gmail.mattdiamond98.coronacraft.abilities.Fighter;
 
-import com.gmail.mattdiamond98.coronacraft.Ability;
+import com.gmail.mattdiamond98.coronacraft.abilities.Ability;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityUtil;
 import com.tommytony.war.Team;
 import org.bukkit.Material;
@@ -8,10 +8,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 
 import static com.gmail.mattdiamond98.coronacraft.util.AbilityUtil.notInSpawn;
 
@@ -38,12 +36,12 @@ public class SwordStyle extends Ability {
 
     @EventHandler(priority =  EventPriority.HIGH)
     public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
-        if (e.getDamager() instanceof Player && e.getEntity() instanceof LivingEntity) {
+        if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
             Player p = (Player) e.getDamager();
             Team team = Team.getTeamByPlayerName(((LivingEntity) e.getEntity()).getName());
             if (team == null) return;
             if (team.getPlayers().contains(p)) return;
-            if (p.getInventory().getItemInMainHand().getType() == item && notInSpawn(p)) {
+            if (p.getInventory().getItemInMainHand().getType() == item && notInSpawn(p) && notInSpawn((Player) e.getEntity())) {
                 getStyle(p).execute(p, (LivingEntity) e.getEntity(), e.getFinalDamage());
             }
         }

@@ -1,6 +1,6 @@
 package com.gmail.mattdiamond98.coronacraft.abilities.Skirmisher;
 
-import com.gmail.mattdiamond98.coronacraft.AbilityStyle;
+import com.gmail.mattdiamond98.coronacraft.abilities.AbilityStyle;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -21,14 +21,13 @@ public class SleightOfHand extends AbilityStyle {
      * @return
      */
     public int execute(Player p, Object... args) {
-        if (!p.getInventory().contains(Material.CROSSBOW)) return 0;
         if (p.getInventory().getItemInOffHand().getType() == Material.CROSSBOW) {
             addBolt(p, p.getInventory().getItemInOffHand());
-
             return 0;
         }
+        if (!p.getInventory().contains(Material.CROSSBOW)) return 0;
         for (ItemStack itemStack : p.getInventory().getContents()) {
-            if (itemStack.getType() == Material.CROSSBOW) {
+            if (itemStack != null && itemStack.getType() == Material.CROSSBOW) {
                 addBolt(p, itemStack);
             }
         }

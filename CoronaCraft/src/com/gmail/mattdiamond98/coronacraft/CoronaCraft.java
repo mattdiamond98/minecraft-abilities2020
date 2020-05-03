@@ -1,5 +1,6 @@
 package com.gmail.mattdiamond98.coronacraft;
 
+import com.gmail.mattdiamond98.coronacraft.abilities.Ability;
 import com.gmail.mattdiamond98.coronacraft.abilities.Anarchist.Detonator;
 import com.gmail.mattdiamond98.coronacraft.abilities.Anarchist.Launcher;
 import com.gmail.mattdiamond98.coronacraft.abilities.Anarchist.TNTGenerator;
@@ -8,16 +9,20 @@ import com.gmail.mattdiamond98.coronacraft.abilities.Berserker.Waraxe;
 import com.gmail.mattdiamond98.coronacraft.abilities.Engineer.Schematic;
 import com.gmail.mattdiamond98.coronacraft.abilities.Engineer.Stockpile;
 import com.gmail.mattdiamond98.coronacraft.abilities.Fighter.SwordStyle;
+import com.gmail.mattdiamond98.coronacraft.abilities.FoodRegen;
 import com.gmail.mattdiamond98.coronacraft.abilities.Gladiator.Net;
+import com.gmail.mattdiamond98.coronacraft.abilities.Gladiator.SpearThrow;
 import com.gmail.mattdiamond98.coronacraft.abilities.Ninja.NinjaMovement;
 import com.gmail.mattdiamond98.coronacraft.abilities.Ninja.ShadowKnife;
 import com.gmail.mattdiamond98.coronacraft.abilities.Ninja.ShurikenBag;
+import com.gmail.mattdiamond98.coronacraft.abilities.PickaxeRegen;
 import com.gmail.mattdiamond98.coronacraft.abilities.Ranger.Longbow;
 import com.gmail.mattdiamond98.coronacraft.abilities.Skirmisher.Shortsword;
 import com.gmail.mattdiamond98.coronacraft.abilities.Tank.Rally;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownEndEvent;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownTickEvent;
 import com.gmail.mattdiamond98.coronacraft.event.PlayerEventListener;
+import com.gmail.mattdiamond98.coronacraft.tutorial.Tutorial;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityKey;
 import net.milkbowl.vault.economy.Economy;
 import com.gmail.mattdiamond98.coronacraft.util.PlayerTimerKey;
@@ -69,6 +74,7 @@ public class CoronaCraft extends JavaPlugin {
                 new Rally(),
                 new Longbow(),
                 new Net(),
+                new SpearThrow(),
                 new Launcher(),
                 new Shortsword(),
                 new Rage(),
@@ -79,9 +85,14 @@ public class CoronaCraft extends JavaPlugin {
         );
 
         getServer().getPluginManager().registerEvents(new PlayerEventListener(), this);
+        getServer().getPluginManager().registerEvents(new Tutorial(), this);
+        getServer().getPluginManager().registerEvents(new FoodRegen(), this);
+        getServer().getPluginManager().registerEvents(new PickaxeRegen(), this);
 
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
+            if (PLAYER_COOL_DOWNS.isEmpty()) return;
             for (AbilityKey key : new HashSet<>(PLAYER_COOL_DOWNS.keySet())) {
+                if (key == null || !PLAYER_COOL_DOWNS.containsKey(key)) return;
                 int new_time = PLAYER_COOL_DOWNS.get(key) - 1;
                 if (new_time <= 0) {
                     PLAYER_COOL_DOWNS.remove(key);

@@ -1,5 +1,6 @@
-package com.gmail.mattdiamond98.coronacraft;
+package com.gmail.mattdiamond98.coronacraft.abilities;
 
+import com.gmail.mattdiamond98.coronacraft.CoronaCraft;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityKey;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
