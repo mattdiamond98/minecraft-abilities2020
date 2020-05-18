@@ -1,6 +1,7 @@
 package com.gmail.mattdiamond98.coronacraft.abilities.Fighter;
 
 import com.gmail.mattdiamond98.coronacraft.abilities.Ability;
+import com.gmail.mattdiamond98.coronacraft.tutorial.Tutorial;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityUtil;
 import com.tommytony.war.Team;
 import org.bukkit.Material;
@@ -31,6 +32,9 @@ public class SwordStyle extends Ability {
         if ((e.getItemDrop().getItemStack().getType() == item) && notInSpawn(e.getPlayer())) {
             AbilityUtil.toggleAbilityStyle(e.getPlayer(), item);
             e.setCancelled(true);
+            if (!Tutorial.FIGHTER_CHANGE_STYLES.isCompleted(e.getPlayer())) {
+                Tutorial.FIGHTER_CHANGE_STYLES.setCompleted(e.getPlayer());
+            }
         }
     }
 

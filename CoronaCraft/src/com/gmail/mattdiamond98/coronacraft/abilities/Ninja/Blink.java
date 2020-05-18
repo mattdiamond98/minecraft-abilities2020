@@ -19,7 +19,7 @@ public class Blink extends AbilityStyle {
     private static Set<Material> transparent = EnumSet.allOf(Material.class).stream()
             .filter(((Predicate<Material>)Material::isSolid).negate()).collect(Collectors.toSet());
 
-    public static final int COOL_DOWN = 5 * CoronaCraft.ABILITY_TICK_PER_SECOND;
+    public static final int COOL_DOWN = 7 * CoronaCraft.ABILITY_TICK_PER_SECOND;
 
     public Blink() {
         super("Blink", new String[]{"Teleport a short distance away"}, "coronacraft.ninja.blink");

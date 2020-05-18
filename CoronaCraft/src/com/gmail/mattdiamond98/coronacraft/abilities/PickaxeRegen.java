@@ -50,7 +50,7 @@ public class PickaxeRegen implements Listener {
                             return;
                         }
                         for (ItemStack itemStack : e.getPlayer().getInventory()) {
-                            if (itemStack.getType() == Material.WOODEN_PICKAXE) {
+                            if (itemStack != null && itemStack.getType() == Material.WOODEN_PICKAXE) {
                                 Damageable meta = (Damageable) itemStack.getItemMeta();
                                 meta.setDamage(DAMAGE);
                                 itemStack.setItemMeta((ItemMeta) meta);

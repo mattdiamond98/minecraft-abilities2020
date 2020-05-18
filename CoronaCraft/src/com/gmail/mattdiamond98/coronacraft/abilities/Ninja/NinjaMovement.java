@@ -2,6 +2,7 @@ package com.gmail.mattdiamond98.coronacraft.abilities.Ninja;
 
 import com.gmail.mattdiamond98.coronacraft.abilities.Ability;
 import com.gmail.mattdiamond98.coronacraft.CoronaCraft;
+import com.gmail.mattdiamond98.coronacraft.abilities.UltimateTracker;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityKey;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownTickEvent;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityUtil;
@@ -42,6 +43,7 @@ public class NinjaMovement extends Ability {
                 AbilityKey key = new AbilityKey(p, getItem());
                 if (!coolDowns.containsKey(key)) {
                     int coolDown = getStyle(e.getPlayer()).execute(e.getPlayer());
+                    if (UltimateTracker.isUltimateActive(e.getPlayer())) coolDown /= 2;
                     if (coolDown > 0) coolDowns.put(key, coolDown);
                 } else {
                     AbilityUtil.notifyAbilityOnCooldown(p, this);

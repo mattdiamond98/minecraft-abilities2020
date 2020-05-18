@@ -1,6 +1,8 @@
 package com.gmail.mattdiamond98.coronacraft.abilities.Anarchist;
 
+import com.gmail.mattdiamond98.coronacraft.CoronaCraft;
 import com.gmail.mattdiamond98.coronacraft.abilities.Ability;
+import com.gmail.mattdiamond98.coronacraft.util.MetadataKey;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -12,6 +14,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.EnumSet;
 import java.util.Set;
@@ -57,6 +60,7 @@ public class Detonator extends Ability {
                     block.setType(Material.AIR);
                     Entity tnt = block.getWorld().spawnEntity(block.getLocation(), EntityType.PRIMED_TNT);
                     ((TNTPrimed)tnt).setFuseTicks(20);
+                    tnt.setMetadata(MetadataKey.PLAYER, new FixedMetadataValue(CoronaCraft.instance, p));
                 }
             }
         }

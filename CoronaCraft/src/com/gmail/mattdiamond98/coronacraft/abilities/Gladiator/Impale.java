@@ -33,19 +33,18 @@ public class Impale extends ProjectileAbilityStyle {
             Team team = Team.getTeamByPlayerName(hit.getName());
             if (team != null) {
                 if (!team.getPlayers().contains(shooter)) {
-                    Vector direction = event.getEntity().getVelocity().setY(0).normalize().multiply(DISTANCE).setY(0.1);
-                    hit.setVelocity(direction);
+                    Vector direction = hit.getLocation().toVector().subtract(shooter.getLocation().toVector()).normalize().multiply(DISTANCE * 2);
                     Bukkit.getScheduler().scheduleSyncDelayedTask(CoronaCraft.instance, () -> {
                         hit.setVelocity(new Vector());
                     }, 5);
-                    if (hit.getLocation().add(direction).getBlock().getType().isSolid()
-                            || hit.getEyeLocation().add(direction).getBlock().getType().isSolid()) {
-                        new PotionEffect(PotionEffectType.JUMP, 2 * 20, 128).apply(hit);
-                        new PotionEffect(PotionEffectType.SLOW, 2 * 20, 7).apply(hit);
+                    if (rayTrace(hit.getLocation(), direction, 5) || rayTrace(hit.getEyeLocation(), direction, 5)) {
+                        new PotionEffect(PotionEffectType.JUMP, 3 * 20, 200).apply(hit); // temporarily for 3 seconds
+                        new PotionEffect(PotionEffectType.SLOW, 3 * 20, 7).apply(hit);
                         hit.sendMessage(ChatColor.RED + "You have been rooted to the ground.");
                         hit.getWorld().playEffect(hit.getLocation(), Effect.STEP_SOUND, Material.REDSTONE_WIRE);
                         hit.getWorld().playSound(hit.getLocation(), Sound.ENTITY_PILLAGER_HURT, 5, 1);
                     }
+                    hit.setVelocity(direction.setY(0.1));
                 }
             }
         } else {
@@ -57,6 +56,17 @@ public class Impale extends ProjectileAbilityStyle {
     @Override
     public int onShoot(Projectile projectile) {
         projectile.setMetadata(MetadataKey.ON_HIT, new FixedMetadataValue(CoronaCraft.instance, this));
-        return 6 * CoronaCraft.ABILITY_TICK_PER_SECOND;
+        return 5 * CoronaCraft.ABILITY_TICK_PER_SECOND;
+    }
+
+    private boolean rayTrace(Location start, Vector direction, int iter) {
+        direction = direction.clone().normalize();
+        Location loc = start.add(direction);
+        for (int i = 1; i < iter; i++) {
+            Material type = loc.getBlock().getType();
+            if (type.isSolid()) return true;
+            start.add(direction);
+        }
+        return false;
     }
 }

@@ -9,7 +9,7 @@ import org.bukkit.util.Vector;
 
 public class Leap extends AbilityStyle {
 
-    public static final int COOL_DOWN = 3 * CoronaCraft.ABILITY_TICK_PER_SECOND;
+    public static final int COOL_DOWN = 5 * CoronaCraft.ABILITY_TICK_PER_SECOND;
 
     public Leap() {
         super("Leap", new String[]{"Jump in the direction you are facing"});

@@ -3,6 +3,7 @@ package com.gmail.mattdiamond98.coronacraft.abilities.Tank;
 import com.gmail.mattdiamond98.coronacraft.abilities.Ability;
 import com.gmail.mattdiamond98.coronacraft.CoronaCraft;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownTickEvent;
+import com.gmail.mattdiamond98.coronacraft.tutorial.Tutorial;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityKey;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityUtil;
 import org.bukkit.Material;
@@ -13,9 +14,6 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.Map;
-
-import static com.gmail.mattdiamond98.coronacraft.util.AbilityUtil.notInSpawn;
-
 
 public class Rally extends Ability {
 
@@ -28,6 +26,7 @@ public class Rally extends Ability {
         styles.add(new TankUp());
         styles.add(new Accelerate());
         styles.add(new Lethargy());
+        styles.add(new Regenerate());
     }
 
     @EventHandler
@@ -44,6 +43,9 @@ public class Rally extends Ability {
                 if (!coolDowns.containsKey(key)) {
                     coolDowns.put(key,
                             getStyle(e.getPlayer()).execute(e.getPlayer()));
+                    if (!Tutorial.TANK_USE_STYLES.isCompleted(e.getPlayer())) {
+                        Tutorial.TANK_USE_STYLES.setCompleted(e.getPlayer());
+                    }
                 } else {
                     AbilityUtil.notifyAbilityOnCooldown(e.getPlayer(), this);
                 }
@@ -56,6 +58,9 @@ public class Rally extends Ability {
         if ((e.getItemDrop().getItemStack().getType() == item)) {
             AbilityUtil.toggleAbilityStyle(e.getPlayer(), item);
             e.setCancelled(true);
+            if (!Tutorial.TANK_CHANGE_STYLES.isCompleted(e.getPlayer())) {
+                Tutorial.TANK_CHANGE_STYLES.setCompleted(e.getPlayer());
+            }
         }
     }
 }

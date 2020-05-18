@@ -12,7 +12,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 public class Stockpile extends Ability {
 
     public Stockpile() {
-        super("Stockpile", Material.CHEST_MINECART);
+        super("Engineer Tool", Material.IRON_PICKAXE);
     }
 
     @Override

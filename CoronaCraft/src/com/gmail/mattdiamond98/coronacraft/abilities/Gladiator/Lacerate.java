@@ -11,8 +11,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -50,6 +48,7 @@ public class Lacerate extends ProjectileAbilityStyle {
                                 hit.getWorld().playEffect(hit.getEyeLocation(), Effect.STEP_SOUND, Material.REDSTONE_WIRE);
                                 hit.getWorld().playSound(hit.getEyeLocation(), Sound.ENTITY_PLAYER_HURT, 3, 1);
                                 hit.damage(2, shooter);
+                                hit.setVelocity(new Vector());
                             }
                         }
                     }.runTaskTimer(CoronaCraft.instance, BLEED_TICK_TIME, BLEED_TICK_TIME);
@@ -64,6 +63,6 @@ public class Lacerate extends ProjectileAbilityStyle {
     @Override
     public int onShoot(Projectile projectile) {
         projectile.setMetadata(MetadataKey.ON_HIT, new FixedMetadataValue(CoronaCraft.instance, this));
-        return 6 * CoronaCraft.ABILITY_TICK_PER_SECOND;
+        return 5 * CoronaCraft.ABILITY_TICK_PER_SECOND;
     }
 }

@@ -66,7 +66,7 @@ public abstract class SchematicStyle extends AbilityStyle {
     public int execute(Player p, Object... args) {
         int state = (Integer) args[0];
         if (state == -1) {
-            if (p.getVelocity().lengthSquared() > 0.1) {
+            if (p.getVelocity().lengthSquared() > 0.01) {
                 System.out.println("Debug: Player Velocity Squared: " + p.getVelocity().lengthSquared());
                 return -4;
             }

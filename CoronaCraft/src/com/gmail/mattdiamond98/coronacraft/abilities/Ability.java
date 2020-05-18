@@ -63,6 +63,14 @@ public abstract class Ability implements Listener {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Ability)) return false;
+        if (o == this) return true;
+        Ability a = (Ability) o;
+        return name.equals(a.name) && item == a.item;
+    }
+
+    @Override
     public String toString() {
         return String.format("%s %s", name, item.toString());
     }

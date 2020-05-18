@@ -43,6 +43,6 @@ public class Fatalis extends ProjectileAbilityStyle {
     @Override
     public int onShoot(Projectile projectile) {
         projectile.setMetadata(MetadataKey.ON_HIT, new FixedMetadataValue(CoronaCraft.instance, this));
-        return 6 * CoronaCraft.ABILITY_TICK_PER_SECOND;
+        return 5 * CoronaCraft.ABILITY_TICK_PER_SECOND;
     }
 }

@@ -40,7 +40,7 @@ public class Regenerate extends AbilityStyle {
                     if (teammate.getHealth() <= 8.0 ) amplifier = 2;
                     if (teammate.getHealth() <= 4.0 ) amplifier = 3;
                     new PotionEffect(PotionEffectType.REGENERATION, 80, amplifier).apply(teammate);
-                    teammate.getWorld().playEffect(teammate.getLocation(), Effect.STEP_SOUND, Material.RED_WOOL);
+                    teammate.getWorld().spawnParticle(Particle.HEART, teammate.getEyeLocation(), 3);
                     teammate.getWorld().playSound(teammate.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 5, 1);
                     teammate.sendMessage(ChatColor.GREEN + "You feel your wounds closing up.");
                 }

@@ -4,6 +4,7 @@ import com.gmail.mattdiamond98.coronacraft.abilities.Ability;
 import com.gmail.mattdiamond98.coronacraft.CoronaCraft;
 import com.gmail.mattdiamond98.coronacraft.abilities.AbilityStyle;
 import com.gmail.mattdiamond98.coronacraft.abilities.ProjectileAbilityStyle;
+import com.gmail.mattdiamond98.coronacraft.abilities.UltimateTracker;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownEndEvent;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityUtil;
 import com.tommytony.war.Warzone;
@@ -37,9 +38,14 @@ public class SpearThrow extends Ability {
     public void onProjectileShoot(ProjectileLaunchEvent event) {
         if (event.getEntity() instanceof Trident && event.getEntity().getShooter() instanceof Player
                 && AbilityUtil.notInSpawn((Player) event.getEntity().getShooter())) {
-            AbilityStyle style = getStyle((Player) event.getEntity().getShooter());
+            Player shooter = (Player) event.getEntity().getShooter();
+            AbilityStyle style = getStyle(shooter);
             if (style instanceof ProjectileAbilityStyle) {
-                CoronaCraft.setCooldown((Player) event.getEntity().getShooter(), item, ((ProjectileAbilityStyle) style).onShoot(event.getEntity()));
+                if (UltimateTracker.isUltimateActive(shooter)) {
+                    CoronaCraft.setCooldown(shooter, item, StormGodsWrath.style.onShoot(event.getEntity()));
+                } else {
+                    CoronaCraft.setCooldown(shooter, item, ((ProjectileAbilityStyle) style).onShoot(event.getEntity()));
+                }
             }
             ((Trident) event.getEntity()).setPickupStatus(AbstractArrow.PickupStatus.DISALLOWED);
         }
@@ -58,9 +64,13 @@ public class SpearThrow extends Ability {
         if (this.equals(event.getAbility())) {
             Player player = event.getPlayer();
             if (player != null && player.isOnline() && Warzone.getZoneByPlayerName(player.getName()) != null) {
-                if (player.getInventory().contains(Material.FISHING_ROD) && !player.getInventory().contains(item)) {
+                if (AbilityUtil.inventoryContains(event.getPlayer(), Material.FISHING_ROD) && !AbilityUtil.inventoryContains(player, item)) {
                     ItemStack trident = new ItemStack(item, 1);
-                    AbilityUtil.formatItem(player, trident);
+                    if (UltimateTracker.isUltimateActive(player)) {
+                        trident = StormGodsWrath.formatTrident(trident);
+                    } else {
+                        trident = AbilityUtil.formatItem(player, trident);
+                    }
                     player.getInventory().addItem(trident);
                 }
             }

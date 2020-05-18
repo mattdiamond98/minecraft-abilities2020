@@ -1,5 +1,7 @@
 package com.gmail.mattdiamond98.coronacraft;
 
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
 import com.gmail.mattdiamond98.coronacraft.abilities.Ability;
 import com.gmail.mattdiamond98.coronacraft.abilities.Anarchist.Detonator;
 import com.gmail.mattdiamond98.coronacraft.abilities.Anarchist.Launcher;
@@ -18,14 +20,18 @@ import com.gmail.mattdiamond98.coronacraft.abilities.Ninja.ShurikenBag;
 import com.gmail.mattdiamond98.coronacraft.abilities.PickaxeRegen;
 import com.gmail.mattdiamond98.coronacraft.abilities.Ranger.Longbow;
 import com.gmail.mattdiamond98.coronacraft.abilities.Skirmisher.Shortsword;
+import com.gmail.mattdiamond98.coronacraft.abilities.Skirmisher.Trap;
 import com.gmail.mattdiamond98.coronacraft.abilities.Tank.Rally;
+import com.gmail.mattdiamond98.coronacraft.abilities.UltimateListener;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownEndEvent;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownTickEvent;
+import com.gmail.mattdiamond98.coronacraft.event.CoronaCraftTickEvent;
 import com.gmail.mattdiamond98.coronacraft.event.PlayerEventListener;
 import com.gmail.mattdiamond98.coronacraft.tutorial.Tutorial;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityKey;
 import net.milkbowl.vault.economy.Economy;
 import com.gmail.mattdiamond98.coronacraft.util.PlayerTimerKey;
+import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -40,8 +46,9 @@ public class CoronaCraft extends JavaPlugin {
     public static CoronaCraft instance;
 
     private static final Logger log = Logger.getLogger("Minecraft");
-
+    private static ProtocolManager protocolManager;
     private static Economy econ = null;
+    private static Permission perms = null;
 
     public static final int ABILITY_TICK_FREQ = 10;
     public static final int ABILITY_TICK_PER_SECOND = 20 / ABILITY_TICK_FREQ;
@@ -55,10 +62,15 @@ public class CoronaCraft extends JavaPlugin {
     // Player metadata for tracking timers associated with players
     private static final Map<PlayerTimerKey, Integer> PLAYER_TASK_MAP = new HashMap<>();
 
+    private double coinMultiplier = 1.0;
+
     @Override
     public void onEnable(){
         instance = this;
 
+        protocolManager = ProtocolLibrary.getProtocolManager();
+
+        setupPermissions();
         if (!setupEconomy() ) {
             log.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
             getServer().getPluginManager().disablePlugin(this);
@@ -71,6 +83,7 @@ public class CoronaCraft extends JavaPlugin {
                 new ShadowKnife(),
                 new NinjaMovement(),
                 new SwordStyle(),
+                new Trap(),
                 new Rally(),
                 new Longbow(),
                 new Net(),
@@ -88,8 +101,17 @@ public class CoronaCraft extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Tutorial(), this);
         getServer().getPluginManager().registerEvents(new FoodRegen(), this);
         getServer().getPluginManager().registerEvents(new PickaxeRegen(), this);
+        getServer().getPluginManager().registerEvents(new UltimateListener(), this);
+
+        for (Loadout loadout : Loadout.values()) {
+            getServer().getPluginManager().registerEvents(loadout.getUltimate(), this);
+        }
+//        getCommand("cctf").setExecutor(new CoronaCommand());
+
+        Tutorial.initTutorial();
 
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
+            Bukkit.getPluginManager().callEvent(new CoronaCraftTickEvent());
             if (PLAYER_COOL_DOWNS.isEmpty()) return;
             for (AbilityKey key : new HashSet<>(PLAYER_COOL_DOWNS.keySet())) {
                 if (key == null || !PLAYER_COOL_DOWNS.containsKey(key)) return;
@@ -128,66 +150,89 @@ public class CoronaCraft extends JavaPlugin {
         return econ != null;
     }
 
-    public static final Map<Material, Ability> getAbilities() {
+    private boolean setupPermissions() {
+        RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
+        perms = rsp.getProvider();
+        return perms != null;
+    }
+
+    public static Map<Material, Ability> getAbilities() {
         return ABILITIES;
     }
 
-    public static final Ability getAbility(Material item) {
+    public static Ability getAbility(Material item) {
         return ABILITIES.get(item);
     }
 
-    public static final Map<AbilityKey, Integer> getPlayerCoolDowns() {
+    public static Map<AbilityKey, Integer> getPlayerCoolDowns() {
         return PLAYER_COOL_DOWNS;
     }
 
-    public static final Map<AbilityKey, Integer> getPlayerAbilities() {
+    public static Map<AbilityKey, Integer> getPlayerAbilities() {
         return PLAYER_ABILITIES;
     }
 
-    public static final boolean isOnCooldown(Player p, Material item) {
+    public static boolean isOnCooldown(Player p, Material item) {
+        if (p == null || item == null || !p.isOnline()) return false;
         return PLAYER_COOL_DOWNS.containsKey(new AbilityKey(p, item));
     }
 
-    public static final int getCooldown(Player p, Material item) {
+    public static int getCooldown(Player p, Material item) {
         if (!isOnCooldown(p, item)) return 0;
         else return PLAYER_COOL_DOWNS.get(new AbilityKey(p, item));
     }
 
-    public static final void setCooldown(Player p, Material item, int coolDown) {
-        PLAYER_COOL_DOWNS.put(new AbilityKey(p, item), coolDown);
+    public static void setCooldown(Player p, Material item, int coolDown) {
+        if (coolDown <= 0) {
+            if (isOnCooldown(p, item)) {
+                AbilityKey key = new AbilityKey(p, item);
+                if (PLAYER_COOL_DOWNS.remove(key) != null) {
+                    CoolDownEndEvent coolDownEndEvent = new CoolDownEndEvent(key);
+                    Bukkit.getPluginManager().callEvent(coolDownEndEvent);
+                }
+            }
+        } else {
+            PLAYER_COOL_DOWNS.put(new AbilityKey(p, item), coolDown);
+        }
     }
 
     public static Economy getEconomy() {
         return econ;
     }
 
+    public static Permission getPermissions() {
+        return perms;
+    }
+
+    public static ProtocolManager getProtocolManager() { return protocolManager; }
+
     @Override
     public void onDisable() {
         log.info(String.format("[%s] Disabled Version %s", getDescription().getName(), getDescription().getVersion()));
     }
-    public static final void addPlayerTimer(PlayerTimerKey ptk, int taskId) {
+    public static void addPlayerTimer(PlayerTimerKey ptk, int taskId) {
         PLAYER_TASK_MAP.put(ptk, taskId);
     }
 
-    public static final void addPlayerTimer(Player p, PlayerTimerKey.PlayerTimerType playerTimer, int taskId) {
+    public static void addPlayerTimer(Player p, PlayerTimerKey.PlayerTimerType playerTimer, int taskId) {
         addPlayerTimer(new PlayerTimerKey(p, playerTimer), taskId);
     }
 
-    public static final void removePlayerTimer(PlayerTimerKey ptk) {
+    public static void removePlayerTimer(PlayerTimerKey ptk) {
         if (PLAYER_TASK_MAP.containsKey(ptk))
             PLAYER_TASK_MAP.remove(ptk);
     }
 
-    public static final void removePlayerTimer(Player p, PlayerTimerKey.PlayerTimerType playerTimer) {
+    public static void removePlayerTimer(Player p, PlayerTimerKey.PlayerTimerType playerTimer) {
         removePlayerTimer(new PlayerTimerKey(p, playerTimer));
     }
 
-    public static final int getTaskId(PlayerTimerKey ptk) {
+    public static int getTaskId(PlayerTimerKey ptk) {
         if (!PLAYER_TASK_MAP.containsKey(ptk)) return -1;
         return PLAYER_TASK_MAP.get(ptk);
     }
 
-    public static final int getTaskId(Player p, PlayerTimerKey.PlayerTimerType playerTimer) {
+    public static int getTaskId(Player p, PlayerTimerKey.PlayerTimerType playerTimer) {
         return getTaskId(new PlayerTimerKey(p, playerTimer));
     }
 

@@ -36,8 +36,8 @@ public class LifeSwap extends ProjectileAbilityStyle {
                             double tmp = hit.getHealth();
                             hit.setHealth(shooter.getHealth());
                             shooter.setHealth(tmp);
-                            hit.getWorld().playEffect(hit.getLocation(), Effect.STEP_SOUND, Material.EMERALD);
-                            shooter.getWorld().playEffect(shooter.getLocation(), Effect.STEP_SOUND, Material.EMERALD);
+                            hit.getWorld().playEffect(hit.getLocation(), Effect.STEP_SOUND, Material.EMERALD_BLOCK);
+                            shooter.getWorld().playEffect(shooter.getLocation(), Effect.STEP_SOUND, Material.EMERALD_BLOCK);
                             shooter.getWorld().playSound(shooter.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 5, 1);
                             shooter.sendMessage(ChatColor.GREEN + "You swapped hit points with " + hit.getName() + ".");
                             hit.sendMessage(ChatColor.RED + shooter.getName() + " swapped hit points with you.");
@@ -54,7 +54,7 @@ public class LifeSwap extends ProjectileAbilityStyle {
     @Override
     public int onShoot(Projectile projectile) {
         projectile.setMetadata(MetadataKey.ON_HIT, new FixedMetadataValue(CoronaCraft.instance, this));
-        return 6 * CoronaCraft.ABILITY_TICK_PER_SECOND;
+        return 5 * CoronaCraft.ABILITY_TICK_PER_SECOND;
     }
 
 }

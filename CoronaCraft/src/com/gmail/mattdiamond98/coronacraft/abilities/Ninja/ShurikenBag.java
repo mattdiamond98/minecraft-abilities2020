@@ -2,6 +2,7 @@ package com.gmail.mattdiamond98.coronacraft.abilities.Ninja;
 
 import com.gmail.mattdiamond98.coronacraft.abilities.Ability;
 import com.gmail.mattdiamond98.coronacraft.CoronaCraft;
+import com.gmail.mattdiamond98.coronacraft.abilities.UltimateTracker;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityKey;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownEndEvent;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownTickEvent;
@@ -52,10 +53,12 @@ public class ShurikenBag extends Ability {
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Snowball && e.getEntity() instanceof Player) {
-            if (Team.getTeamByPlayerName(((LivingEntity) e.getEntity()).getName()) == null) return;
+            if (Team.getTeamByPlayerName(((Player) e.getEntity()).getName()) == null) return;
             Player p = (Player) ((Snowball) e.getDamager()).getShooter();
             Player target = (Player) e.getEntity();
+            if (AbilityUtil.inSpawn(p) || AbilityUtil.inSpawn(target)) return;
             getStyle(p).execute(p, target);
+            target.setNoDamageTicks(0);
         }
     }
 
@@ -70,8 +73,10 @@ public class ShurikenBag extends Ability {
         ItemMeta meta = given.getItemMeta();
         meta.setDisplayName("§eShuriken");
         given.setItemMeta(meta);
+        int cooldown = BASE_COOL_DOWN;
+        if (UltimateTracker.isUltimateActive(e.getPlayer())) cooldown /= 2;
         AbilityUtil.regenerateItemPassive(e.getPlayer(), e.getItem(),
-                item, given, MAX_COUNT, BASE_COOL_DOWN);
+                item, given, MAX_COUNT, cooldown);
     }
 
     @EventHandler
@@ -83,7 +88,9 @@ public class ShurikenBag extends Ability {
                 Map<AbilityKey, Integer> coolDowns = CoronaCraft.getPlayerCoolDowns();
                 AbilityKey key = new AbilityKey(player, getItem());
                 if (!coolDowns.containsKey(key)) {
-                    coolDowns.put(key, BASE_COOL_DOWN);
+                    int cooldown = BASE_COOL_DOWN;
+                    if (UltimateTracker.isUltimateActive(player)) cooldown /= 2;
+                    coolDowns.put(key, cooldown);
                 }
             }
         }

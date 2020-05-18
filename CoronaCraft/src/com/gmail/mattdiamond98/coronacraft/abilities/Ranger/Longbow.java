@@ -1,8 +1,11 @@
 package com.gmail.mattdiamond98.coronacraft.abilities.Ranger;
 
+import com.gmail.mattdiamond98.coronacraft.Loadout;
 import com.gmail.mattdiamond98.coronacraft.abilities.Ability;
 import com.gmail.mattdiamond98.coronacraft.CoronaCraft;
+import com.gmail.mattdiamond98.coronacraft.abilities.UltimateTracker;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownTickEvent;
+import com.gmail.mattdiamond98.coronacraft.tutorial.Tutorial;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityKey;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityUtil;
 import org.bukkit.Material;
@@ -10,6 +13,7 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -39,16 +43,25 @@ public class Longbow extends Ability {
         if ((e.getItemDrop().getItemStack().getType() == item) && notInSpawn(e.getPlayer())) {
             AbilityUtil.toggleAbilityStyle(e.getPlayer(), item);
             e.setCancelled(true);
+            if (!Tutorial.RANGER_CHANGE_STYLES.isCompleted(e.getPlayer())) {
+                Tutorial.RANGER_CHANGE_STYLES.setCompleted(e.getPlayer());
+            }
         }
     }
 
     @EventHandler
-    public void onBowShoot(ProjectileLaunchEvent e) {
-        if (e.getEntity() instanceof Arrow && e.getEntity().getShooter() instanceof Player) {
-            Arrow arrow = (Arrow) e.getEntity();
-            Player p = (Player) arrow.getShooter();
+    public void onBowShoot(EntityShootBowEvent e) {
+        if (e.getProjectile() instanceof Arrow && e.getEntity() instanceof Player) {
+            Arrow arrow = (Arrow) e.getProjectile();
+            Player p = (Player) e.getEntity();
             if (p.isSneaking() && AbilityUtil.notInSpawn(p)) {
                 getStyle(p).execute(p, arrow);
+                if (!Tutorial.RANGER_USE_STYLES.isCompleted(p)) {
+                    Tutorial.RANGER_USE_STYLES.setCompleted(p);
+                }
+            }
+            if (UltimateTracker.isUltimateActive(p)) {
+                ArrowStorm.arrowDuplicate(p, arrow, e.getForce());
             }
         }
     }
@@ -70,7 +83,7 @@ public class Longbow extends Ability {
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent e) {
         AbilityKey key = new AbilityKey(e.getPlayer(), item);
-        if (e.getPlayer().getInventory().contains(Material.BOW)) {
+        if (AbilityUtil.inventoryContains(e.getPlayer(), Material.BOW)) {
             if (!CoronaCraft.isOnCooldown(e.getPlayer(), item))
                 CoronaCraft.getPlayerCoolDowns().put(key, 10_000);
         } else if (CoronaCraft.getPlayerCoolDowns().containsKey(key)){

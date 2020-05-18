@@ -33,7 +33,7 @@ public class Entangle extends AbilityStyle {
         FishHook hook = (FishHook) args[0];
         List<Player> enemies = AbilityUtil.getEnemies(p);
         for (Player enemy : enemies) {
-            if (enemy.getLocation().distanceSquared(hook.getLocation()) < 1.5 * 1.5 && notInSpawn(enemy)) {
+            if (enemy.getLocation().distanceSquared(hook.getLocation()) < 2.5 * 2.5 && notInSpawn(enemy)) {
                 new PotionEffect(PotionEffectType.SLOW, 8 * 20, 3).apply(enemy);
                 enemy.getLocation().getWorld().playEffect(enemy.getEyeLocation(), Effect.STEP_SOUND, Material.COBWEB);
                 enemy.sendMessage(ChatColor.RED + "You have been entangled.");

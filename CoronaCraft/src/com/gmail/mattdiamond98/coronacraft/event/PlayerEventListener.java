@@ -3,8 +3,11 @@ package com.gmail.mattdiamond98.coronacraft.event;
 import com.gmail.mattdiamond98.coronacraft.abilities.Ability;
 import com.gmail.mattdiamond98.coronacraft.abilities.AbilityStyle;
 import com.gmail.mattdiamond98.coronacraft.CoronaCraft;
+import com.gmail.mattdiamond98.coronacraft.abilities.TrapAbilityStyle;
+import com.gmail.mattdiamond98.coronacraft.abilities.UltimateTracker;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityUtil;
 import com.gmail.mattdiamond98.coronacraft.util.MetadataKey;
+import com.gmail.mattdiamond98.coronacraft.util.PlayerInteraction;
 import com.gmail.mattdiamond98.coronacraft.util.PlayerTimerKey;
 import com.gmail.mattdiamond98.coronacraft.util.PlayerTimerKey.PlayerTimerType;
 import com.tommytony.war.Team;
@@ -13,6 +16,7 @@ import com.tommytony.war.Warzone;
 import com.tommytony.war.config.TeamConfig;
 import com.tommytony.war.config.WarzoneConfig;
 import com.tommytony.war.event.*;
+import net.milkbowl.vault.chat.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -22,6 +26,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -30,10 +36,12 @@ import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.metadata.Metadatable;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class PlayerEventListener implements Listener {
 
@@ -48,11 +56,10 @@ public class PlayerEventListener implements Listener {
         base.add(Material.COBBLESTONE);
         base.add(Material.SNOWBALL);
         base.add(Material.COBWEB);
-        base.add(Material.CROSSBOW);
         return base;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOW)
     public void onPlayerInteract(PlayerInteractEvent e) {
         if (Warzone.getZoneByPlayerName(e.getPlayer().getName()) == null) {
             if (e.hasItem() && e.getItem().getType() == Material.NETHER_STAR
@@ -83,11 +90,58 @@ public class PlayerEventListener implements Listener {
                 if (warzones.size() == 0) return;
                 Warzone zone = warzones.get(random.nextInt(warzones.size()));
                 if (zone != null) {
+                    e.setCancelled(true);
                     zone.autoAssign(e.getPlayer());
+                }
+            }
+        } else {
+            if (e.getAction() == Action.PHYSICAL) {
+                if (e.getClickedBlock().getType() == Material.HEAVY_WEIGHTED_PRESSURE_PLATE) {
+                    Object style = AbilityUtil.getMetadata(e.getClickedBlock(), MetadataKey.ON_STEP);
+                    Object player = AbilityUtil.getMetadata(e.getClickedBlock(), MetadataKey.PLAYER);
+                    if (style instanceof AbilityStyle && player instanceof Player) {
+                        if (!((Player) player).isOnline()
+                                || !Warzone.getZoneByLocation(e.getClickedBlock().getLocation()).equals(Warzone.getZoneByPlayerName(((Player) player).getName()))) {
+                            e.getClickedBlock().setType(Material.AIR);
+                            e.getClickedBlock().removeMetadata(MetadataKey.PLAYER, CoronaCraft.instance);
+                            e.getClickedBlock().removeMetadata(MetadataKey.ON_STEP, CoronaCraft.instance);
+                            TrapAbilityStyle.getPlayerTraps().remove(((Player) player).getName());
+                        }
+                        if (!Team.getTeamByPlayerName(((Player) player).getName()).equals(Team.getTeamByPlayerName(e.getPlayer().getName()))) {
+                            if (TrapAbilityStyle.getPlayerTraps().containsKey(((Player) player).getName())) {
+                                CoronaCraft.setCooldown((Player) player, e.getClickedBlock().getType(), ((AbilityStyle) style).execute((Player) player, e));
+                            }
+                            e.getClickedBlock().setType(Material.AIR);
+                            e.getClickedBlock().removeMetadata(MetadataKey.PLAYER, CoronaCraft.instance);
+                            e.getClickedBlock().removeMetadata(MetadataKey.ON_STEP, CoronaCraft.instance);
+                            TrapAbilityStyle.getPlayerTraps().remove(((Player) player).getName());
+                        }
+                    } else {
+                        e.getClickedBlock().setType(Material.AIR);
+                        e.getClickedBlock().removeMetadata(MetadataKey.PLAYER, CoronaCraft.instance);
+                        e.getClickedBlock().removeMetadata(MetadataKey.ON_STEP, CoronaCraft.instance);
+                    }
                 }
             }
         }
     }
+
+    @EventHandler
+    public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
+        if (e.getEntity() instanceof Player) {
+            if (e.getDamager() instanceof Player) {
+                PlayerInteraction.playerHarm((Player) e.getEntity(), (Player) e.getDamager());
+            }
+            if (e.getDamager() instanceof Projectile && ((Projectile)e.getDamager()).getShooter() instanceof Player) {
+                PlayerInteraction.playerHarm((Player) e.getEntity(), (Player) ((Projectile) e.getDamager()).getShooter());
+            }
+            if (e.getDamager() instanceof TNTPrimed && e.getDamager().hasMetadata(MetadataKey.PLAYER)) {
+                PlayerInteraction.playerHarm((Player) e.getEntity(), (Player) e.getDamager().getMetadata(MetadataKey.PLAYER).get(0).value());
+            }
+        }
+    }
+
+
 
     @EventHandler
     public void onProjectileHit(ProjectileHitEvent event) {
@@ -103,6 +157,31 @@ public class PlayerEventListener implements Listener {
     @EventHandler
     public void onPlayerLeave(WarPlayerLeaveEvent event) {
         AbilityUtil.removeCooldowns(Bukkit.getPlayer(event.getQuitter()));
+    }
+
+    @EventHandler
+    public void onWarPlayerThief(WarPlayerThiefEvent event) {
+        for (PotionEffectType type : new PotionEffectType[]{
+                PotionEffectType.SPEED,
+                PotionEffectType.FAST_DIGGING,
+                PotionEffectType.INCREASE_DAMAGE,
+                PotionEffectType.JUMP,
+                PotionEffectType.REGENERATION,
+                PotionEffectType.DAMAGE_RESISTANCE,
+                PotionEffectType.FIRE_RESISTANCE,
+                PotionEffectType.WATER_BREATHING,
+                PotionEffectType.NIGHT_VISION,
+                PotionEffectType.HEALTH_BOOST,
+                PotionEffectType.ABSORPTION,
+                PotionEffectType.LUCK,
+                PotionEffectType.SLOW_FALLING,
+                PotionEffectType.HERO_OF_THE_VILLAGE
+        }) {
+            if (event.getThief().hasPotionEffect(type)) event.getThief().removePotionEffect(type);
+        }
+        if (UltimateTracker.isUltimateActive(event.getThief())) {
+            UltimateTracker.removeProgress(event.getThief());
+        }
     }
 
     @EventHandler
@@ -136,7 +215,7 @@ public class PlayerEventListener implements Listener {
     @EventHandler
     public void onPlayerPickupArrow(PlayerPickupArrowEvent e) {
         if (e.getArrow() instanceof Trident) {
-            if (!e.getPlayer().getInventory().contains(Material.FISHING_ROD) || e.getPlayer().getInventory().contains(Material.TRIDENT)) {
+            if (!AbilityUtil.inventoryContains(e.getPlayer(), Material.FISHING_ROD) || AbilityUtil.inventoryContains(e.getPlayer(), Material.TRIDENT)) {
                 e.setCancelled(true);
                 e.getArrow().remove();
             }
@@ -228,6 +307,7 @@ public class PlayerEventListener implements Listener {
                 adjustedAmount *= 1.5;
             }
             adjustedAmount = Math.ceil(adjustedAmount);
+//            adjustedAmount *= 2;
             CoronaCraft.getEconomy().depositPlayer(p, (int) adjustedAmount);
             p.sendMessage(ChatColor.GREEN + "You received " + ((int) adjustedAmount) + " Corona Coins!");
         }
@@ -350,9 +430,9 @@ public class PlayerEventListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent e) {
         if (!e.getPlayer().hasPlayedBefore()) {
             // TODO: change to tutorial once implemented
-            e.getPlayer().sendTitle(ChatColor.GOLD + "Corona Capture the Flag", ChatColor.GREEN + "Right click the Nether Star to play", 1, 6, 1);
+            e.getPlayer().sendTitle(ChatColor.GOLD + "Corona Capture the Flag", ChatColor.GREEN + "Right click the Nether Star to play", 20, 100, 20);
         }
-        if (!e.getPlayer().getInventory().contains(Material.NETHER_STAR)) {
+        if (!AbilityUtil.inventoryContains(e.getPlayer(), Material.NETHER_STAR)) {
             ItemStack autoJoin = new ItemStack(Material.NETHER_STAR, 1);
             ItemMeta meta = autoJoin.getItemMeta();
             meta.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Join Active Game");

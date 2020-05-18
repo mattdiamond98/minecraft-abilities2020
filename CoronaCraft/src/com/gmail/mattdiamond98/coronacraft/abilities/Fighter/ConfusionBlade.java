@@ -14,7 +14,7 @@ public class ConfusionBlade extends AbilityStyle {
     private Random random = new Random();
 
     public ConfusionBlade() {
-        super("Confusion Blade", new String[]{"25% chance to distort opponent's view on hit"});
+        super("Confusion Blade", new String[]{"20% chance to distort opponent's view on hit"});
     }
 
     /***
@@ -23,7 +23,7 @@ public class ConfusionBlade extends AbilityStyle {
      */
     public int execute(Player p, Object... args) {
         LivingEntity e = (LivingEntity) args[0];
-        if (random.nextFloat() < 0.25) {
+        if (random.nextFloat() < 0.2) {
             Location loc = e.getLocation();
             loc.setPitch((random.nextFloat() * 180) - 90);
             loc.setYaw((random.nextFloat() * 360) - 180);

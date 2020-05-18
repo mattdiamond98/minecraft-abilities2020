@@ -36,9 +36,10 @@ public class SleightOfHand extends AbilityStyle {
 
     private void addBolt(Player p, ItemStack crossbow) {
         CrossbowMeta meta = (CrossbowMeta) crossbow.getItemMeta();
+        if (meta == null) return;
         if (meta.hasChargedProjectiles()) {
             if (meta.getChargedProjectiles().size() < 3) {
-                meta.addChargedProjectile(new ItemStack(Material.ARROW, 1));
+                meta.addChargedProjectile(new ItemStack(Material.SPECTRAL_ARROW, 1));
                 crossbow.setItemMeta(meta);
                 p.sendMessage(ChatColor.GREEN + "Loaded an extra projectile");
             }

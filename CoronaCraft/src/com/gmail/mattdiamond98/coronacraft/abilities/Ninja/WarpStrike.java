@@ -27,21 +27,22 @@ public class WarpStrike extends AbilityStyle {
         LivingEntity e = (LivingEntity) args[0];
         Vector difference = p.getLocation().subtract(e.getLocation()).toVector();
         difference = difference.normalize().multiply(10);
-        Location destination = p.getLocation().add(difference);
-        if (!p.getWorld().getBlockAt(destination).getType().isOccluding()) {
-            teleportWithEffect(p, destination);
-            return 0;
-        }
-        for (int i = 1; i < 5; i++) {
-            for (Vector v : AbilityUtil.unitVectors()) {
-                if (!p.getWorld().getBlockAt(destination.add(v.multiply(i))).getType().isOccluding()) {
-
-                    teleportWithEffect(p, destination.add(v.multiply(i)));
-                    return 0;
+        for (int j = 1; j <= 3; j++) {
+            Location destination = p.getLocation().add(difference.multiply(1.0 / j));
+            if (!p.getWorld().getBlockAt(destination).getType().isOccluding()) {
+                teleportWithEffect(p, destination);
+                return 0;
+            }
+            for (int i = 1; i < 5; i++) {
+                for (Vector v : AbilityUtil.unitVectors()) {
+                    if (!p.getWorld().getBlockAt(destination.add(v.multiply(i))).getType().isOccluding()) {
+                        teleportWithEffect(p, destination.add(v.multiply(i)));
+                        return 0;
+                    }
                 }
             }
         }
-        teleportWithEffect(p, destination);
+        teleportWithEffect(p, p.getLocation());
         return 0;
     }
 
