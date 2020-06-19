@@ -1,0 +1,1155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="CoronaCraft:jar2" />
+    </artifacts-to-build>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0581fea0-4993-45b5-9c7e-537ca940b2dd" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/CoronaCraft_jar2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_ejml_core_0_30.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_ejml_dense64_0_30.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_ejml_simple_0_30.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/ejml_simple_0_39.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CoronaCraft/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/DurationAbilityStyle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/EventExecutable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Fighter/BullRush.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Fighter/Rush.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Fighter/TigerPounce.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Ranger/PrimordialArrow.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/data/PlayerData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/data/PlayerDataPath.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/util/TeamMap.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CoronaCraft/src/main/resources/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/User.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/User.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/CoronaCraft.iml" beforeDir="false" afterPath="$PROJECT_DIR$/CoronaCraft/CoronaCraft.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/CoronaCraft.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/Loadout.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Ability.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/AbilityStyle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Anarchist/Chemical.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Anarchist/Detonator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Anarchist/Grenade.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Anarchist/Incendiary.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Anarchist/Launcher.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Anarchist/TNTGenerator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Anarchist/TNTTrail.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Berserker/BloodSeeker.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Berserker/Brawn.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Berserker/Fleetfoot.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Berserker/LifeThief.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Berserker/Rage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Berserker/UndyingFrenzy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Berserker/Waraxe.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Engineer/Bridge.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Engineer/Schematic.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Engineer/SchematicStyle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Engineer/SpacetimePortal.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Engineer/Stockpile.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Engineer/Tower.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Engineer/Wall.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Fighter/ConfusionBlade.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Fighter/InfernalBlade.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Fighter/Omnislash.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Fighter/SwiftBlade.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Fighter/SwordStyle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/FoodRegen.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Gladiator/Enfeeble.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Gladiator/Entangle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Gladiator/Fatalis.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Gladiator/Impale.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Gladiator/Lacerate.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Gladiator/LifeSwap.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Gladiator/Net.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Gladiator/Pluck.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Gladiator/SpearThrow.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Gladiator/StormGodsWrath.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Ninja/Blink.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Ninja/Leap.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Ninja/NinjaMovement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Ninja/PoisonShuriken.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Ninja/ShadowKnife.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Ninja/ShadowStride.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Ninja/ShurikenBag.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Ninja/ToxicEnd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Ninja/VoidShuriken.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Ninja/WarpStrike.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/PickaxeRegen.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/ProjectileAbilityStyle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Ranger/ArrowStorm.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Ranger/GravityArrow.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Ranger/Longbow.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Ranger/PoisonArrow.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Ranger/SlayingArrow.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Ranger/SlowingArrow.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Skirmisher/BearTrap.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Skirmisher/HunterBlade.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Skirmisher/InstinctiveHunter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Skirmisher/Shortsword.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Skirmisher/SleightOfHand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Skirmisher/SoulDrain.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Skirmisher/Trap.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Tank/Accelerate.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Tank/DesolationFist.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Tank/Lethargy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Tank/Rally.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Tank/Regenerate.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Tank/TankUp.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Tank/ZoneOfProtection.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/TrapAbilityStyle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/UltimateAbility.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/UltimateListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/UltimateTracker.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/command/CoronaCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/event/CoolDownEndEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/event/CoolDownTickEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/event/CoronaCraftTickEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/event/PlayerEventListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/tutorial/Tip.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/tutorial/Tutorial.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/tutorial/TutorialStep.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/util/AbilityKey.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/util/AbilityUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/util/InstantFirework.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/util/MetadataKey.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/util/PlayerInteraction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/util/PlayerTimerKey.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoronaCraft/src/plugin.yml" beforeDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/out/" />
+    <ignored path="$PROJECT_DIR$/CoronaCraft/target/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="isMigrated" value="true" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/event/PlayerEventListener.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="301" column="51" selection-start-line="301" selection-start-column="51" selection-end-line="301" selection-end-column="51" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#12947#12948#0" expanded="true" />
+                <element signature="e#18651#18652#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Ranger/Longbow.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-34">
+              <caret line="39" column="42" selection-start-line="39" selection-start-column="42" selection-end-line="39" selection-end-column="42" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Ranger/PrimordialArrow.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="733">
+              <caret line="167" column="51" selection-start-line="167" selection-start-column="51" selection-end-line="167" selection-end-column="51" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#2126#2874#0" expanded="true" />
+                <element signature="e#2873#2874#0" expanded="true" />
+                <element signature="e#4114#5231#0" expanded="true" />
+                <element signature="e#5230#5231#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/tutorial/Tutorial.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="92" column="45" selection-start-line="92" selection-start-column="45" selection-end-line="92" selection-end-column="45" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Engineer/Schematic.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-5">
+              <caret line="46" column="24" selection-start-line="46" selection-start-column="24" selection-end-line="46" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Engineer/SchematicStyle.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="267">
+              <caret line="79" column="20" selection-start-line="79" selection-start-column="20" selection-end-line="85" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/EventExecutable.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" column="4" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Tank/DesolationFist.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="70" column="17" selection-start-line="66" selection-start-column="16" selection-end-line="70" selection-end-column="17" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Gladiator/Lacerate.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="80">
+              <caret line="31" column="64" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="64" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Class" />
+        <option value="Interface" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>format</find>
+      <find>addItem(new ItemStack(Material.NETHE</find>
+      <find>has activ</find>
+      <find>CHEST_M</find>
+      <find>getTotalCount</find>
+      <find>getInventory().conta</find>
+      <find>player.get</find>
+      <find>.getInventory().conta</find>
+      <find>join ac</find>
+      <find>NETHER_</find>
+      <find>conservat</find>
+      <find>onDisa</find>
+      <find>join</find>
+      <find>folder</find>
+      <find>quit</find>
+      <find>War</find>
+      <find>notify</find>
+      <find>notInSpaw</find>
+      <find>cooldown</find>
+      <find>CooldownTick</find>
+      <find>Sound</find>
+      <find>falling</find>
+      <find>FallingB</find>
+      <find>rand</find>
+      <find>economy</find>
+      <find>Circus</find>
+      <find>CircusUltim</find>
+      <find>econo</find>
+      <find>MetaData</find>
+      <find>agea</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/CoronaCraft.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Ninja/ShurikenBag.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/event/PlayerEventListener.java" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Tank/DesolationFist.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Gladiator/StormGodsWrath.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Engineer/Stockpile.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Anarchist/TNTTrail.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Tank/Rally.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/util/PlayerInteraction.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Skirmisher/Trap.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/util/AbilityUtil.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Ranger/Longbow.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Gladiator/SpearThrow.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Skirmisher/SleightOfHand.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/UltimateListener.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Skirmisher/SoulDrain.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Berserker/Fleetfoot.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Berserker/UndyingFrenzy.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Ninja/WarpStrike.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Ninja/ToxicEnd.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Ninja/ShadowKnife.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Ninja/PoisonShuriken.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/abilities/Ninja/VoidShuriken.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/com/gmail/mattdiamond98/coronacraft/event/PlayerEventListener.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/rating/PlayerRating.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/rating/PlayerData.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Anarchist/Grenade.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Tank/DesolationFist.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Gladiator/Lacerate.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/data/PlayerRating.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/data/PlayerDataPath.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/data/PlayerData.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/util/TeamMap.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/main/resources/META-INF/MANIFEST.MF" />
+        <option value="$PROJECT_DIR$/CoronaCraft/pom.xml" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/util/AbilityUtil.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Fighter/SwordStyle.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Anarchist/Launcher.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Ninja/Leap.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/DurationAbilityStyle.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Ninja/ShurikenBag.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/CoronaCraft.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Fighter/BullRush.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Fighter/TigerPounce.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Fighter/Rush.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Engineer/SchematicStyle.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Berserker/UndyingFrenzy.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Ninja/Blink.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Ranger/PrimalArrow.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/EventExecutable.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Ranger/Longbow.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/tutorial/Tutorial.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Ranger/PrimordialArrow.java" />
+        <option value="$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/event/PlayerEventListener.java" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="CoronaCraft" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="CoronaCraft" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Plugins" type="7aea1407:MavenProjectsStructure$PluginsNode" />
+        </path>
+      </expand>
+      <select />
+    </treeState>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="522" />
+    <option name="y" value="56" />
+    <option name="width" value="814" />
+    <option name="height" value="867" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="CoronaCraft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CoronaCraft" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CoronaCraft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CoronaCraft" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CoronaCraft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CoronaCraft" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CoronaCraft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CoronaCraft" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CoronaCraft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CoronaCraft" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="coronacraft" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CoronaCraft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CoronaCraft" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="coronacraft" type="462c0819:PsiDirectoryNode" />
+              <item name="abilities" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CoronaCraft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CoronaCraft" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="coronacraft" type="462c0819:PsiDirectoryNode" />
+              <item name="abilities" type="462c0819:PsiDirectoryNode" />
+              <item name="Berserker" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CoronaCraft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CoronaCraft" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="coronacraft" type="462c0819:PsiDirectoryNode" />
+              <item name="abilities" type="462c0819:PsiDirectoryNode" />
+              <item name="Engineer" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CoronaCraft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CoronaCraft" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="coronacraft" type="462c0819:PsiDirectoryNode" />
+              <item name="abilities" type="462c0819:PsiDirectoryNode" />
+              <item name="Fighter" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CoronaCraft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CoronaCraft" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="coronacraft" type="462c0819:PsiDirectoryNode" />
+              <item name="abilities" type="462c0819:PsiDirectoryNode" />
+              <item name="Gladiator" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CoronaCraft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CoronaCraft" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="coronacraft" type="462c0819:PsiDirectoryNode" />
+              <item name="abilities" type="462c0819:PsiDirectoryNode" />
+              <item name="Ninja" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CoronaCraft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CoronaCraft" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="coronacraft" type="462c0819:PsiDirectoryNode" />
+              <item name="abilities" type="462c0819:PsiDirectoryNode" />
+              <item name="Ranger" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CoronaCraft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CoronaCraft" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="coronacraft" type="462c0819:PsiDirectoryNode" />
+              <item name="abilities" type="462c0819:PsiDirectoryNode" />
+              <item name="Tank" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CoronaCraft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CoronaCraft" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="coronacraft" type="462c0819:PsiDirectoryNode" />
+              <item name="event" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CoronaCraft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CoronaCraft" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="coronacraft" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CoronaCraft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/2020 SPRING/MINECRAFT/SimplePets-(1.15).jar!/" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.14746094" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.gmail.mattdiamond98.coronacraft.abilities.Fighter" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\User\IdeaProjects\CoronaCraft\CoronaCraft\src\main\resources" />
+      <recent name="C:\Users\User\IdeaProjects\" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0581fea0-4993-45b5-9c7e-537ca940b2dd" name="Default Changelist" comment="" />
+      <created>1585600347378</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1585600347378</updated>
+      <workItem from="1585600350718" duration="166113000" />
+      <workItem from="1586316945176" duration="2452000" />
+      <workItem from="1586368196498" duration="10530000" />
+      <workItem from="1586391910902" duration="4710000" />
+      <workItem from="1586566585013" duration="11364000" />
+      <workItem from="1586744022119" duration="15327000" />
+      <workItem from="1587000524868" duration="4437000" />
+      <workItem from="1587155660619" duration="3332000" />
+      <workItem from="1587244164588" duration="14159000" />
+      <workItem from="1587393380681" duration="4448000" />
+      <workItem from="1587421618086" duration="1880000" />
+      <workItem from="1587591943341" duration="8037000" />
+      <workItem from="1587773980835" duration="1337000" />
+      <workItem from="1588284040728" duration="33857000" />
+      <workItem from="1588439550806" duration="135007000" />
+      <workItem from="1589386126483" duration="92849000" />
+      <workItem from="1592182405481" duration="42480000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="552319000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2114396" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4993573" weight="0.25302827" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="8" />
+      <window_info anchor="bottom" id="Statistic" order="9" />
+      <window_info anchor="bottom" id="Terminal" order="10" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50064266" side_tool="true" weight="0.25437415" />
+      <window_info anchor="bottom" id="Version Control" order="12" />
+      <window_info anchor="bottom" id="Messages" order="13" sideWeight="0.49871466" weight="0.32974428" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" weight="0.32969153" />
+      <window_info anchor="right" id="Maven" order="4" weight="0.32969153" />
+      <window_info anchor="right" id="Palette&#9;" order="5" />
+      <window_info anchor="right" id="SciView" order="6" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Engineer/SchematicStyle.java</url>
+          <line>62</line>
+          <properties />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Skirmisher/Trap.java</url>
+          <line>29</line>
+          <properties />
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="jar://$USER_HOME$/Desktop/2020 SPRING/MINECRAFT/war.jar!/com/tommytony/war/Team.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1509">
+          <caret line="616" column="20" selection-start-line="616" selection-start-column="20" selection-end-line="616" selection-end-column="20" />
+          <folding>
+            <element signature="e#28031#28032#0" expanded="true" />
+            <element signature="e#28067#28068#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Gladiator/Fatalis.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="27" column="31" selection-start-line="27" selection-start-column="31" selection-end-line="27" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/data/PlayerRating.java" />
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/de/gesundkrank/jskills/Team.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/de/gesundkrank/jskills/SkillCalculator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="141">
+          <caret line="39" column="41" selection-start-line="39" selection-start-column="41" selection-end-line="39" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/de/gesundkrank/jskills/GameInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1061">
+          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/de/gesundkrank/jskills/trueskill/TrueSkillFactorGraph.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="29" column="61" selection-start-line="29" selection-start-column="51" selection-end-line="29" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/de/gesundkrank/jskills/Rating.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2047">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/data/PlayerDataPath.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/de/gesundkrank/jskills/IPlayer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/de/gesundkrank/jskills/trueskill/FactorGraphTrueSkillCalculator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="269">
+          <caret line="44" selection-start-line="44" selection-end-line="44" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/de/gesundkrank/jskills/RateablePlayer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding>
+            <element signature="e#1064#1065#0" expanded="true" />
+            <element signature="e#1150#1151#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/de/gesundkrank/jskills/ITeam.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="20" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/resources/META-INF/MANIFEST.MF">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/de/gesundkrank/jskills/trueskill/layers/PlayerSkillsToPerformancesLayer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="28" column="109" selection-start-line="28" selection-start-column="109" selection-end-line="28" selection-end-column="109" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/resources/plugin.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="16" selection-start-column="16" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/data/PlayerData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="918">
+          <caret line="74" column="62" selection-start-line="74" selection-start-column="62" selection-end-line="74" selection-end-column="62" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/de/gesundkrank/jskills/TrueSkillCalculator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="20" column="45" selection-start-line="20" selection-start-column="45" selection-end-line="20" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Fighter/SwordStyle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="53" selection-start-column="53" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="437">
+          <caret line="28" column="43" selection-start-line="28" selection-start-column="43" selection-end-line="28" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Fighter/SwiftBlade.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="19" column="47" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Ninja/Leap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="11" column="41" selection-start-line="11" selection-start-column="41" selection-end-line="11" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Anarchist/Launcher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="369">
+          <caret line="89" column="18" selection-start-line="89" selection-start-column="18" selection-end-line="89" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/DurationAbilityStyle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="47" lean-forward="true" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="47" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Ninja/ShurikenBag.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-17">
+          <caret line="40" column="5" lean-forward="true" selection-start-line="40" selection-start-column="5" selection-end-line="40" selection-end-column="5" />
+          <folding>
+            <element signature="e#2519#2520#0" expanded="true" />
+            <element signature="e#2595#2596#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/ProjectileAbilityStyle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/util/TeamMap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="72" selection-start-line="8" selection-start-column="72" selection-end-line="8" selection-end-column="72" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Tank/Rally.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="103">
+          <caret line="31" selection-start-line="31" selection-end-line="34" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/util/AbilityUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="70" column="30" lean-forward="true" selection-start-line="70" selection-end-line="71" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/CoronaCraft.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="103" column="26" selection-start-line="103" selection-start-column="26" selection-end-line="103" selection-end-column="26" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Anarchist/TNTGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="29" column="33" selection-start-line="29" selection-start-column="20" selection-end-line="29" selection-end-column="42" />
+          <folding>
+            <element signature="e#1051#1052#0" expanded="true" />
+            <element signature="e#1127#1128#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Fighter/BullRush.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="23" lean-forward="true" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Fighter/Rush.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="539">
+          <caret line="119" column="13" selection-start-line="119" selection-start-column="13" selection-end-line="119" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Fighter/TigerPounce.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="43" selection-start-line="20" selection-start-column="43" selection-end-line="20" selection-end-column="43" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Engineer/Tower.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="18" column="20" lean-forward="true" selection-start-line="18" selection-start-column="20" selection-end-line="18" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Engineer/Bridge.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Berserker/UndyingFrenzy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="522">
+          <caret line="78" column="79" selection-start-line="78" selection-start-column="79" selection-end-line="78" selection-end-column="79" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Ninja/Blink.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Ninja/PoisonShuriken.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="21" column="11" lean-forward="true" selection-start-line="21" selection-start-column="11" selection-end-line="21" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Ranger/PoisonArrow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="10" column="29" selection-start-line="10" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Gladiator/Lacerate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="31" column="64" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Tank/DesolationFist.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="70" column="17" selection-start-line="66" selection-start-column="16" selection-end-line="70" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/EventExecutable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="4" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Ranger/Longbow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-34">
+          <caret line="39" column="42" selection-start-line="39" selection-start-column="42" selection-end-line="39" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Engineer/Schematic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5">
+          <caret line="46" column="24" selection-start-line="46" selection-start-column="24" selection-end-line="46" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Engineer/SchematicStyle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="267">
+          <caret line="79" column="20" selection-start-line="79" selection-start-column="20" selection-end-line="85" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/UltimateTracker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="99" column="25" lean-forward="true" selection-start-line="99" selection-start-column="25" selection-end-line="99" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/tutorial/Tutorial.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="92" column="45" selection-start-line="92" selection-start-column="45" selection-end-line="92" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/Desktop/2020 SPRING/MINECRAFT/war.jar!/com/tommytony/war/volume/Volume.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="102" column="16" selection-start-line="102" selection-start-column="16" selection-end-line="102" selection-end-column="16" />
+          <folding>
+            <element signature="e#2717#2718#0" expanded="true" />
+            <element signature="e#2758#2759#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/abilities/Ranger/PrimordialArrow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="733">
+          <caret line="167" column="51" selection-start-line="167" selection-start-column="51" selection-end-line="167" selection-end-column="51" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2126#2874#0" expanded="true" />
+            <element signature="e#2873#2874#0" expanded="true" />
+            <element signature="e#4114#5231#0" expanded="true" />
+            <element signature="e#5230#5231#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoronaCraft/src/main/java/com/gmail/mattdiamond98/coronacraft/event/PlayerEventListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="301" column="51" selection-start-line="301" selection-start-column="51" selection-end-line="301" selection-end-column="51" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#12947#12948#0" expanded="true" />
+            <element signature="e#18651#18652#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <last-edited>CoronaCraft:jar2</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>CoronaCraft</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>ejml-ddense-0.39</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

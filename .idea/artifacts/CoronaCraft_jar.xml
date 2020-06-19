@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="CoronaCraft:jar">
+    <output-path>$USER_HOME$/Desktop/2020 SPRING/MINECRAFT</output-path>
+    <root id="archive" name="CoronaCraft.jar">
+      <element id="module-output" name="CoronaCraft" />
+      <element id="library" level="project" name="ejml-core-0.39" />
+      <element id="library" level="project" name="Maven: org.ejml:simple:0.30" />
+      <element id="library" level="project" name="Maven: org.ejml:dense64:0.30" />
+      <element id="library" level="project" name="Maven: org.ejml:core:0.30" />
+      <element id="library" level="project" name="ejml-simple-0.39" />
+    </root>
+  </artifact>
+</component>

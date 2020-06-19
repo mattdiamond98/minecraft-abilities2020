@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="CoronaCraft:jar2">
+    <output-path>$USER_HOME$/Desktop/2020 SPRING/MINECRAFT</output-path>
+    <root id="archive" name="CoronaCraft.jar">
+      <element id="module-output" name="CoronaCraft" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/ejml/dense64/0.30/dense64-0.30.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/2020 SPRING/MINECRAFT/ejml-simple-0.39.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/ejml/simple/0.30/simple-0.30.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/2020 SPRING/MINECRAFT/ejml-core-0.39.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/ejml/core/0.30/core-0.30.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/2020 SPRING/MINECRAFT/ejml-ddense-0.39.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
