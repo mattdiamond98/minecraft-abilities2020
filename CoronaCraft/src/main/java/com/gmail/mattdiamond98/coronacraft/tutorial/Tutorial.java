@@ -95,7 +95,9 @@ public class Tutorial implements Listener {
         }
         if (e.getWarzone().getName().equals("Renegade")) {
             e.getPlayer().sendMessage(ChatColor.YELLOW + "Special Rule: Hybrid classes");
-            e.getPlayer().sendMessage(ChatColor.YELLOW + "Special Rule: Capture the cake to restore lives");
+        }
+        if (!e.getWarzone().getBombs().isEmpty()) {
+            e.getPlayer().sendMessage(ChatColor.YELLOW + "Special Rule: Score by bringing the bomb to enemy spawn");
         }
     }
 

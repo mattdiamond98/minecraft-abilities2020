@@ -2,6 +2,7 @@ package com.gmail.mattdiamond98.coronacraft.abilities.Gladiator;
 
 import com.gmail.mattdiamond98.coronacraft.CoronaCraft;
 import com.gmail.mattdiamond98.coronacraft.abilities.ProjectileAbilityStyle;
+import com.gmail.mattdiamond98.coronacraft.util.AbilityUtil;
 import com.gmail.mattdiamond98.coronacraft.util.MetadataKey;
 import com.tommytony.war.Team;
 import org.bukkit.*;
@@ -20,7 +21,7 @@ public class Impale extends ProjectileAbilityStyle {
     public Impale() {
         super("Impale", new String[]{
                 "Knock back enemies hit by",
-                "your thrown spear, rooting",
+                "your thrown spear, stunning",
                 "them if they hit a wall"
         });
     }
@@ -38,11 +39,9 @@ public class Impale extends ProjectileAbilityStyle {
                         hit.setVelocity(new Vector());
                     }, 5);
                     if (rayTrace(hit.getLocation(), direction, 5) || rayTrace(hit.getEyeLocation(), direction, 5)) {
-                        new PotionEffect(PotionEffectType.JUMP, 3 * 20, 200).apply(hit); // temporarily for 3 seconds
-                        new PotionEffect(PotionEffectType.SLOW, 3 * 20, 7).apply(hit);
-                        hit.sendMessage(ChatColor.RED + "You have been rooted to the ground.");
+                        AbilityUtil.applyStunEffect(hit, 3 * 20);
                         hit.getWorld().playEffect(hit.getLocation(), Effect.STEP_SOUND, Material.REDSTONE_WIRE);
-                        hit.getWorld().playSound(hit.getLocation(), Sound.ENTITY_PILLAGER_HURT, 5, 1);
+                        hit.getWorld().playSound(hit.getLocation(), Sound.ENTITY_PILLAGER_HURT, 1, 1);
                     }
                     hit.setVelocity(direction.setY(0.1));
                 }

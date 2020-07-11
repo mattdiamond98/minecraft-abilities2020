@@ -17,7 +17,7 @@ public class Regenerate extends AbilityStyle {
                 "Heal nearby allies over time,",
                 "healing more if they are hurt",
                 "Radius: 10",
-                "Duration: 4 seconds",
+                "Duration: 6 seconds",
                 "Cooldown: 35 seconds"},
                 "coronacraft.tank.regenerate");
     }
@@ -39,7 +39,7 @@ public class Regenerate extends AbilityStyle {
                     if (teammate.getHealth() <= 12.0) amplifier = 1;
                     if (teammate.getHealth() <= 8.0 ) amplifier = 2;
                     if (teammate.getHealth() <= 4.0 ) amplifier = 3;
-                    new PotionEffect(PotionEffectType.REGENERATION, 80, amplifier).apply(teammate);
+                    new PotionEffect(PotionEffectType.REGENERATION, 120, amplifier).apply(teammate);
                     teammate.getWorld().spawnParticle(Particle.HEART, teammate.getEyeLocation(), 3);
                     teammate.getWorld().playSound(teammate.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 5, 1);
                     teammate.sendMessage(ChatColor.GREEN + "You feel your wounds closing up.");
@@ -47,6 +47,6 @@ public class Regenerate extends AbilityStyle {
 
             }
         }
-        return 40 * CoronaCraft.ABILITY_TICK_PER_SECOND;
+        return 35 * CoronaCraft.ABILITY_TICK_PER_SECOND;
     }
 }

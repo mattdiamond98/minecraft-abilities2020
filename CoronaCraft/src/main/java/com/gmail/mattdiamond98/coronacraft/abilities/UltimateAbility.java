@@ -15,5 +15,9 @@ public abstract class UltimateAbility implements Listener {
         return name;
     }
 
+    public String getName(Player player) {
+        return getName();
+    }
+
     public void activate(Player player) {}
 }

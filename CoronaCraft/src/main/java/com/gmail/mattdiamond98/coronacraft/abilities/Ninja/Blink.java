@@ -2,6 +2,7 @@ package com.gmail.mattdiamond98.coronacraft.abilities.Ninja;
 
 import com.gmail.mattdiamond98.coronacraft.abilities.AbilityStyle;
 import com.gmail.mattdiamond98.coronacraft.CoronaCraft;
+import com.gmail.mattdiamond98.coronacraft.util.AbilityUtil;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -17,9 +18,6 @@ import java.util.stream.Collectors;
 
 public class Blink extends AbilityStyle {
 
-    private static Set<Material> transparent = EnumSet.allOf(Material.class).stream()
-            .filter(((Predicate<Material>)Material::isSolid).negate()).collect(Collectors.toSet());
-
     public static final int COOL_DOWN = 10 * CoronaCraft.ABILITY_TICK_PER_SECOND;
 
     public Blink() {
@@ -27,7 +25,7 @@ public class Blink extends AbilityStyle {
     }
 
     public int execute(Player p, Object... args) {
-        Block target = p.getTargetBlock(transparent, 15);
+        Block target = p.getTargetBlock(AbilityUtil.transparent, 15);
         if (target.getType().equals(Material.AIR)) return 0;
         Block destination = target.getRelative(0, 1, 0);
         if (!destination.getType().isSolid()) {

@@ -80,6 +80,7 @@ public class PrimordialArrow extends ProjectileAbilityStyle {
         loc.getWorld().playSound(loc, Sound.ENTITY_ENDER_DRAGON_GROWL, 1F, 0.5F);
         for (int i = 0; i < 16; i++) {
             final FallingBlock fallingBlock = loc.getWorld().spawnFallingBlock(loc, Bukkit.createBlockData(Material.SPRUCE_LEAVES));
+            fallingBlock.setDropItem(false);
             fallingBlock.setVelocity(new Vector(rand.nextFloat() * 0.7 - 0.35, 0.3F + (rand.nextFloat() * 0.3), rand.nextFloat() * 0.7 - 0.35));
 
             fallingBlock.setMetadata(MetadataKey.ON_HIT, new FixedMetadataValue(CoronaCraft.instance, onLeafLand));
@@ -126,7 +127,7 @@ public class PrimordialArrow extends ProjectileAbilityStyle {
                             e.getBlock().getRelative(-1, -1, -1),
 
                     }) {
-                        if (validBlock(block) && !block.getType().isAir()) {
+                        if (AbilityUtil.validBlock(block) && !block.getType().isAir()) {
                             block.setType(Material.GRASS_BLOCK);
                         } else {
                             e.getEntity().remove();
@@ -164,20 +165,4 @@ public class PrimordialArrow extends ProjectileAbilityStyle {
             }
         }
     };
-
-    private boolean validBlock(final Block block) {
-        Warzone zone = Warzone.getZoneByLocation(block.getLocation());
-        if (zone == null) return false;
-        return zone.getTeams().stream().map(Team::getSpawnVolumes)
-                .map(Map::values)
-                .flatMap(Collection::stream)
-                .peek(volume -> {
-                    if (volume.getCornerTwo().getY() >= volume.getCornerOne().getY()) {
-                        volume.setCornerTwo(volume.getCornerTwo().add(new Vector(0, 5, 0)));
-                    } else {
-                        volume.setCornerOne(volume.getCornerOne().add(new Vector(0, 5, 0)));
-                    }
-                })
-                .noneMatch(volume -> volume.contains(block));
-    }
 }

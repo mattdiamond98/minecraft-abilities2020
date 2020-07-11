@@ -28,17 +28,15 @@ public class Pluck extends AbilityStyle {
     public int execute(Player p, Object... args) {
         FishHook hook = (FishHook) args[0];
         List<Player> enemies = AbilityUtil.getEnemies(p);
-        Vector vector = p.getEyeLocation().toVector().subtract(hook.getLocation().toVector()).normalize().multiply(2);
+        Vector vector = p.getEyeLocation().toVector().subtract(hook.getLocation().toVector()).normalize().multiply(new Vector(2, 1.5, 2));
         for (Player enemy : enemies) {
             if (enemy.getLocation().distanceSquared(hook.getLocation()) < 2.5 * 2.5 && notInSpawn(enemy)) {
                 enemy.getLocation().getWorld().playEffect(enemy.getEyeLocation(), Effect.STEP_SOUND, Material.COBWEB);
                 enemy.setVelocity(vector);
-                new PotionEffect(PotionEffectType.SLOW, 20, 3).apply(enemy);
-                new PotionEffect(PotionEffectType.WEAKNESS, 20, 1).apply(enemy);
-                new PotionEffect(PotionEffectType.BLINDNESS, 20, 0).apply(enemy);
+                AbilityUtil.applyStunEffect(enemy, 20);
                 enemy.sendMessage(ChatColor.RED + "You have been stunned.");
             }
         }
-        return 7 * CoronaCraft.ABILITY_TICK_PER_SECOND;
+        return 10 * CoronaCraft.ABILITY_TICK_PER_SECOND;
     }
 }

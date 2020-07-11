@@ -13,14 +13,14 @@ public class Fleetfoot extends AbilityStyle {
     public Fleetfoot() {
         super ("Fleetfoot", new String[] {
                 "Gain a boost of speed.",
-                "Duration: 20 seconds",
+                "Duration: 10 seconds",
                 "Cost: 2 hearts"
         }, "coronacraft.berserker.fleetfoot");
     }
 
     public int execute(Player p, Object... args) {
         p.damage(UltimateTracker.isUltimateActive(p) ? 2.0 : 4.0);
-        new PotionEffect(PotionEffectType.SPEED, 20 * 20, 1).apply(p);
+        new PotionEffect(PotionEffectType.SPEED, 10 * 20, 1).apply(p);
         p.getLocation().getWorld().playEffect(p.getLocation(), Effect.STEP_SOUND, Material.REDSTONE_WIRE);
         return 0;
     }

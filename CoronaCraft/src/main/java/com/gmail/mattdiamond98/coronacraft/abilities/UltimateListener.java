@@ -138,7 +138,7 @@ public class UltimateListener implements Listener {
         UltimateAbility ultimate = Loadout.getLoadout(player).getUltimate();
         if (zone == null || ultimate == null) return;
         for (Player msg : zone.getPlayers()) {
-            msg.sendMessage(ChatColor.YELLOW + player.getName() + " has activated " + ChatColor.GREEN + ultimate.getName());
+            msg.sendMessage(ChatColor.YELLOW + player.getName() + " has activated " + ChatColor.GREEN + ultimate.getName(player));
         }
         if (player.getInventory().getItemInOffHand().getType() == Material.NETHER_STAR)
             player.getInventory().setItemInOffHand(null);

@@ -21,7 +21,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
@@ -52,7 +51,7 @@ public class DesolationFist extends UltimateAbility {
         UltimateListener.sendUltimateMessage(player);
 
         CoronaCraft.setCooldown(player, Material.NETHER_STAR, DURATION_COOLDOWN_TICKS);
-        player.setVelocity(new Vector(0, 2.5, 0));
+        player.setVelocity(new Vector(0, JUMP_HEIGHT, 0));
         player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, DURATION_MINECRAFT_TICKS, 0));
         if (player.getHealth() < 10) player.setHealth(10);
         player.sendMessage(ChatColor.GREEN + "Right click to target your Desolation Fist");
@@ -150,6 +149,7 @@ public class DesolationFist extends UltimateAbility {
             Material material = block.getType();
             block.setType(Material.AIR);
             FallingBlock fallingBlock = block.getWorld().spawnFallingBlock(block.getLocation(), Bukkit.createBlockData(material));
+            fallingBlock.setDropItem(false);
             fallingBlock.setVelocity(new Vector(rand.nextFloat() * 0.5 - 0.25, 0.75, rand.nextFloat() * 0.5 - 0.25));
         }
     }

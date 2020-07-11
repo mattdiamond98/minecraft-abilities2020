@@ -2,7 +2,7 @@ package com.gmail.mattdiamond98.coronacraft;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
-import com.gmail.mattdiamond98.coronacraft.abilities.Ability;
+import com.gmail.mattdiamond98.coronacraft.abilities.*;
 import com.gmail.mattdiamond98.coronacraft.abilities.Anarchist.Detonator;
 import com.gmail.mattdiamond98.coronacraft.abilities.Anarchist.Launcher;
 import com.gmail.mattdiamond98.coronacraft.abilities.Anarchist.TNTGenerator;
@@ -12,18 +12,17 @@ import com.gmail.mattdiamond98.coronacraft.abilities.Engineer.Schematic;
 import com.gmail.mattdiamond98.coronacraft.abilities.Engineer.Stockpile;
 import com.gmail.mattdiamond98.coronacraft.abilities.Fighter.Rush;
 import com.gmail.mattdiamond98.coronacraft.abilities.Fighter.SwordStyle;
-import com.gmail.mattdiamond98.coronacraft.abilities.FoodRegen;
 import com.gmail.mattdiamond98.coronacraft.abilities.Gladiator.Net;
 import com.gmail.mattdiamond98.coronacraft.abilities.Gladiator.SpearThrow;
 import com.gmail.mattdiamond98.coronacraft.abilities.Ninja.NinjaMovement;
 import com.gmail.mattdiamond98.coronacraft.abilities.Ninja.ShadowKnife;
 import com.gmail.mattdiamond98.coronacraft.abilities.Ninja.ShurikenBag;
-import com.gmail.mattdiamond98.coronacraft.abilities.PickaxeRegen;
 import com.gmail.mattdiamond98.coronacraft.abilities.Ranger.Longbow;
 import com.gmail.mattdiamond98.coronacraft.abilities.Skirmisher.Shortsword;
 import com.gmail.mattdiamond98.coronacraft.abilities.Skirmisher.Trap;
 import com.gmail.mattdiamond98.coronacraft.abilities.Tank.Rally;
-import com.gmail.mattdiamond98.coronacraft.abilities.UltimateListener;
+import com.gmail.mattdiamond98.coronacraft.abilities.Wizard.Spellbook;
+import com.gmail.mattdiamond98.coronacraft.abilities.Wizard.Wand;
 import com.gmail.mattdiamond98.coronacraft.data.PlayerData;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownEndEvent;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownTickEvent;
@@ -59,19 +58,14 @@ public class CoronaCraft extends JavaPlugin {
 
     private static final Map<Material, Ability> ABILITIES = new HashMap<>();
 
-    // RateablePlayer metadata for tracking which sub-ability players have selected
     private static final Map<AbilityKey, Integer> PLAYER_ABILITIES = new HashMap<>();
-    // RateablePlayer metadata for tracking which abilities are on cooldown
     private static final Map<AbilityKey, Integer> PLAYER_COOL_DOWNS = new HashMap<>();
-    // RateablePlayer metadata for tracking timers associated with players
     private static final Map<PlayerTimerKey, Integer> PLAYER_TASK_MAP = new HashMap<>();
 
     private double coinMultiplier = 1.0;
 
     @Override
     public void onEnable(){
-        SimpleMatrix S = SimpleMatrix.diag(2);
-        System.out.println(S);
         instance = this;
 
         protocolManager = ProtocolLibrary.getProtocolManager();
@@ -101,7 +95,8 @@ public class CoronaCraft extends JavaPlugin {
                 new Schematic(),
                 new Stockpile(),
                 new Waraxe(),
-                new Rush()
+                new Rush(),
+                new Wand()
         );
 
         getServer().getPluginManager().registerEvents(new PlayerEventListener(), this);
@@ -111,8 +106,10 @@ public class CoronaCraft extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new UltimateListener(), this);
 
         for (Loadout loadout : Loadout.values()) {
-            getServer().getPluginManager().registerEvents(loadout.getUltimate(), this);
+            if (loadout.getUltimate() != null)
+                getServer().getPluginManager().registerEvents(loadout.getUltimate(), this);
         }
+
 //        getCommand("cctf").setExecutor(new CoronaCommand());
 
         Tutorial.initTutorial();
@@ -137,7 +134,7 @@ public class CoronaCraft extends JavaPlugin {
         }, 0, 10); // Twice per second
     }
 
-    private void initializeAbilities(Ability... abilities) {
+    public void initializeAbilities(Ability... abilities) {
         for (Ability ability : abilities) {
             ability.initialize();
             getServer().getPluginManager().registerEvents(ability, this);

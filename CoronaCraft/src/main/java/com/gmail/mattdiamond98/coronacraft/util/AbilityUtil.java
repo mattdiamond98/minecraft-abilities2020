@@ -8,13 +8,20 @@ import com.tommytony.war.Team;
 import com.tommytony.war.Warzone;
 import com.tommytony.war.utility.LoadoutSelection;
 import org.bukkit.*;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.Metadatable;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -22,9 +29,16 @@ import static com.gmail.mattdiamond98.coronacraft.CoronaCraft.ABILITY_TICK_PER_S
 
 public final class AbilityUtil {
 
+    private static final Random rand = new Random();
+
+    public static Set<Material> transparent = EnumSet.allOf(Material.class).stream()
+            .filter(((Predicate<Material>)Material::isSolid).negate()).collect(Collectors.toSet());
+
     public static void setStackCount(Player player, Material item, int count) {
         if (player.getInventory().getItemInOffHand().getType().equals(item)) {
-            player.getInventory().getItemInOffHand().setAmount(count);
+            ItemStack offhand = player.getInventory().getItemInOffHand();
+            offhand.setAmount(count);
+            player.getInventory().setItemInOffHand(offhand);
         }
         boolean first = true;
         for (ItemStack itemStack : player.getInventory().getContents()) {
@@ -68,6 +82,16 @@ public final class AbilityUtil {
         return enemies;
     }
 
+    public static void applyStunEffect(Player player, int ticks) {
+        new PotionEffect(PotionEffectType.JUMP, ticks, 200).apply(player);
+        new PotionEffect(PotionEffectType.SLOW, ticks, 7).apply(player);
+        new PotionEffect(PotionEffectType.BLINDNESS, ticks, 0).apply(player);
+        new PotionEffect(PotionEffectType.WEAKNESS, ticks, 100).apply(player);
+        new PotionEffect(PotionEffectType.SLOW_DIGGING, ticks, 100).apply(player);
+        player.sendTitle("", ChatColor.RED + "STUNNED", 0, ticks, 0);
+        player.sendMessage(ChatColor.RED + "You have been stunned!.");
+    }
+
     public static void setItemStackToCooldown(Player player, Material item) {
         Map<AbilityKey, Integer> coolDowns = CoronaCraft.getPlayerCoolDowns();
         if (item == null || player == null || !player.isOnline()) return;
@@ -92,6 +116,65 @@ public final class AbilityUtil {
         return !inSpawn(p);
     }
 
+    public static FallingBlock dropBlockRandomly(Block block) {
+        return dropBlockWithVector(block, new Vector(rand.nextFloat() * 0.3 - 0.15, 0.5, rand.nextFloat() * 0.3 - 0.15));
+    }
+
+    public static Block getSolidBlock(Block block) {
+        return getSolidBlock(block, 5);
+    }
+
+    public static Block getSolidBlock(Block block, int i) {
+        if (i == 0 || block.getType().isSolid() && !block.getRelative(0, 1, 0).getType().isSolid()) {
+            return block;
+        }
+        if (!block.getType().isSolid()) return getSolidBlock(block.getRelative(0, -1, 0), i - 1);
+        return getSolidBlock(block.getRelative(0, 1, 0), i - 1);
+    }
+
+    public static FallingBlock dropBlockWithVector(Block block, Vector vector) {
+        Material material = block.getType();
+        block.setType(Material.AIR);
+        FallingBlock fragment = block.getWorld().spawnFallingBlock(block.getLocation(), Bukkit.createBlockData(material));
+        fragment.setDropItem(false);
+        fragment.getWorld().playEffect(fragment.getLocation(), Effect.STEP_SOUND, material);
+        fragment.setVelocity(vector);
+        return fragment;
+    }
+
+    public static boolean validBlock(final Block block) {
+        Warzone zone = Warzone.getZoneByLocation(block.getLocation());
+        if (zone == null) return false;
+        return zone.getTeams().stream().map(Team::getSpawnVolumes)
+                .map(Map::values)
+                .flatMap(Collection::stream)
+                .peek(volume -> {
+                    if (volume.getCornerTwo().getY() >= volume.getCornerOne().getY()) {
+                        volume.setCornerTwo(volume.getCornerTwo().add(new Vector(0, 5, 0)));
+                    } else {
+                        volume.setCornerOne(volume.getCornerOne().add(new Vector(0, 5, 0)));
+                    }
+                })
+                .noneMatch(volume -> volume.contains(block));
+    }
+
+    public static void surroundPlayer(Player p, Consumer<Block> blockConsumer) {
+        p.teleport(p.getLocation().add(0.5, 0, 0.5));
+        Block feet = p.getLocation().getBlock();
+        Block head = feet.getRelative(BlockFace.UP);
+        Arrays.asList(
+                BlockFace.EAST,
+                BlockFace.WEST,
+                BlockFace.SOUTH,
+                BlockFace.NORTH
+        ).forEach(face -> {
+                blockConsumer.accept(feet.getRelative(face));
+                blockConsumer.accept(head.getRelative(face));
+        });
+        blockConsumer.accept(feet.getRelative(BlockFace.DOWN));
+        blockConsumer.accept(head.getRelative(BlockFace.UP));
+    }
+
     public static void toggleAbilityStyle(Player p, Material item) {
         Ability ability = CoronaCraft.getAbility(item);
         AbilityStyle currentStyle = ability.getStyle(p);
@@ -99,10 +182,7 @@ public final class AbilityUtil {
         AbilityStyle nextStyle = ability.getStyle(nextPosition);
         if (!nextStyle.equals(currentStyle)) {
             CoronaCraft.getPlayerAbilities().put(new AbilityKey(p, item), nextPosition);
-            p.sendMessage(AbilityUtil.formatStyleName(nextStyle));
-            for (String line : nextStyle.getDescription()) {
-                p.sendMessage(ChatColor.GRAY + line);
-            }
+            sendAbilityStyle(p, nextStyle);
             Set<Material> keySet = CoronaCraft.getAbilities().keySet();
             Bukkit.getScheduler().scheduleSyncDelayedTask(CoronaCraft.instance, () ->
                     Arrays.stream(p.getInventory().getContents())
@@ -110,6 +190,13 @@ public final class AbilityUtil {
                             .filter(i -> keySet.contains(i.getType()))
                             .forEach(i -> AbilityUtil.formatItem(p, i)), 1);
 
+        }
+    }
+
+    public static void sendAbilityStyle(Player p, AbilityStyle style) {
+        p.sendMessage(AbilityUtil.formatStyleName(style));
+        for (String line : style.getDescription()) {
+            p.sendMessage(ChatColor.GRAY + line);
         }
     }
 
@@ -151,7 +238,11 @@ public final class AbilityUtil {
     }
 
     public static void notifyAbilityRequiresResources(Player p, Material m, int c) {
-        p.sendMessage(ChatColor.RED + "That requires " + c + " " + m.toString());
+        notifyAbilityRequiresResources(p, m.name().toLowerCase(), c);
+    }
+
+    public static void notifyAbilityRequiresResources(Player p, String s, int c) {
+        p.sendMessage(ChatColor.RED + "That requires " + c + " " + s);
     }
 
     public static void notifyAbilityRequiresResources(Player p, List<Material> m, List<Integer> c) {

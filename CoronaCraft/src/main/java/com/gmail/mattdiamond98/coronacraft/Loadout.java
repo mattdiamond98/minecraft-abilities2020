@@ -11,6 +11,7 @@ import com.gmail.mattdiamond98.coronacraft.abilities.Ranger.ArrowStorm;
 import com.gmail.mattdiamond98.coronacraft.abilities.Skirmisher.InstinctiveHunter;
 import com.gmail.mattdiamond98.coronacraft.abilities.Tank.DesolationFist;
 import com.gmail.mattdiamond98.coronacraft.abilities.UltimateAbility;
+import com.gmail.mattdiamond98.coronacraft.abilities.Wizard.WizardUltimateAbility;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -25,7 +26,8 @@ public enum Loadout {
     NINJA(Material.SHEARS, new ShadowStride()),
     GLADIATOR(Material.TRIDENT, new StormGodsWrath()),
     TANK(Material.SHIELD, new DesolationFist()),
-    ANARCHIST(Material.FLINT_AND_STEEL, new TNTTrail());
+    ANARCHIST(Material.FLINT_AND_STEEL, new TNTTrail()),
+    WIZARD(Material.BLAZE_ROD, new WizardUltimateAbility());
 
     private Material item;
     private UltimateAbility ultimate;

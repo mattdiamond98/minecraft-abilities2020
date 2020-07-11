@@ -1,7 +1,10 @@
 package com.gmail.mattdiamond98.coronacraft.event;
 
+import com.gmail.mattdiamond98.coronacraft.Loadout;
 import com.gmail.mattdiamond98.coronacraft.abilities.*;
 import com.gmail.mattdiamond98.coronacraft.CoronaCraft;
+import com.gmail.mattdiamond98.coronacraft.abilities.Wizard.Pyromancer.PyromancerSpellbook;
+import com.gmail.mattdiamond98.coronacraft.abilities.Wizard.Spellbook;
 import com.gmail.mattdiamond98.coronacraft.data.PlayerData;
 import com.gmail.mattdiamond98.coronacraft.util.*;
 import com.gmail.mattdiamond98.coronacraft.util.PlayerTimerKey.PlayerTimerType;
@@ -25,6 +28,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.Metadatable;
@@ -135,11 +139,14 @@ public class PlayerEventListener implements Listener {
             if (e.getDamager() instanceof Player) {
                 PlayerInteraction.playerHarm((Player) e.getEntity(), (Player) e.getDamager());
             }
-            if (e.getDamager() instanceof Projectile && ((Projectile)e.getDamager()).getShooter() instanceof Player) {
+            else if (e.getDamager() instanceof Projectile && ((Projectile)e.getDamager()).getShooter() instanceof Player) {
                 PlayerInteraction.playerHarm((Player) e.getEntity(), (Player) ((Projectile) e.getDamager()).getShooter());
             }
-            if (e.getDamager() instanceof TNTPrimed && e.getDamager().hasMetadata(MetadataKey.PLAYER)) {
+            else if (e.getDamager() instanceof TNTPrimed && e.getDamager().hasMetadata(MetadataKey.PLAYER)) {
                 PlayerInteraction.playerHarm((Player) e.getEntity(), (Player) e.getDamager().getMetadata(MetadataKey.PLAYER).get(0).value());
+            }
+            else if (e.getDamager() instanceof Firework) {
+                e.setCancelled(true);
             }
         }
     }
@@ -305,49 +312,78 @@ public class PlayerEventListener implements Listener {
 
     @EventHandler
     public void onGameEnd(final WarScoreCapEvent e) {
-//        Bukkit.getScheduler().runTaskAsynchronously(CoronaCraft.instance, () -> {
-            Warzone zone = e.getWarzone();
-            List<Team> winners = e.getWinningTeams();
-            List<Team> losers = new ArrayList<>(zone.getTeams());
-            losers.removeAll(winners);
-            if (winners.size() == 0 || losers.size() == 0) return;
-            int reward = losers.stream().map(team -> team.getPlayers().size()).min(Integer::compareTo).orElse(1);
-            final int adjustedReward = 1 + ((reward > 5) ? (int) Math.round(Math.floor(5 + Math.log(reward - 5) / Math.log(2))) : reward);
-            winners.stream().forEach(team -> payTeam(team, adjustedReward));
+        Warzone zone = e.getWarzone();
+        List<Team> winners = e.getWinningTeams();
+        List<Team> losers = new ArrayList<>(zone.getTeams());
+        losers.removeAll(winners);
+        if (winners.size() == 0 || losers.size() == 0) return;
+        int reward = losers.stream().map(team -> team.getPlayers().size()).min(Integer::compareTo).orElse(1);
+        final int adjustedReward = 1 + ((reward > 5) ? (int) Math.round(Math.floor(5 + Math.log(reward - 5) / Math.log(2))) : reward);
+        winners.stream().forEach(team -> payTeam(team, adjustedReward));
 
-            /**
-             * Calculate score if the game is two teams of three or more players with both teams having flags
-             * We also remove match of the day style games.
-             */
-            if (losers.size() == 1 && winners.size() == 1
-                    && !zone.getName().equalsIgnoreCase("CircusUltimatus")
-                    && !zone.getName().equalsIgnoreCase("Renegade")) {
-                Team winningTeam = winners.get(0);
-                Team losingTeam = losers.get(0);
-                if (winningTeam.getTeamFlag() != null && losingTeam.getTeamFlag() != null
-                        && winningTeam.getPlayers().size() >= 1 && losingTeam.getPlayers().size() >= 1) { // TODO: set to >= 3
-                    List<ITeam> ratings = new ArrayList<>(2);
+        /**
+         * Calculate score if the game is two teams of three or more players with both teams having flags
+         * We also remove match of the day style games.
+         */
+        if (losers.size() == 1 && winners.size() == 1
+                && !zone.getName().equalsIgnoreCase("CircusUltimatus")
+                && !zone.getName().equalsIgnoreCase("Renegade")) {
+            Team winningTeam = winners.get(0);
+            Team losingTeam = losers.get(0);
+            if (winningTeam.getTeamFlag() != null && losingTeam.getTeamFlag() != null
+                    && winningTeam.getPlayers().size() >= 1 && losingTeam.getPlayers().size() >= 1) { // TODO: set to >= 3
+                List<ITeam> ratings = new ArrayList<>(2);
 
-                    TeamMap winningRatings = new TeamMap();
-                    winningTeam.getPlayers().stream().map(Player::getUniqueId).forEach(uuid -> {
-                        winningRatings.put((IPlayer) new RateablePlayer<UUID>(uuid), PlayerData.getRating(uuid));
-                    });
-                    ratings.add((ITeam) winningRatings);
-                    TeamMap losingRatings = new TeamMap();
-                    losingTeam.getPlayers().stream().map(Player::getUniqueId).forEach(uuid -> {
-                        losingRatings.put((IPlayer) new RateablePlayer<UUID>(uuid), PlayerData.getRating(uuid));
-                    });
-                    ratings.add((ITeam) losingRatings);
-                    Map<IPlayer, Rating> newRatings = TrueSkillCalculator.calculateNewRatings(GameInfo.getDefaultGameInfo(), ratings, 1, 2);
-                    newRatings.entrySet().forEach(entry -> {
-                        PlayerData.updateRating(((RateablePlayer<UUID>) entry.getKey()).getId(), entry.getValue());
-                    });
-                    Bukkit.getLogger().info("Updated rankings successfully");
+                TeamMap winningRatings = new TeamMap();
+                winningTeam.getPlayers().stream().map(Player::getUniqueId).forEach(uuid -> {
+                    winningRatings.put((IPlayer) new RateablePlayer<UUID>(uuid), PlayerData.getRating(uuid));
+                });
+                ratings.add((ITeam) winningRatings);
+                TeamMap losingRatings = new TeamMap();
+                losingTeam.getPlayers().stream().map(Player::getUniqueId).forEach(uuid -> {
+                    losingRatings.put((IPlayer) new RateablePlayer<UUID>(uuid), PlayerData.getRating(uuid));
+                });
+                ratings.add((ITeam) losingRatings);
+                Map<IPlayer, Rating> newRatings = TrueSkillCalculator.calculateNewRatings(GameInfo.getDefaultGameInfo(), ratings, 1, 2);
+                newRatings.entrySet().forEach(entry -> {
+                    PlayerData.updateRating(((RateablePlayer<UUID>) entry.getKey()).getId(), entry.getValue());
+                });
+                Bukkit.getLogger().info("Updated rankings successfully");
+            }
+        }
+    }
+
+    @EventHandler
+    public void onPlayerLeaveSpawn(WarPlayerLeaveSpawnEvent e) {
+        Warzone zone = Warzone.getZoneByPlayerName(e.getPlayer().getName());
+        if (
+            zone != null
+                    && !zone.isReinitializing()
+                    && zone.getName().equals("Arcanum")
+                    && Loadout.getLoadout(e.getPlayer()) == Loadout.WIZARD
+        ) {
+            Ability ability = CoronaCraft.getAbility(Material.BLAZE_ROD);
+            AbilityStyle prev = ability.getStyle(e.getPlayer());
+            AbilityStyle next = prev;
+            for (AbilityStyle style : ability.getStyles()) {
+                if (style instanceof Spellbook) {
+                    Spellbook spellbook = (Spellbook) style;
+                    if (AbilityUtil.inventoryContains(e.getPlayer(), spellbook.getLightStyle().getItem())) {
+                        next = spellbook;
+                    }
                 }
             }
-//        });
+            AbilityUtil.sendAbilityStyle(e.getPlayer(), next);
+            e.getPlayer().sendMessage(ChatColor.YELLOW + "Right click each spell icon to learn about it.");
+            e.getPlayer().sendMessage(ChatColor.YELLOW + "All abilities are cast with your wand.");
+            e.getPlayer().sendMessage(ChatColor.YELLOW + "Remember this class is in beta, so expect some bugs!");
+            if (!prev.equals(next)) {
+                CoronaCraft.getPlayerAbilities().put(new AbilityKey(e.getPlayer(), Material.BLAZE_ROD), ability.getStylePosition(next));
+            }
+        }
 
     }
+
 
     private void payTeam(Team team, int amount) {
 //        if (team.getPlayers().stream().anyMatch(p -> p.hasPermission("coronacraft.coins.allyboost"))) {
@@ -497,20 +533,21 @@ public class PlayerEventListener implements Listener {
         }
         if (e.getPlayer().getGameMode() != GameMode.CREATIVE) e.getPlayer().getInventory().clear();
         addLobbyItem(e.getPlayer(), 0, Material.NETHER_STAR, "Join Game", "Right Click to join an active game!");
-        addLobbyItem(e.getPlayer(), 5, Material.PAPER, "Refer", "Refer players to support the server and earn rewards!");
-        addLobbyItem(e.getPlayer(), 6, Material.GOLD_INGOT, "Vote", "Vote to support the server and earn rewards!");
-        addLobbyItem(e.getPlayer(), 7, Material.DIAMOND, "Donate", "Donate to support the server and get rewards!");
+        addLobbyItem(e.getPlayer(), 5, Material.PAPER, "Refer", "Refer players to support the", "server and earn rewards!");
+        addLobbyItem(e.getPlayer(), 6, Material.GOLD_INGOT, "Vote", "Vote to support the server", "and earn rewards!");
+        addLobbyItem(e.getPlayer(), 7, Material.DIAMOND, "Donate", "Donate to support the", "server and get rewards!");
         addLobbyItem(e.getPlayer(), 8, Material.MUSIC_DISC_STAL, "Discord", "Join our discord community!");
         PlayerData.preLoadPlayer(e.getPlayer().getUniqueId());
     }
 
-    void addLobbyItem(Player p, int slot, Material item, String title, String description) {
+    void addLobbyItem(Player p, int slot, Material item, String title, String... description) {
         if (!AbilityUtil.inventoryContains(p, item)) {
             ItemStack stack = new ItemStack(item, 1);
             ItemMeta meta = stack.getItemMeta();
             meta.setDisplayName(ChatColor.GREEN + title + ChatColor.GRAY + " (Right Click)");
-            meta.setLore(Arrays.asList(ChatColor.GRAY + description));
+            meta.setLore(Arrays.stream(description).map(line -> ChatColor.GRAY + line).collect(Collectors.toList()));
             meta.getPersistentDataContainer().set(NamespacedKey.minecraft("hideflags"), PersistentDataType.BYTE, (byte) 63);
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
             stack.setItemMeta(meta);
             p.getInventory().setItem(slot, stack);
         }
