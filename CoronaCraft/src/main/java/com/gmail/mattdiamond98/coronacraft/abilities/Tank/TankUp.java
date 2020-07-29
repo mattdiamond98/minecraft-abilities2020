@@ -13,7 +13,7 @@ import org.bukkit.potion.PotionEffectType;
 public class TankUp extends AbilityStyle {
 
     public TankUp() {
-        super("Tank Up", new String[]{"Buff allies with protection!", "Radius: 10", "Duration: 10 seconds", "Cooldown: 40 seconds"});
+        super("Tank Up", new String[]{"Buff allies with protection!", "Radius: 10", "Duration: 10 seconds", "Cooldown: 40 seconds"}, 423454);
     }
 
     /***

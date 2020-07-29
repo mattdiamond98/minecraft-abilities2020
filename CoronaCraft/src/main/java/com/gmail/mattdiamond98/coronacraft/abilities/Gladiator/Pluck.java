@@ -22,7 +22,7 @@ public class Pluck extends AbilityStyle {
         super("Pluck", new String[] {
                 "Pull your opponent toward you",
                 "with great force, stunning them."
-        }, "coronacraft.gladiator.pluck");
+        }, "coronacraft.gladiator.pluck", 0);
     }
 
     public int execute(Player p, Object... args) {

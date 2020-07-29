@@ -15,7 +15,7 @@ public class Brawn extends AbilityStyle {
                 "Gain a boost of strength.",
                 "Duration: 10 seconds",
                 "Cost: 2 hearts"
-        });
+        }, 913456);
     }
 
     public int execute(Player p, Object... args) {

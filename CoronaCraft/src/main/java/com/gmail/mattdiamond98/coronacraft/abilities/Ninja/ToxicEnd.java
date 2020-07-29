@@ -15,7 +15,7 @@ public class ToxicEnd extends AbilityStyle {
                 "Crouch hit with Shadow Knife to",
                 "remove all poison from the enemy,",
                 "damaging them equal to the duration."
-        });
+        }, 953457);
     }
 
     /***

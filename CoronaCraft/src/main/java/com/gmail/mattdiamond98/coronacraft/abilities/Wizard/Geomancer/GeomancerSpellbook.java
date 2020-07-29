@@ -15,7 +15,7 @@ public class GeomancerSpellbook extends Spellbook {
                 new StoneWard(),
                 new Catapult(),
                 new Earthquake(),
-                new MeteorRain()
+                new MeteorRain(),223457
         );
     }
 

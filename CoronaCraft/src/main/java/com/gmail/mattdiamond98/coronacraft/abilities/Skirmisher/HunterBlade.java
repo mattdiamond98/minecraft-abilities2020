@@ -12,7 +12,7 @@ public class HunterBlade extends AbilityStyle {
     public HunterBlade() {
         super("Hunter Blade", new String[]{"Deal 50% more damage",
                 "against glowing enemies."
-        });
+        },723456);
     }
 
     /***

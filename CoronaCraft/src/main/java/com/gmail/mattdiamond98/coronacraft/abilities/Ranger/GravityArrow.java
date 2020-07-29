@@ -14,7 +14,7 @@ public class GravityArrow extends AbilityStyle {
         super("Gravity Arrow", new String[] {
                 "Shoot an anti-gravity arrow by crouching.",
                 "Cost: 20 Arrows"
-        }, "coronacraft.ranger.gravityarrow");
+        }, "coronacraft.ranger.gravityarrow", 823450);
     }
 
     /***

@@ -18,7 +18,7 @@ public class TigerPounce extends AbilityStyle {
         super("Tiger Pounce", new String[] {
                 "Jump high up, and deal true damage to",
                 "enemies you hit while falling."
-        }, "coronacraft.fighter.tigerpounce");
+        }, "coronacraft.fighter.tigerpounce", 123476);
     }
 
     @Override

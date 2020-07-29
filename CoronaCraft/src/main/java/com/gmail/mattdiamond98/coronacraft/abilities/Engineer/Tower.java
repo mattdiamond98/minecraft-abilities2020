@@ -22,7 +22,7 @@ public class Tower extends SchematicStyle {
                 "where you stand.",
                 String.format("Cost: %d Planks, %d Cobblestone", COST_PLANKS, COST_COBBLE),
                 "Construction Time: 5 seconds"
-        }, null, costs);
+        }, null, 703458, costs);
     }
 
 

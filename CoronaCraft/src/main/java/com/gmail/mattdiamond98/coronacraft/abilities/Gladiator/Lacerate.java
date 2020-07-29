@@ -24,7 +24,7 @@ public class Lacerate extends ProjectileAbilityStyle {
                 "Bleed your enemies, dealing",
                 "damage whenever they move for",
                 "a short time after being hit."
-        }, "coronacraft.gladiator.lacerate");
+        }, "coronacraft.gladiator.lacerate", 0);
     }
 
     @Override

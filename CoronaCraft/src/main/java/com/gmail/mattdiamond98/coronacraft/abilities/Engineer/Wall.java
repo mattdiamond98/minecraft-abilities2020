@@ -22,6 +22,6 @@ public class Wall extends SchematicStyle {
                 "in front of you.",
                 String.format("Cost: %d Planks, %d Cobblestone", COST_PLANKS, COST_COBBLE),
                 "Construction Time: 5 seconds"
-        }, "coronacraft.engineer.wall", costs);
+        }, "coronacraft.engineer.wall", 703456, costs);
     }
 }

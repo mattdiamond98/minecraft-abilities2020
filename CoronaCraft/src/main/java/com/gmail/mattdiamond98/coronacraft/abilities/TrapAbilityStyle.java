@@ -11,12 +11,12 @@ public abstract class TrapAbilityStyle extends AbilityStyle {
 
     private static Map<String, Metadatable> playerTraps = new HashMap<>();
 
-    public TrapAbilityStyle(String name, String[] description, @Nullable String permission) {
-        super(name, description, permission);
+    public TrapAbilityStyle(String name, String[] description, @Nullable String permission, int ModelData) {
+        super(name, description, permission, ModelData);
     }
 
-    public TrapAbilityStyle(String name, String[] description) {
-        this(name, description, null);
+    public TrapAbilityStyle(String name, String[] description, int ModelData) {
+        this(name, description, null, ModelData);
     }
 
     public static Map<String, Metadatable> getPlayerTraps() { return playerTraps; }

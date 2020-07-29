@@ -22,6 +22,6 @@ public class Bridge extends SchematicStyle {
                 "in front of you.",
                 String.format("Cost: %d Planks, %d Cobblestone", COST_PLANKS, COST_COBBLE),
                 "Construction Time: 5 seconds"
-        }, "coronacraft.engineer.bridge", costs);
+        }, "coronacraft.engineer.bridge", 703457, costs);
     }
 }

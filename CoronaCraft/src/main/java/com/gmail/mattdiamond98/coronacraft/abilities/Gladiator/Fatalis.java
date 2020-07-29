@@ -16,7 +16,7 @@ public class Fatalis extends ProjectileAbilityStyle {
         super("Fatalis", new String[]{
                 "Instantly kill enemies if",
                 "they have less than half health"
-        }, "coronacraft.gladiator.fatalis");
+        }, "coronacraft.gladiator.fatalis", 0);
     }
 
     @Override

@@ -14,7 +14,7 @@ public class ConfusionBlade extends AbilityStyle {
     private Random random = new Random();
 
     public ConfusionBlade() {
-        super("Confusion Blade", new String[]{"20% chance to distort opponent's view on hit"});
+        super("Confusion Blade", new String[]{"20% chance to distort opponent's view on hit"}, 123457);
     }
 
     /***

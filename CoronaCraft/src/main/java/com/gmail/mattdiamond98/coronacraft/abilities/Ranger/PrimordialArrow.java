@@ -35,7 +35,7 @@ public class PrimordialArrow extends ProjectileAbilityStyle {
                 "spawns a poisonous thicket where",
                 "it lands.",
                 "Cost: 40 Arrows"
-        }, "coronacraft.ranger.primordialarrow");
+        }, "coronacraft.ranger.primordialarrow", 823456);
     }
 
     @Override

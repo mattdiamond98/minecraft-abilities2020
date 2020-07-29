@@ -15,7 +15,7 @@ public class Fleetfoot extends AbilityStyle {
                 "Gain a boost of speed.",
                 "Duration: 10 seconds",
                 "Cost: 2 hearts"
-        }, "coronacraft.berserker.fleetfoot");
+        }, "coronacraft.berserker.fleetfoot", 913457);
     }
 
     public int execute(Player p, Object... args) {

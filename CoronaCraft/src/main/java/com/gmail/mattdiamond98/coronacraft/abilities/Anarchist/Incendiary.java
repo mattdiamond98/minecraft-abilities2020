@@ -17,7 +17,7 @@ public class Incendiary extends AbilityStyle {
                 "fiery explosion.",
                 "Cost: 1 TNT",
                 "Cooldown: 10 seconds"
-        }, "coronacraft.anarchist.incendiary");
+        }, "coronacraft.anarchist.incendiary", 323457);
     }
 
     public int execute(Player p, Object... args) {

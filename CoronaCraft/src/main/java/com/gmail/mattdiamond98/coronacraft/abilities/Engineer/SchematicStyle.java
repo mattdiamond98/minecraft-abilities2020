@@ -46,8 +46,8 @@ public abstract class SchematicStyle extends AbilityStyle {
 
     private Map<Material, Integer> materials;
 
-    public SchematicStyle(String name, String[] description, @Nullable String permission, Map<Material, Integer> materials) {
-        super(name, description, permission);
+    public SchematicStyle(String name, String[] description, @Nullable String permission, Integer ModelData, Map<Material, Integer> materials) {
+        super(name, description, permission, ModelData);
         this.materials = materials;
 
         if (schematics.size() == 0) {

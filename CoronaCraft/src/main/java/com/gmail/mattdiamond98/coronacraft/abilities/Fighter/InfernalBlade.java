@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 public class InfernalBlade extends AbilityStyle {
 
     public InfernalBlade() {
-        super("Infernal Blade", new String[]{"Set fire to opponents on hit"});
+        super("Infernal Blade", new String[]{"Set fire to opponents on hit"}, 123456);
     }
 
     /***

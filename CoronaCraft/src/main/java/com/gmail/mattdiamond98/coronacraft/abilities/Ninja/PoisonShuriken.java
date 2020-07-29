@@ -19,7 +19,7 @@ public class PoisonShuriken extends AbilityStyle {
                 "Damage and poison on hit.",
                 "increase total poison duration",
                 "on successive hits."
-        });
+        }, 923457);
     }
 
     /***

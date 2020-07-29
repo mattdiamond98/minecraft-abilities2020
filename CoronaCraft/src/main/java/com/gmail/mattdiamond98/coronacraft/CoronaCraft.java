@@ -33,8 +33,7 @@ import com.gmail.mattdiamond98.coronacraft.util.AbilityKey;
 import net.milkbowl.vault.economy.Economy;
 import com.gmail.mattdiamond98.coronacraft.util.PlayerTimerKey;
 import net.milkbowl.vault.permission.Permission;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -69,7 +68,7 @@ public class CoronaCraft extends JavaPlugin {
         instance = this;
 
         protocolManager = ProtocolLibrary.getProtocolManager();
-
+        getDataFolder().mkdir();
         setupPermissions();
         if (!setupEconomy() ) {
             log.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));

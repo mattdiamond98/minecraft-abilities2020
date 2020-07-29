@@ -17,7 +17,7 @@ public class Lethargy extends AbilityStyle {
 
     public Lethargy() {
         super("Lethargy", new String[]{"Weaken and fatigue your opponents", "Radius: 10", "Duration: 10 seconds", "Cooldown: 40 seconds"},
-                "coronacraft.tank.lethargy");
+                "coronacraft.tank.lethargy", 423458);
     }
 
     public int execute(Player p, Object... args) {

@@ -12,7 +12,7 @@ public abstract class WizardStyle extends AbilityStyle {
     protected Ability ability;
 
     public WizardStyle(String name, String[] description, Ability ability) {
-        super(name, description, null);
+        super(name, description, null, 0);
         this.ability = ability;
     }
 
