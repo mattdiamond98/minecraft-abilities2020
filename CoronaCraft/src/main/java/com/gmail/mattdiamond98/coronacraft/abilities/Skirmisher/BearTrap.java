@@ -22,7 +22,7 @@ public class BearTrap extends TrapAbilityStyle {
         super("Bear Trap", new String[]{
                 "Place a trap down that damages",
                 "and roots enemies that walk on it."
-        });
+        } ,0);
     }
 
     /**

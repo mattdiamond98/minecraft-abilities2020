@@ -21,7 +21,7 @@ public class Blink extends AbilityStyle {
     public static final int COOL_DOWN = 10 * CoronaCraft.ABILITY_TICK_PER_SECOND;
 
     public Blink() {
-        super("Blink", new String[]{"Teleport a short distance away"}, "coronacraft.ninja.blink");
+        super("Blink", new String[]{"Teleport a short distance away"}, "coronacraft.ninja.blink", 523457);
     }
 
     public int execute(Player p, Object... args) {

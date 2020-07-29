@@ -42,7 +42,7 @@ public class StormGodsWrath extends UltimateAbility {
     public static ProjectileAbilityStyle style = new ProjectileAbilityStyle("Storm Strike", new String[]{
             "Smite your enemies with",
             "the power of the Storm God."
-    }) {
+    }, 0) {
         @Override
         public int onShoot(Projectile p) {
             p.setMetadata(MetadataKey.ON_HIT, new FixedMetadataValue(CoronaCraft.instance, this));

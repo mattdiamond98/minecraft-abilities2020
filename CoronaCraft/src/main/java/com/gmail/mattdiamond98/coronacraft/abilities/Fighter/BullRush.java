@@ -18,7 +18,7 @@ public class BullRush extends AbilityStyle {
         super("Bull Rush", new String[] {
                 "Rush forward until you hit an",
                 "enemy, knocking them up."
-        });
+        }, 123466);
     }
 
     @Override

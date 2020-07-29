@@ -14,7 +14,7 @@ public class SlowingArrow extends AbilityStyle {
         super("Slowing Arrow", new String[] {
                 "Shoot a slowing arrow by crouching.",
                 "Cost: 5 Arrows"
-        });
+        }, 823457);
     }
 
     /***

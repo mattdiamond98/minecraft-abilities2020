@@ -12,7 +12,7 @@ public class BloodSeeker extends AbilityStyle {
                 "Increase the duration and",
                 "amplifier of your strength",
                 "effect with each kill."
-        }, "coronacraft.berserker.bloodseeker");
+        }, "coronacraft.berserker.bloodseeker", 903456);
     }
 
     public int execute(Player p, Object... args) {

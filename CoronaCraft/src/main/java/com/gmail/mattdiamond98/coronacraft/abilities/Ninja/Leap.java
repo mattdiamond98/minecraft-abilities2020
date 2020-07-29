@@ -12,7 +12,7 @@ public class Leap extends AbilityStyle {
     public static final int COOL_DOWN = 6 * CoronaCraft.ABILITY_TICK_PER_SECOND;
 
     public Leap() {
-        super("Leap", new String[]{"Jump in the direction you are facing"});
+        super("Leap", new String[]{"Jump in the direction you are facing"}, 523456);
     }
 
     public int execute(Player p, Object... args) {

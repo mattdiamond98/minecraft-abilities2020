@@ -14,7 +14,7 @@ public class SlayingArrow extends AbilityStyle {
         super("Slaying Arrow", new String[] {
                 "Shoot an Arrow of Slaying by crouching.",
                 "Cost: 64 Arrows"
-        }, "coronacraft.ranger.slayingarrow");
+        }, "coronacraft.ranger.slayingarrow", 823459);
     }
 
     /***

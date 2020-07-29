@@ -14,7 +14,7 @@ public class LifeThief extends AbilityStyle {
                 "Gain back four hearts",
                 "and restore your hunger",
                 "when you slay an enemy"
-        });
+        },903456);
     }
 
     /***

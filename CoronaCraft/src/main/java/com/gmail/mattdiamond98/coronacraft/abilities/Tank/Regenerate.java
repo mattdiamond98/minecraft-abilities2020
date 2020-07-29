@@ -19,7 +19,7 @@ public class Regenerate extends AbilityStyle {
                 "Radius: 10",
                 "Duration: 6 seconds",
                 "Cooldown: 35 seconds"},
-                "coronacraft.tank.regenerate");
+                "coronacraft.tank.regenerate", 423456);
     }
 
     /***

@@ -20,7 +20,7 @@ public class LifeSwap extends ProjectileAbilityStyle {
                 "Switch life totals when",
                 "you hit an enemy with more",
                 "hit points than you."
-        }, "coronacraft.gladiator.lifeswap");
+        }, "coronacraft.gladiator.lifeswap", 0);
     }
 
     @Override

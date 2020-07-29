@@ -14,7 +14,7 @@ public class PoisonArrow extends AbilityStyle {
         super("Poison Arrow", new String[] {
                 "Shoot a poison arrow by crouching.",
                 "Cost: 5 Arrows"
-        });
+        }, 823458);
     }
 
     /***

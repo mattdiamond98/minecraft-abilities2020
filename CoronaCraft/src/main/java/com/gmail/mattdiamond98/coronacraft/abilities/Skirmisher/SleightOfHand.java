@@ -12,7 +12,7 @@ public class SleightOfHand extends AbilityStyle {
         super("Sleight of Hand", new String[]{"Add extra projectiles",
                 "to your loaded crossbow",
                 "when you hit an opponent."
-        }, "coronacraft.skirmisher.sleightofhand");
+        }, "coronacraft.skirmisher.sleightofhand", 723458);
     }
 
     /***
