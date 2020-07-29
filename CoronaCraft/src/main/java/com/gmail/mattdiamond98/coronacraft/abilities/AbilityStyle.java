@@ -8,15 +8,17 @@ public abstract class AbilityStyle {
     private String name;
     private String[] description;
     private String permission;
+    private int modelData;
 
-    public AbilityStyle(String name, String[] description, @Nullable String permission) {
+    public AbilityStyle(String name, String[] description, @Nullable String permission, @Nullable int ModelData) {
         this.name = name;
         this.description = description;
         this.permission = permission;
+        this.modelData=ModelData;
     }
 
-    public AbilityStyle(String name, String[] description) {
-        this(name, description, null);
+    public AbilityStyle(String name, String[] description, int ModelData) {
+        this(name, description, null, ModelData);
     }
 
     public abstract int execute(Player player, Object... data);
@@ -24,7 +26,9 @@ public abstract class AbilityStyle {
     public String getName() {
         return name;
     }
-
+    public int getModelData(){
+        return this.modelData;
+    }
     public String[] getDescription() {
         return description;
     }

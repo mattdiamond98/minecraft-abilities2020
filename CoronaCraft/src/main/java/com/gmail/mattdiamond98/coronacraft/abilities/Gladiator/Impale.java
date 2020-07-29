@@ -23,7 +23,7 @@ public class Impale extends ProjectileAbilityStyle {
                 "Knock back enemies hit by",
                 "your thrown spear, stunning",
                 "them if they hit a wall"
-        });
+        }, 0);
     }
 
     @Override

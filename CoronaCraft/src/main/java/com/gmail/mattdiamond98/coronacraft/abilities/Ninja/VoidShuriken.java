@@ -16,7 +16,7 @@ public class VoidShuriken extends AbilityStyle {
         super("Void Shuriken", new String[]{
                 "Damage and switch places with",
                 "the target on hit with a shuriken."
-        }, "coronacraft.ninja.voidshuriken");
+        }, "coronacraft.ninja.voidshuriken", 923456);
     }
 
     /***

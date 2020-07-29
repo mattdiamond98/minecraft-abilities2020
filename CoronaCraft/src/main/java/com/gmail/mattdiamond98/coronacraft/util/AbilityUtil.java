@@ -285,6 +285,8 @@ public final class AbilityUtil {
         AbilityStyle style = ability.getStyle(p);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(formatStyleName(style));
+        if(style.getModelData()!=0){
+        meta.setCustomModelData(style.getModelData());}
         meta.setLore(Arrays.stream(style.getDescription()).map(AbilityUtil::formatLoreLine).collect(Collectors.toList()));
         item.setItemMeta(meta);
         return item;

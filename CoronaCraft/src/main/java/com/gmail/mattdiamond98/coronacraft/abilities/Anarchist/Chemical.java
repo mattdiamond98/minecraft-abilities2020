@@ -20,7 +20,7 @@ public class Chemical extends AbilityStyle {
                 "damaging chemicals.",
                 "Cost: 1 TNT",
                 "Cooldown: 10 seconds"
-        }, "coronacraft.anarchist.chemical");
+        }, "coronacraft.anarchist.chemical", 323458);
     }
 
     public int execute(Player p, Object... args) {

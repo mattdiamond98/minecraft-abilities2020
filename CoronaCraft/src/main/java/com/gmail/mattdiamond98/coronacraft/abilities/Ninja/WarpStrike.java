@@ -17,7 +17,7 @@ public class WarpStrike extends AbilityStyle {
                 "Crouch hit with Shadow Knife to",
                 "teleport a short distance in the",
                 "opposite direction of the enemy"
-        }, "coronacraft.ninja.warpstrike");
+        }, "coronacraft.ninja.warpstrike", 953456);
     }
 
     /***

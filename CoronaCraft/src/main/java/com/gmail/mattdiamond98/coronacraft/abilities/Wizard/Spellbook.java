@@ -24,9 +24,9 @@ public abstract class Spellbook extends AbilityStyle {
             WizardStyle medium,
             WizardStyle heavy,
             WizardStyle capstone,
-            UltimateAbility ultimate
+            UltimateAbility ultimate, int ModelData
     ) {
-        super(name, description, permission);
+        super(name, description, permission, ModelData);
         this.light = light;
         this.medium = medium;
         this.heavy = heavy;
@@ -41,9 +41,9 @@ public abstract class Spellbook extends AbilityStyle {
             WizardStyle medium,
             WizardStyle heavy,
             WizardStyle capstone,
-            UltimateAbility ultimate
+            UltimateAbility ultimate, int ModelData
     ) {
-        this(name, description, null, light, medium, heavy, capstone, ultimate);
+        this(name, description, null, light, medium, heavy, capstone, ultimate, ModelData);
     }
 
     @Override

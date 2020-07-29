@@ -13,7 +13,7 @@ public class Grenade extends AbilityStyle {
                 "explosive shot.",
                 "Cost: 1 TNT",
                 "Cooldown: 10 seconds"
-        });
+        }, 323456);
     }
 
     public int execute(Player p, Object... args) {

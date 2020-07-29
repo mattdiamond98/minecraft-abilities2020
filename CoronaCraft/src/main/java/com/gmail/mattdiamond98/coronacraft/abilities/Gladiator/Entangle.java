@@ -21,7 +21,7 @@ public class Entangle extends AbilityStyle {
         super("Entangle", new String[] {
                 "Bind your opponent, preventing",
                 "them from moving."
-        });
+        }, 0);
     }
 
     /***

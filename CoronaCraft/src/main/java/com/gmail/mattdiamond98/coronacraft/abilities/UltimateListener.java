@@ -18,6 +18,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+
 import java.util.Set;
 
 public class UltimateListener implements Listener {
@@ -39,6 +40,8 @@ public class UltimateListener implements Listener {
         }
         PlayerInteraction.clearHarm(victim);
     }
+
+
 
     @EventHandler
     public void onPlayerJoin(WarPlayerJoinEvent e) {

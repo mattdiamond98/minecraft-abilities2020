@@ -10,7 +10,7 @@ public class SwiftBlade  extends AbilityStyle {
     public SwiftBlade() {
         super("Swift Blade",
                 new String[]{"Gain a boost of speed when you", "hit your opponent."},
-                "coronacraft.fighter.swiftblade");
+                "coronacraft.fighter.swiftblade", 123458);
     }
 
     /***

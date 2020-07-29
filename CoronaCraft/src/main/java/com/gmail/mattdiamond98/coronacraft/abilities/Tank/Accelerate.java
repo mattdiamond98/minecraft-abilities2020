@@ -13,7 +13,7 @@ import org.bukkit.potion.PotionEffectType;
 public class Accelerate extends AbilityStyle {
 
     public Accelerate() {
-        super("Accelerate", new String[]{"Buff allies with a speed boost!", "Radius: 10", "Duration: 10 seconds", "Cooldown: 30 seconds"});
+        super("Accelerate", new String[]{"Buff allies with a speed boost!", "Radius: 10", "Duration: 10 seconds", "Cooldown: 30 seconds"}, 423457);
     }
 
     /***

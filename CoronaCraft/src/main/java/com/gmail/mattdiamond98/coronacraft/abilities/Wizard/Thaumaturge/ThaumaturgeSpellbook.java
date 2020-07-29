@@ -15,7 +15,7 @@ public class ThaumaturgeSpellbook extends Spellbook {
                 new IceWall(),
                 new Geyser(),
                 new Blizzard(),
-                new Typhoon()
+                new Typhoon(), 223458
         );
     }
 

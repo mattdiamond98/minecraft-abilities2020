@@ -21,7 +21,7 @@ public class Enfeeble extends AbilityStyle {
         super("Enfeeble", new String[] {
                 "Restrict your opponent's attacks,",
                 "lessening their damage."
-        }, "coronacraft.gladiator.enfeeble");
+        }, "coronacraft.gladiator.enfeeble" ,0);
     }
 
     public int execute(Player p, Object... args) {

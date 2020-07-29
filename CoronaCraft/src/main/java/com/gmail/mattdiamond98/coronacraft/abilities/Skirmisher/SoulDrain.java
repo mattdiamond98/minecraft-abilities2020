@@ -14,7 +14,7 @@ public class SoulDrain extends AbilityStyle {
     public SoulDrain() {
         super("Soul Drain", new String[]{"Gain back lost health",
                 "when hitting glowing enemies"
-        }, "coronacraft.skirmisher.souldrain");
+        }, "coronacraft.skirmisher.souldrain", 723457);
     }
 
     /***

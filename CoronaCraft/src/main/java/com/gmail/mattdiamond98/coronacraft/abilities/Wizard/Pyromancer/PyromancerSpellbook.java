@@ -15,7 +15,7 @@ public class PyromancerSpellbook extends Spellbook {
                 new FlameRune(),
                 new Fireball(),
                 new CombustiveBurst(),
-                new DragonfireHelix()
+                new DragonfireHelix(), 223456
         );
     }
 }
