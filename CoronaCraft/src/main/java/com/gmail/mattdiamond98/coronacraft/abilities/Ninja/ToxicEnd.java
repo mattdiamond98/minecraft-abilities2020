@@ -29,7 +29,7 @@ public class ToxicEnd extends AbilityStyle {
         target.removePotionEffect(PotionEffectType.POISON);
         p.getLocation().getWorld().playEffect(p.getLocation(), Effect.STEP_SOUND, Material.SLIME_BLOCK);
         PlayerInteraction.playerHarm(target, p);
-        if (target.getHealth() - (duration / 20) <= 0) {
+        if (target.getHealth() - (duration / 20F) <= 0) {
             target.damage(200);
         } else {
             target.setHealth(target.getHealth() - (duration / 20F));

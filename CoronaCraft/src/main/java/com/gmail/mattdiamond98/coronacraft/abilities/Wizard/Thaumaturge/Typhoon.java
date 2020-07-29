@@ -12,6 +12,7 @@ import com.gmail.mattdiamond98.coronacraft.util.MetadataKey;
 import com.tommytony.war.Team;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -146,7 +147,8 @@ public class Typhoon extends UltimateAbility {
                 } else {
                     for (int i = 0; i < levels.length; i++) {
                         double prev = levels[i];
-                        levels[i] = A * ((tick - i) - H) * ((tick - i) - H) + HEIGHT + playerLoc.getY();
+                        levels[i] = Math.max(A * ((tick - i) - H) * ((tick - i) - H)
+                                + HEIGHT + playerLoc.getY(), playerLoc.getY());
                         executeDiff(rows.get(i), prev, levels[i]);
                     }
                     if (tick % VELOCITY == 0) {
@@ -158,6 +160,7 @@ public class Typhoon extends UltimateAbility {
                                 max = levels[i];
                             }
                         }
+                        player.getWorld().playSound(centerPoints.get(k).toLocation(player.getWorld()), Sound.AMBIENT_UNDERWATER_ENTER, 0.7F, 2.0F);
                         damageNearby(centerPoints.get(k).toLocation(player.getWorld()), player, damaged);
                     }
                 }

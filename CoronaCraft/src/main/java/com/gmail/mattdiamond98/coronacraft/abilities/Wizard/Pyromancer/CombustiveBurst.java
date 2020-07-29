@@ -78,7 +78,7 @@ public class CombustiveBurst extends ChargeableCapstoneWizardStyle {
                 tasks.add(new BukkitRunnable() {
                     @Override
                     public void run() {
-                        block.getWorld().createExplosion(location, 1, false, true, p);
+                        block.getWorld().createExplosion(location, 1, true, false, p);
                         FireworkEffect fireworkEffect = FireworkEffect.builder().trail(true)
                                 .with(FireworkEffect.Type.BALL).withColor(Color.RED).build();
                         new InstantFirework(fireworkEffect, location);
@@ -126,7 +126,7 @@ public class CombustiveBurst extends ChargeableCapstoneWizardStyle {
     }
 
     private void burst(Location location, Player p, float power) {
-        location.getWorld().createExplosion(location, power, false, true, p);
+        location.getWorld().createExplosion(location, power, true, false, p);
         FireworkEffect fireworkEffect = FireworkEffect.builder().trail(true)
                 .with(FireworkEffect.Type.BALL_LARGE).withColor(Color.RED).build();
         new InstantFirework(fireworkEffect, location);

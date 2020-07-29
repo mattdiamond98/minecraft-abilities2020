@@ -44,12 +44,12 @@ public class MeteorRain extends UltimateAbility {
         if (e.getItem() == Material.NETHER_STAR
                 && UltimateTracker.getLoadout(e.getPlayer()) == Loadout.WIZARD
                 && CoronaCraft.getAbility(Material.BLAZE_ROD).getStyle(e.getPlayer()) instanceof GeomancerSpellbook) {
-            Location target = e.getPlayer().getTargetBlock(AbilityUtil.transparent, 30).getRelative(0, 30, 0).getLocation();
+            Location target = e.getPlayer().getTargetBlock(AbilityUtil.transparent, 30).getRelative(0, 18, 0).getLocation();
             for (int i = 0; i < 2; i++) {
                 Catapult.spawnCatapultProjectile(
                         e.getPlayer(),
                         target.clone().add(new Vector(rand.nextFloat() * 10 - 5, 0, rand.nextFloat() * 10 - 5)).getBlock(),
-                        Material.MAGMA_BLOCK, new Vector(0, -1, 0));
+                        Material.MAGMA_BLOCK, new Vector(0, -0.5, 0));
             }
             target.getWorld().playEffect(target, Effect.STEP_SOUND, Material.MAGMA_BLOCK);
             target.getWorld().playSound(target, Sound.ENTITY_HOSTILE_BIG_FALL, 2.0F, 0.1F);

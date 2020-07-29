@@ -28,7 +28,7 @@ public class Catapult extends WizardStyle {
 
     public static final int MANA_COST = 25;
 
-    public static final int COOLDOWN_SECONDS = 15;
+    public static final int COOLDOWN_SECONDS = 10;
     public static final int COOLDOWN_ABILITY_TICKS = COOLDOWN_SECONDS * CoronaCraft.ABILITY_TICK_PER_SECOND;
 
     private static final Set<Vector> PIERCE_SHAPE = new HashSet<>();
@@ -121,7 +121,7 @@ public class Catapult extends WizardStyle {
                                 cancel();
                                 player.getWorld().playEffect(player.getEyeLocation(), Effect.STEP_SOUND, projectile.getBlockData().getMaterial());
                                 if (!Team.getTeamByPlayerName(player.getName()).equals(team)) {
-                                    player.damage(piercing ? 12 : 8, p);
+                                    player.damage(piercing ? 10 : 5, p);
                                     AbilityUtil.applyStunEffect(player, 2 * 20);
                                     player.getWorld().playSound(player.getLocation(), Sound.ENTITY_PILLAGER_HURT, 1, 1);
                                 }

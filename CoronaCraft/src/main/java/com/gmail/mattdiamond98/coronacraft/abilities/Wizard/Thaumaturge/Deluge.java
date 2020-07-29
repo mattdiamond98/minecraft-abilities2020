@@ -11,14 +11,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.ThrownPotion;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PotionSplashEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
 
 public class Deluge extends WizardStyle {
 
-    public static final int MANA_COST = 3;
+    public static final int MANA_COST = 4;
 
-    public static final int COOLDOWN_ABILITY_TICKS = 1;
+    public static final int COOLDOWN_ABILITY_TICKS = 3;
 
     public Deluge() {
         super("Deluge", new String[]{
@@ -34,17 +35,19 @@ public class Deluge extends WizardStyle {
                             event.setCancelled(true);
                             Player p = (Player) event.getEntity().getShooter();
                             Team team = Team.getTeamByPlayerName(p.getName());
-                            event.getEntity().getWorld().getNearbyEntities(event.getEntity().getLocation(), 1, 1, 1).stream()
+                            event.getEntity().getWorld().getNearbyEntities(event.getEntity().getLocation().add(event.getEntity().getVelocity()),
+                                    1.5, 2.5, 1.5).stream()
                                     .filter(entity -> entity instanceof Player)
                                     .map(entity -> (Player) entity)
                                     .filter(member -> Team.getTeamByPlayerName(member.getName()) != null)
                                     .filter(member -> !Team.getTeamByPlayerName(member.getName()).equals(team))
                                     .filter(member -> !AbilityUtil.inSpawn(member)).forEach(hit -> {
-                                        hit.damage(6, p);
-                                        hit.getWorld().playSound(hit.getLocation(), Sound.ENTITY_DROWNED_HURT_WATER, 0.5F, 0.5F);
+                                        hit.damage(3.5, p);
+                                        hit.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 0));
+                                        hit.getWorld().playSound(hit.getLocation(), Sound.ENTITY_DROWNED_HURT_WATER, 0.3F, 0.3F);
                                         hit.getWorld().playEffect(hit.getEyeLocation(), Effect.STEP_SOUND, Material.WATER);
                                         Bukkit.getScheduler().scheduleSyncDelayedTask(CoronaCraft.instance, () -> {
-                                            hit.setVelocity(event.getEntity().getLocation().getDirection().setY(0.1).normalize().multiply(0.3));
+                                            hit.setVelocity(hit.getVelocity().add(event.getEntity().getLocation().getDirection().setY(0.5).normalize().multiply(0.3)));
                                         }, 2);
                                     }
 
@@ -68,6 +71,7 @@ public class Deluge extends WizardStyle {
                 @Override
                 public void run() {
                     projectile.getWorld().spawnParticle(Particle.WATER_SPLASH, projectile.getLocation(), 10, 1, 1, 1);
+                    projectile.getWorld().playSound(projectile.getLocation(), Sound.AMBIENT_UNDERWATER_ENTER, 0.5F, 0.25F);
                     if (projectile.isDead()) {
                         cancel();
                     }

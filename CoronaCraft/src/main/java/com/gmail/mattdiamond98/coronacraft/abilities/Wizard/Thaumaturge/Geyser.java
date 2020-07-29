@@ -93,7 +93,7 @@ public class Geyser extends WizardStyle {
                     final int fi = i;
                     Bukkit.getScheduler().scheduleSyncDelayedTask(CoronaCraft.instance, () -> {
                         Block step = target.getRelative(0, fi ,0);
-                        step.getWorld().getNearbyEntities(step.getLocation(), 1.75, 1.75, 1.75).stream()
+                        step.getWorld().getNearbyEntities(step.getLocation(), 3.0, 3.0, 3.0).stream()
                                 .filter(entity -> entity instanceof Player)
                                 .map(entity -> (Player) entity)
                                 .filter(member -> Team.getTeamByPlayerName(member.getName()) != null)

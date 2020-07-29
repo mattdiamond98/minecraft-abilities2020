@@ -56,7 +56,7 @@ public class Blizzard extends ChargeableCapstoneWizardStyle {
         if (team == null) return;
         Set<Player> frozen = new HashSet<>();
         for (int i = 1; i < finalCharge; i++) {
-            Set<Vector> arc = getArcOffset(i * 2, p.getLocation().getYaw());
+            Set<Vector> arc = getArcOffset(i * 2, p.getLocation().getYaw() + 45);
             Bukkit.getScheduler().scheduleSyncDelayedTask(CoronaCraft.instance, () -> {
                 Set<Block> blocks = new HashSet<>();
                 Set<Player> affectedPlayers = new HashSet<>();
@@ -89,6 +89,7 @@ public class Blizzard extends ChargeableCapstoneWizardStyle {
                         .map(block -> block.getType().isSolid() ? block.getRelative(BlockFace.UP) : block)
                         .filter(AbilityUtil::validBlock)
                         .filter(block -> !block.getType().isSolid())
+                        .filter(block -> block.getRelative(BlockFace.DOWN).getType().isSolid())
                         .forEach(block ->  block.setType(Material.SNOW));
                 affectedPlayers.forEach(enemy -> freezePlayer(enemy, p));
                 frozen.addAll(affectedPlayers);

@@ -18,7 +18,7 @@ public class Grenade extends AbilityStyle {
 
     public int execute(Player p, Object... args) {
         Egg egg = (Egg) args[0];
-        Warzone zone = Warzone.getZoneByLocation(egg.getLocation());
+        Warzone zone = Warzone.getZoneByLocation(egg.getLocation().add(egg.getVelocity()));
         boolean destroy = zone == null ||
                 zone.getWarzoneConfig().contains(WarzoneConfig.UNBREAKABLE) && zone.getWarzoneConfig().getBoolean(WarzoneConfig.UNBREAKABLE);
         egg.getWorld().createExplosion(egg.getLocation(),2.0F, false, !destroy, (Player) egg.getShooter());

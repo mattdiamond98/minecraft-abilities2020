@@ -7,6 +7,8 @@ import com.gmail.mattdiamond98.coronacraft.abilities.Wizard.WizardUtil;
 import com.gmail.mattdiamond98.coronacraft.event.CoolDownTickEvent;
 import com.gmail.mattdiamond98.coronacraft.util.AbilityUtil;
 import com.tommytony.war.Warzone;
+import com.tommytony.war.event.WarPlayerDeathEvent;
+import com.tommytony.war.event.WarPlayerThiefEvent;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
@@ -64,6 +66,30 @@ public class StoneWard extends WizardStyle {
                             if (projectileDamage((Player) e.getEntity(), e.getDamager())) {
                                 e.setCancelled(true);
                             }
+                        }
+                    }
+                    @EventHandler
+                    public void onPlayerFlagCapture(WarPlayerThiefEvent e) {
+                        if (WARD_DATA_MAP.isEmpty()) {
+                            return;
+                        }
+                        if (WARD_DATA_MAP.containsKey(e.getThief().getUniqueId())) {
+                            for (Item item : WARD_DATA_MAP.get(e.getThief().getUniqueId()).item) {
+                                item.remove();
+                            }
+                            WARD_DATA_MAP.remove(e.getThief().getUniqueId());
+                        }
+                    }
+                    @EventHandler
+                    public void onWarPlayerDeath(WarPlayerDeathEvent e) {
+                        if (WARD_DATA_MAP.isEmpty()) {
+                            return;
+                        }
+                        if (WARD_DATA_MAP.containsKey(e.getVictim().getUniqueId())) {
+                            for (Item item : WARD_DATA_MAP.get(e.getVictim().getUniqueId()).item) {
+                                item.remove();
+                            }
+                            WARD_DATA_MAP.remove(e.getVictim().getUniqueId());
                         }
                     }
                 });

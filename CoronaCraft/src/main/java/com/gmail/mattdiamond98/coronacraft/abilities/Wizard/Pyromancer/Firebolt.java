@@ -12,6 +12,7 @@ import org.bukkit.entity.SmallFireball;
 public class Firebolt extends WizardStyle {
 
     public static final int MANA_COST = 3;
+    public static final int COOLDOWN_ABILITY_TICKS = 1;
 
     public Firebolt() {
         super("Firebolt", new String[]{
@@ -27,9 +28,11 @@ public class Firebolt extends WizardStyle {
     @Override
     public int execute(Player p, Object... args) {
         if (WizardUtil.handleManaCostAndCooldown(p, this, MANA_COST)) {
+            CoronaCraft.setCooldown(p, getItem(), COOLDOWN_ABILITY_TICKS);
             p.setLevel(p.getLevel() - MANA_COST);
             p.getWorld().playSound(p.getLocation(), Sound.ENTITY_BLAZE_SHOOT, 0.5F, 0.5F);
             SmallFireball projectile = p.launchProjectile(SmallFireball.class);
+            projectile.setVelocity(p.getLocation().getDirection().normalize().multiply(2.5));
         }
         return 0;
     }

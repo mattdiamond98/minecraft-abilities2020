@@ -18,7 +18,7 @@ import org.bukkit.util.Vector;
 public class EarthSurge extends WizardStyle {
 
     public static final int MANA_COST = 3;
-    public static final int COOLDOWN_ABILITY_TICKS = 1;
+    public static final int COOLDOWN_ABILITY_TICKS = 2;
 
     public EarthSurge() {
         super("Earth Surge", new String[]{

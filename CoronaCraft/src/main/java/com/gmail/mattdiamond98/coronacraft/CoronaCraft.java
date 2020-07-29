@@ -119,6 +119,10 @@ public class CoronaCraft extends JavaPlugin {
             if (PLAYER_COOL_DOWNS.isEmpty()) return;
             for (AbilityKey key : new HashSet<>(PLAYER_COOL_DOWNS.keySet())) {
                 if (key == null || !PLAYER_COOL_DOWNS.containsKey(key)) return;
+                if (!key.getPlayer().isOnline()) {
+                    PLAYER_COOL_DOWNS.remove(key);
+                    return;
+                }
                 int new_time = PLAYER_COOL_DOWNS.get(key) - 1;
                 if (new_time <= 0) {
                     PLAYER_COOL_DOWNS.remove(key);
@@ -131,7 +135,7 @@ public class CoronaCraft extends JavaPlugin {
                     Bukkit.getPluginManager().callEvent(coolDownTickEvent);
                 }
             }
-        }, 0, 10); // Twice per second
+        }, 0, ABILITY_TICK_FREQ); // Twice per second
     }
 
     public void initializeAbilities(Ability... abilities) {
