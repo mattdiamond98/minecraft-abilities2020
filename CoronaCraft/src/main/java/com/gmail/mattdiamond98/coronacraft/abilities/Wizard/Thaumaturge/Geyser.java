@@ -29,7 +29,7 @@ public class Geyser extends WizardStyle {
 
     public static final int MANA_COST = 20;
 
-    public static final int COOLDOWN_SECONDS = 15;
+    public static final int COOLDOWN_SECONDS = 10;
     public static final int COOLDOWN_ABILITY_TICKS = COOLDOWN_SECONDS * CoronaCraft.ABILITY_TICK_PER_SECOND;
 
     private static final int HEIGHT = 5;

@@ -29,6 +29,7 @@ public class TankUp extends AbilityStyle {
         for (Player teammate : Team.getTeamByPlayerName(p.getName()).getPlayers()) {
             if (teammate.getLocation().distanceSquared(p.getLocation()) < 10 * 10) {
                 new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 200, 0).apply(teammate);
+                new PotionEffect(PotionEffectType.ABSORPTION, 200,  1).apply(teammate);
                 teammate.getWorld().playEffect(teammate.getLocation(), Effect.STEP_SOUND, Material.IRON_BLOCK);
                 teammate.getWorld().playSound(teammate.getLocation(), Sound.BLOCK_ANVIL_USE, 10, 1);
                 teammate.sendMessage(ChatColor.GREEN + "You feel as if nothing can hurt you!");

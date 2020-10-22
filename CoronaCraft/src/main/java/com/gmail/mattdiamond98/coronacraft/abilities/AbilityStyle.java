@@ -1,7 +1,8 @@
 package com.gmail.mattdiamond98.coronacraft.abilities;
 
-import com.sun.istack.internal.Nullable;
 import org.bukkit.entity.Player;
+
+import javax.annotation.Nullable;
 
 public abstract class AbilityStyle {
 

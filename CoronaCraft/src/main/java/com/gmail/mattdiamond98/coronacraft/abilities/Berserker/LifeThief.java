@@ -24,7 +24,7 @@ public class LifeThief extends AbilityStyle {
     public int execute(Player p, Object... args) {
         p.setHealth(Math.min(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue(), p.getHealth() + HEAL_AMOUNT));
         p.getWorld().playSound(p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
-        p.setSaturation(20);
+        p.setSaturation(Math.min(p.getSaturation() + 2, 20));
         p.setFoodLevel(20);
         return 0;
     }

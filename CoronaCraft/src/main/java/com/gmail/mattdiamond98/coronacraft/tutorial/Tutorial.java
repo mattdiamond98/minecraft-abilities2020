@@ -7,6 +7,10 @@ import com.tommytony.war.config.FlagReturn;
 import com.tommytony.war.config.TeamConfig;
 import com.tommytony.war.config.WarzoneConfig;
 import com.tommytony.war.event.*;
+import com.tommytony.war.event.WarPlayerJoinEvent;
+import com.tommytony.war.event.WarPlayerLeaveSpawnEvent;
+import com.tommytony.war.event.WarPlayerThiefEvent;
+import com.tommytony.war.event.WarScoreCapEvent;
 import org.black_ixx.bossshop.events.BSPlayerPurchaseEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -168,7 +172,7 @@ public class Tutorial implements Listener {
     }
 
     @EventHandler
-    public void onLifepoolEmpty(WarBattleWinEvent e) {
+    public void onLifepoolEmpty(com.tommytony.war.event.WarBattleWinEvent e) {
         for (Player player : e.getZone().getPlayers()) {
             if (SCORE_LIFEPOOL.isCompletedAnyPrev(player)) {
                 player.sendTitle(ChatColor.GOLD + "Scoring", ChatColor.GREEN + "Reach the score cap to win", 20, 80, 20);

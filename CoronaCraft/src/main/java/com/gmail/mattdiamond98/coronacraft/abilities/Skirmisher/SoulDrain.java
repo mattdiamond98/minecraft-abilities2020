@@ -25,7 +25,7 @@ public class SoulDrain extends AbilityStyle {
     public int execute(Player p, Object... args) {
         EntityDamageByEntityEvent e = (EntityDamageByEntityEvent) args[0];
         if (((LivingEntity) e.getEntity()).getPotionEffect(PotionEffectType.GLOWING) != null) {
-            double heal = Math.min(e.getFinalDamage(), 3.0);
+            double heal = Math.min(e.getFinalDamage(), 5.0);
             p.setHealth(Math.min(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue(), p.getHealth() + heal));
             e.getEntity().getLocation().getWorld().playEffect(e.getEntity().getLocation(), Effect.STEP_SOUND, Material.WHITE_WOOL);
         }

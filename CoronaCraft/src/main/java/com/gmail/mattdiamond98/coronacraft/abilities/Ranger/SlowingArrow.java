@@ -23,7 +23,7 @@ public class SlowingArrow extends AbilityStyle {
      * @return cooldown (currently 0)
      */
     public int execute(Player p, Object... args) {
-        PotionEffect effect = new PotionEffect(PotionEffectType.SLOW, 10 * 20, 0);
+        PotionEffect effect = new PotionEffect(PotionEffectType.SLOW, 10 * 20, 1);
         Longbow.potionEffectArrow(p, (Arrow) args[0], effect, ARROW_COST);
         return 0;
     }

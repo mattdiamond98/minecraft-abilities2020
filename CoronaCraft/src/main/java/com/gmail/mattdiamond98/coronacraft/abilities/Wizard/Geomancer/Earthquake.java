@@ -30,8 +30,8 @@ public class Earthquake extends ChargeableCapstoneWizardStyle {
     public static final double SPREAD = 20;
     public static final int NODES_PER_ITER = 2;
 
-    public static final int MAX_CHARGE = 12;
-    public static final int MIN_CHARGE = 5;
+    public static final int MAX_CHARGE = 10;
+    public static final int MIN_CHARGE = 4;
 
     private static final Random rand = new Random();
 

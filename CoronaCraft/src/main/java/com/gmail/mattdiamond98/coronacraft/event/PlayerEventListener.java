@@ -6,7 +6,6 @@ import com.gmail.mattdiamond98.coronacraft.CoronaCraft;
 import com.gmail.mattdiamond98.coronacraft.abilities.Wizard.Pyromancer.PyromancerSpellbook;
 import com.gmail.mattdiamond98.coronacraft.abilities.Wizard.Spellbook;
 import com.gmail.mattdiamond98.coronacraft.data.PlayerData;
-import com.gmail.mattdiamond98.coronacraft.tournament.Tournament;
 import com.gmail.mattdiamond98.coronacraft.util.*;
 import com.gmail.mattdiamond98.coronacraft.util.PlayerTimerKey.PlayerTimerType;
 import com.sk89q.worldedit.bukkit.fastutil.Hash;
@@ -16,6 +15,12 @@ import com.tommytony.war.Warzone;
 import com.tommytony.war.config.TeamConfig;
 import com.tommytony.war.config.WarzoneConfig;
 import com.tommytony.war.event.*;
+import com.tommytony.war.event.WarBattleWinEvent;
+import com.tommytony.war.event.WarPlayerDeathEvent;
+import com.tommytony.war.event.WarPlayerLeaveEvent;
+import com.tommytony.war.event.WarPlayerLeaveSpawnEvent;
+import com.tommytony.war.event.WarPlayerThiefEvent;
+import com.tommytony.war.event.WarScoreCapEvent;
 import de.gesundkrank.jskills.*;
 import net.milkbowl.vault.chat.Chat;
 import org.bukkit.*;
@@ -46,7 +51,12 @@ public class PlayerEventListener implements Listener {
 
     private java.util.Random random = new java.util.Random();
 
-
+    private static List<Material> unplaceableItems = Arrays.asList(new Material[] {
+       Material.FIRE_CHARGE,
+       Material.TNT_MINECART,
+       Material.FIRE_CORAL,
+       Material.CAMPFIRE,
+    });
 
     public Set<Material> lockedItems() {
         if (CoronaCraft.getAbilities() == null) return new HashSet<>();
@@ -133,6 +143,20 @@ public class PlayerEventListener implements Listener {
                     }
                 }
             }
+            else if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                if (unplaceableItems.contains(e.getItem().getType())) {
+                    e.setCancelled(true);
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onEntityDamage(EntityDamageEvent e) {
+        if (e.getEntity() instanceof Player && (e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK
+                || e.getCause() == EntityDamageEvent.DamageCause.POISON
+                || e.getCause() == EntityDamageEvent.DamageCause.WITHER)) {
+            ((Player) e.getEntity()).setNoDamageTicks(0);
         }
     }
 
@@ -140,10 +164,16 @@ public class PlayerEventListener implements Listener {
     public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
         if (e.getEntity() instanceof Player) {
             if (e.getDamager() instanceof Player) {
-                PlayerInteraction.playerHarm((Player) e.getEntity(), (Player) e.getDamager());
+                if (e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK
+                        && ((Player) e.getDamager()).getInventory().getItemInMainHand().getType() == Material.BLAZE_ROD) {
+                    e.setCancelled(true);
+                } else {
+                    PlayerInteraction.playerHarm((Player) e.getEntity(), (Player) e.getDamager());
+                }
             }
             else if (e.getDamager() instanceof Projectile && ((Projectile)e.getDamager()).getShooter() instanceof Player) {
                 PlayerInteraction.playerHarm((Player) e.getEntity(), (Player) ((Projectile) e.getDamager()).getShooter());
+                ((Player) e.getEntity()).setNoDamageTicks(0);
             }
             else if (e.getDamager() instanceof TNTPrimed && e.getDamager().hasMetadata(MetadataKey.PLAYER)) {
                 PlayerInteraction.playerHarm((Player) e.getEntity(), (Player) e.getDamager().getMetadata(MetadataKey.PLAYER).get(0).value());

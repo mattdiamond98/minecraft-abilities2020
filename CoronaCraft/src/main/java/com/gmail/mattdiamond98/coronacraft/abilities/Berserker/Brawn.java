@@ -22,6 +22,7 @@ public class Brawn extends AbilityStyle {
         p.damage(UltimateTracker.isUltimateActive(p) ? 2.0 : 4.0);
         new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 10 * 20, 0).apply(p);
         p.getLocation().getWorld().playEffect(p.getLocation(), Effect.STEP_SOUND, Material.REDSTONE_WIRE);
+        p.setNoDamageTicks(0);
         return 0;
     }
 

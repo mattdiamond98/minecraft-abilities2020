@@ -1,9 +1,9 @@
 package com.gmail.mattdiamond98.coronacraft.abilities;
 
-import com.sun.istack.internal.Nullable;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.Metadatable;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 

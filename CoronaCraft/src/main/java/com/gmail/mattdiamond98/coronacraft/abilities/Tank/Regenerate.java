@@ -6,6 +6,7 @@ import com.gmail.mattdiamond98.coronacraft.util.AbilityUtil;
 import com.gmail.mattdiamond98.coronacraft.util.InstantFirework;
 import com.tommytony.war.Team;
 import org.bukkit.*;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -34,12 +35,13 @@ public class Regenerate extends AbilityStyle {
         }
         for (Player teammate : Team.getTeamByPlayerName(p.getName()).getPlayers()) {
             if (teammate.getLocation().distanceSquared(p.getLocation()) < 10 * 10) {
-                if (teammate.getHealth() <= 16.0) {
+                if (teammate.getHealth() <= 18.0) {
                     int amplifier = 0;
-                    if (teammate.getHealth() <= 12.0) amplifier = 1;
-                    if (teammate.getHealth() <= 8.0 ) amplifier = 2;
-                    if (teammate.getHealth() <= 4.0 ) amplifier = 3;
+                    if (teammate.getHealth() <= 14.0) amplifier = 1;
+                    if (teammate.getHealth() <= 10.0 ) amplifier = 2;
+                    if (teammate.getHealth() <= 6.0 ) amplifier = 3;
                     new PotionEffect(PotionEffectType.REGENERATION, 120, amplifier).apply(teammate);
+                    teammate.setHealth(Math.min(teammate.getHealth() + amplifier * 2, teammate.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()));
                     teammate.getWorld().spawnParticle(Particle.HEART, teammate.getEyeLocation(), 3);
                     teammate.getWorld().playSound(teammate.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 5, 1);
                     teammate.sendMessage(ChatColor.GREEN + "You feel your wounds closing up.");

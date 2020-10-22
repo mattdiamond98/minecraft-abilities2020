@@ -24,8 +24,8 @@ public class Blizzard extends ChargeableCapstoneWizardStyle {
 
     public static final int MANA_COST = 3;
 
-    public static final int MAX_CHARGE = 20;
-    public static final int MIN_CHARGE = 10;
+    public static final int MAX_CHARGE = 12;
+    public static final int MIN_CHARGE = 5;
 
     public static final int COOLDOWN_SECONDS = 60;
     public static final int COOLDOWN_ABILITY_TICKS = COOLDOWN_SECONDS * CoronaCraft.ABILITY_TICK_PER_SECOND;
@@ -91,26 +91,27 @@ public class Blizzard extends ChargeableCapstoneWizardStyle {
                         .filter(block -> !block.getType().isSolid())
                         .filter(block -> block.getRelative(BlockFace.DOWN).getType().isSolid())
                         .forEach(block ->  block.setType(Material.SNOW));
-                affectedPlayers.forEach(enemy -> freezePlayer(enemy, p));
+                affectedPlayers.forEach(enemy -> freezePlayer(enemy, p, finalCharge));
                 frozen.addAll(affectedPlayers);
             }, i * 3);
 
         }
     }
 
-    private void freezePlayer(Player enemy, Player p) {
+    private void freezePlayer(Player enemy, Player p, int finalCharge) {
         float id = new Random().nextFloat();
+        enemy.setVelocity(new Vector(0, 0.25, 0));
+        enemy.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 60 + finalCharge * 5, 0));
         if (enemy.hasPotionEffect(PotionEffectType.SLOW)) {
-            enemy.damage(16, p);
+            enemy.damage(finalCharge / 2.0, p);
             AbilityUtil.surroundPlayer(enemy, block -> {
                 if (AbilityUtil.validBlock(block) && !block.getType().isSolid()) {
                     block.setType(Material.PACKED_ICE);
                 }
             });
         } else {
-            enemy.damage(8, p);
-            enemy.setVelocity(new Vector(0, 0.5, 0));
-            enemy.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 1));
+            enemy.damage(finalCharge / 3.0, p);
+            enemy.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60 + finalCharge * 5, 1));
             AbilityUtil.surroundPlayer(enemy, block -> {
                 if (AbilityUtil.validBlock(block) && (!block.getType().isSolid() || block.getType() == Material.SNOW)) {
                     block.setType(Material.SNOW_BLOCK);

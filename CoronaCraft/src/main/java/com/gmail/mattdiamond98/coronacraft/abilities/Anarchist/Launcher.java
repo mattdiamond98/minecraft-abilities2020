@@ -89,15 +89,7 @@ public class Launcher extends Ability {
         if (e.getEntity() instanceof Egg) {
             final Egg egg = (Egg) e.getEntity();
             if (egg.getShooter() instanceof Player && Warzone.getZoneByLocation(egg.getLocation()) != null) {
-                final Player p = (Player) egg.getShooter();
-                if (e.getEntity().getTicksLived() > MINIMUM_TICK_TIME) {
-                    getStyle(p).execute(p, egg);
-                } else {
-                    egg.getWorld().playSound(egg.getLocation(), Sound.BLOCK_PUMPKIN_CARVE, 0.2F, 0.6F);
-                    Bukkit.getScheduler().runTaskLater(CoronaCraft.instance, () -> {
-                        getStyle(p).execute(p, egg);
-                    }, e.getEntity().getTicksLived() - MINIMUM_TICK_TIME);
-                }
+                getStyle((Player) egg.getShooter()).execute((Player) egg.getShooter(), egg);
             }
         }
     }

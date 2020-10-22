@@ -63,6 +63,7 @@ public class PlayerInteraction {
         Optional<Map.Entry<UUID, Long>> entry = HARM_MAP.get(player.getUniqueId())
                 .entrySet()
                 .stream()
+                .filter(Objects::nonNull)
                 .max(Comparator.comparing(Map.Entry::getValue));
         if (entry.isPresent()) {
             UUID id = entry.get().getKey();

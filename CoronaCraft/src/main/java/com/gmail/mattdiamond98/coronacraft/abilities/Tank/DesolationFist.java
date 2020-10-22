@@ -83,7 +83,9 @@ public class DesolationFist extends UltimateAbility {
             Player p = (Player) e.getEntity();
             if (UltimateTracker.isUltimateActive(p) && UltimateTracker.getLoadout(p) == Loadout.TANK) {
                 e.setCancelled(true);
+                p.setFireTicks(0);
                 p.setVelocity(new Vector(0, JUMP_HEIGHT, 0));
+                return;
             }
             else if (!fallingPlayers.contains(p.getUniqueId()) || (e.getCause() != EntityDamageEvent.DamageCause.FALL)) return;
             fallingPlayers.remove(p.getUniqueId());
@@ -98,9 +100,17 @@ public class DesolationFist extends UltimateAbility {
         final Warzone zone = Warzone.getZoneByPlayerName(player.getName());
         player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 5 * 20, 1));
         AbilityUtil.getEnemies(player).stream().filter(e -> e.getLocation().distanceSquared(player.getLocation()) < (RADIUS * RADIUS) + 2).forEach(enemy -> {
-            enemy.setVelocity(enemy.getLocation().toVector().subtract(player.getLocation().toVector()).setY(0).normalize().multiply(1.5).setY(1.5));
-            enemy.damage(14, player);
-            enemy.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 5 * 20, 1));
+            enemy.setVelocity(
+                    enemy.getLocation()
+                            .toVector()
+                            .subtract(player.getLocation().toVector())
+                            .setY(0)
+                            .normalize()
+                            .multiply(1.5 * (enemy.isOnGround() ? 2.0 : 1.0))
+                            .setY(1.5)
+            );
+            enemy.damage(16, player);
+            enemy.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 7 * 20, 1));
         });
 
         throwBlockUp(center.getBlock());

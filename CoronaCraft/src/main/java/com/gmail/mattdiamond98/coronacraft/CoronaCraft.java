@@ -1,7 +1,5 @@
 package com.gmail.mattdiamond98.coronacraft;
 
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.ProtocolManager;
 import com.gmail.mattdiamond98.coronacraft.abilities.*;
 import com.gmail.mattdiamond98.coronacraft.abilities.Anarchist.Detonator;
 import com.gmail.mattdiamond98.coronacraft.abilities.Anarchist.Launcher;
@@ -48,7 +46,6 @@ public class CoronaCraft extends JavaPlugin {
     public static CoronaCraft instance;
 
     private static final Logger log = Logger.getLogger("Minecraft");
-    private static ProtocolManager protocolManager;
     private static Economy econ = null;
     private static Permission perms = null;
 
@@ -67,7 +64,6 @@ public class CoronaCraft extends JavaPlugin {
     public void onEnable(){
         instance = this;
 
-        protocolManager = ProtocolLibrary.getProtocolManager();
         getDataFolder().mkdir();
         setupPermissions();
         if (!setupEconomy() ) {
@@ -117,7 +113,7 @@ public class CoronaCraft extends JavaPlugin {
             Bukkit.getPluginManager().callEvent(new CoronaCraftTickEvent());
             if (PLAYER_COOL_DOWNS.isEmpty()) return;
             for (AbilityKey key : new HashSet<>(PLAYER_COOL_DOWNS.keySet())) {
-                if (key == null || !PLAYER_COOL_DOWNS.containsKey(key)) return;
+                if (key == null || key.getPlayer() == null || !PLAYER_COOL_DOWNS.containsKey(key)) return;
                 if (!key.getPlayer().isOnline()) {
                     PLAYER_COOL_DOWNS.remove(key);
                     return;
@@ -210,8 +206,6 @@ public class CoronaCraft extends JavaPlugin {
     public static Permission getPermissions() {
         return perms;
     }
-
-    public static ProtocolManager getProtocolManager() { return protocolManager; }
 
     @Override
     public void onDisable() {

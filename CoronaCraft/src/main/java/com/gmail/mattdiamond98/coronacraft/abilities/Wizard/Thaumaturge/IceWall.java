@@ -23,7 +23,7 @@ public class IceWall extends WizardStyle {
 
     public static final int WALL_LENGTH = 4; //half length
 
-    public static final int COOLDOWN_SECONDS = 30;
+    public static final int COOLDOWN_SECONDS = 15;
     public static final int COOLDOWN_ABILITY_TICKS = COOLDOWN_SECONDS * CoronaCraft.ABILITY_TICK_PER_SECOND;
 
     public IceWall() {
