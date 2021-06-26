@@ -1,0 +1,9 @@
+name: CoronaCraft
+version: 1.0
+author: Matan Diamond
+description: Plugin
+main: com.gmail.mattdiamond98.coronacraft.CoronaCraft
+api-version: 1.16
+
+
+
